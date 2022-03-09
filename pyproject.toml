@@ -8,6 +8,7 @@ authors = ["KIMHOONHEE <nmdkims@gmail.com>"]
 python = "^3.9"
 Django = "4.0"
 django-ninja = "0.16.1"
+mysqlclient = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
 
