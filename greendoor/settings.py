@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from typing import List
 
-from .my_settings import MY_SECRET, MY_DATABASES
+from .my_settings import MY_DATABASES, MY_SECRET
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
