@@ -1,7 +1,8 @@
-<<<<<<< HEAD
 from django.db import models
 
 from greendoor.models import BaseModel
+from product.models import Product
+
 from user.models import Users
 
 
@@ -24,7 +25,7 @@ class OderProduct(BaseModel):
         Product, on_delete=models.CASCADE, related_name="order_product", db_column="product_id"
     )
     qty = models.IntegerField()
-=======
+
 # from django.db import models
 #
 # from greendoor.models import BaseModel
@@ -51,4 +52,4 @@ class OderProduct(BaseModel):
 #         Product, on_delete=models.CASCADE, related_name="order_product", db_column="product_id"
 #     )
 #     qty = models.IntegerField()
->>>>>>> cfc1069283e700d65b28680c4c067c9d664a5417
+

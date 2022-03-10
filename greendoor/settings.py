@@ -55,7 +55,11 @@ INSTALLED_APPS = [
 =======
     "product",
     "info",
+<<<<<<< HEAD
 >>>>>>> cfc1069283e700d65b28680c4c067c9d664a5417
+=======
+    "feed",
+>>>>>>> e0aa468488484af7c765a6166cdafb603a081842
 ]
 
 MIDDLEWARE = [

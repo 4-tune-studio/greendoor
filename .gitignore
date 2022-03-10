@@ -6,5 +6,3 @@ __pycache__
 .venv
 # RDS 연결설정
 /greendoor/my_settings.py
-
-test.sh
