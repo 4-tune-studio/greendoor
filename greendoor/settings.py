@@ -51,6 +51,11 @@ INSTALLED_APPS = [
     "order",
     "user",
     "plant",
+<<<<<<< HEAD
+=======
+    "product",
+    "info",
+>>>>>>> cfc1069283e700d65b28680c4c067c9d664a5417
 ]
 
 MIDDLEWARE = [
