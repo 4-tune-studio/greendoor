@@ -11,16 +11,10 @@ class OrderBasket(BaseModel):
     )
     qty = models.IntegerField()
 
-    class Meta:
-        db_table = "order_basket"
-
 
 class Order(BaseModel):
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="order", db_column="user_id")
     status = models.IntegerField(default=2)  # 처리중-2, 완료-1, 실패-0
-
-    class Meta:
-        db_table = "order"
 
 
 class OderProduct(BaseModel):
@@ -29,6 +23,3 @@ class OderProduct(BaseModel):
         Product, on_delete=models.CASCADE, related_name="order_product", db_column="product_id"
     )
     qty = models.IntegerField()
-
-    class Meta:
-        db_table = "order_product"
