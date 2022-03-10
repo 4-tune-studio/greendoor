@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "plant",
     "product",
     "info",
+    "feed",
 ]
 
 MIDDLEWARE = [
