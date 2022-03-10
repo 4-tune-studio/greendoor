@@ -24,8 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-zhi_y6fvy1nv=*d8%tqdi&ac=*isw41d-g16e&@_jvxros7j=a'
+# try:
 SECRET_KEY = MY_SECRET["SECRET_KEY"]
 DATABASES = MY_DATABASES
+# except:
+#     SECRET_KEY = ${{ secrets.SECRET_KEY }}
+#     DATABASES = MY_DATABASES
+# else:
+#     print("성공")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
