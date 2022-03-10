@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PlantConfig(AppConfig):
+class InfoConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "plant"
+    name = "info"
