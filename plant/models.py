@@ -9,6 +9,6 @@ class PlantCategory(BaseModel):
 
 
 class Plant(BaseModel):
-    plant_category_id = models.ForeignKey(PlantCategory, on_delete=models.CASCADE, related_name="plant",
-                                          db_column="plant_category_id")
-
+    plant_category_id = models.ForeignKey(
+        PlantCategory, on_delete=models.CASCADE, related_name="plant", db_column="plant_category_id"
+    )
