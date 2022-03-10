@@ -12,7 +12,6 @@ mysqlclient = "^2.1.0"
 black = "21.12b0"
 django-stubs = "1.9.0"
 isort = "5.10.1"
-product = "^0.1.1"
 mypy = "0.931"
 
 [tool.poetry.dev-dependencies]
