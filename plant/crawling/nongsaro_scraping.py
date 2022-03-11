@@ -2,13 +2,25 @@
 # from selenium.webdriver.common.keys import Keys
 # import time
 # import urllib.request
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+
+import django
+
+django.setup()
+
 import time
 
-import pymysql
+# import pymysql
 import requests
 from bs4 import BeautifulSoup
 
-from greendoor.my_settings import MY_DATABASES
+# from greendoor.my_settings import MY_DATABASES
+from plant.models import *
+from datetime import datetime
+
+# Feedback 객체 생성
 
 #####################################################################
 # bs4 사용법 요약
@@ -18,16 +30,16 @@ from greendoor.my_settings import MY_DATABASES
 # soup = BeautifulSoup(html, 'html.parser')
 # print(soup.select_one('body').text)
 #####################################################################
-db = pymysql.connect(
-    host=MY_DATABASES["default"]["HOST"],
-    port=3306,
-    user=MY_DATABASES["default"]["USER"],
-    passwd=MY_DATABASES["default"]["PASSWORD"],
-    db=MY_DATABASES["default"]["NAME"],
-    charset="utf8mb4",
-)
-
-cursor = db.cursor()
+# db = pymysql.connect(
+#     host=MY_DATABASES["default"]["HOST"],
+#     port=3306,
+#     user=MY_DATABASES["default"]["USER"],
+#     passwd=MY_DATABASES["default"]["PASSWORD"],
+#     db=MY_DATABASES["default"]["NAME"],
+#     charset="utf8mb4",
+# )
+#
+# cursor = db.cursor()
 
 for i in range(1, 23):
     print(f"========================= {i}:page 시작 =========================")
@@ -196,27 +208,14 @@ for i in range(1, 23):
         except:
             continue
         else:
-            cursor.execute(
-                f"INSERT INTO plant_plant VALUES('{id_num}',"
-                f"'{category_name}',"
-                f"'{img}',"
-                f"'{title}',"
-                f"'{price.strip()}',"
-                f"'{description}',"
-                f"'{score}',"
-                f"'{alcohol}',"
-                f"'{style_info}',"
-                f"'{aroma_info}',"
-                f"'{flavor_info}',"
-                f"'{finish_info}',"
-                f"'{smoothness_info}',"
-                f"'{enjoy_info}',"
-                f"'{pairing_info}',"
-                f"'{page}')"
-            )
+            pt = Plant(updated_at=datetime.now(),
+                       createDate=datetime.now(),
+                       image=image,
+                       botanical_name=botanical_name,
+                       english_name=english_name)
 
-            db.commit()
-
+            # 새 객체 INSERT
+            pt.save()
             print(f"==================================================================================")
             print(f"*********** {i} page {j + 1} 번째 conetent 끝 ***********")
             print("==================================================================================")
