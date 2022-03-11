@@ -25,6 +25,7 @@ class FeedLike(BaseModel):
             models.UniqueConstraint(fields=["user_id", "feed_id"], name="unique_user_feedlike"),
         ]
 
+
 class FeedBookmark(BaseModel):
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="feed_bookmark", db_column="user_id")
     feed_id = models.ForeignKey(Feed, on_delete=models.CASCADE, related_name="feed_bookmark", db_column="feed_id")

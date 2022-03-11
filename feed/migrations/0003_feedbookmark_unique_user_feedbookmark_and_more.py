@@ -6,16 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('feed', '0002_initial'),
+        ("feed", "0002_initial"),
     ]
 
     operations = [
         migrations.AddConstraint(
-            model_name='feedbookmark',
-            constraint=models.UniqueConstraint(fields=('user_id', 'feed_id'), name='unique_user_feedbookmark'),
+            model_name="feedbookmark",
+            constraint=models.UniqueConstraint(fields=("user_id", "feed_id"), name="unique_user_feedbookmark"),
         ),
         migrations.AddConstraint(
-            model_name='feedlike',
-            constraint=models.UniqueConstraint(fields=('user_id', 'feed_id'), name='unique_user_feedlike'),
+            model_name="feedlike",
+            constraint=models.UniqueConstraint(fields=("user_id", "feed_id"), name="unique_user_feedlike"),
         ),
     ]
