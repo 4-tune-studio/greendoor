@@ -2,8 +2,13 @@
 # from selenium.webdriver.common.keys import Keys
 # import time
 # import urllib.request
+import time
+
+import pymysql
 import requests
 from bs4 import BeautifulSoup
+
+from greendoor.my_settings import MY_DATABASES
 
 #####################################################################
 # bs4 사용법 요약
@@ -13,7 +18,16 @@ from bs4 import BeautifulSoup
 # soup = BeautifulSoup(html, 'html.parser')
 # print(soup.select_one('body').text)
 #####################################################################
+db = pymysql.connect(
+    host=MY_DATABASES["default"]["HOST"],
+    port=3306,
+    user=MY_DATABASES["default"]["USER"],
+    passwd=MY_DATABASES["default"]["PASSWORD"],
+    db=MY_DATABASES["default"]["NAME"],
+    charset="utf8mb4",
+)
 
+cursor = db.cursor()
 
 for i in range(1, 23):
     print(f"========================= {i}:page 시작 =========================")
@@ -30,6 +44,7 @@ for i in range(1, 23):
     # print("=============================================== end page test")
     for j in range(10):
         try:
+            image = soup.select("img")[j]["src"]
             tr = soup.select("td > a")[j]["onclick"]
             tr = tr.lstrip("fncDtl(")
             tr = tr.strip().rstrip("eslaf nruter ;)")
@@ -47,7 +62,7 @@ for i in range(1, 23):
             origin = content.select("tr > td")[4].text
             advise_info = content.select("tr > td")[5].text
             image_link = content.select("tr > td")[6].text
-            heigt_info = content.select("tr > td")[7].text
+            height_info = content.select("tr > td")[7].text
             width_info = content.select("tr > td")[8].text
             leaftype_info = content.select("tr > td")[9].text
 
@@ -80,9 +95,9 @@ for i in range(1, 23):
             length_big = content.select("tr > td")[34].text
             length_mid = content.select("tr > td")[35].text
             length_small = content.select("tr > td")[36].text
-            heigt_big = content.select("tr > td")[37].text
-            heigt_mid = content.select("tr > td")[38].text
-            heigt_small = content.select("tr > td")[39].text
+            height_big = content.select("tr > td")[37].text
+            height_mid = content.select("tr > td")[38].text
+            height_small = content.select("tr > td")[39].text
 
             volume_big = content.select("tr > td")[40].text
             volume_mid = content.select("tr > td")[41].text
@@ -107,7 +122,9 @@ for i in range(1, 23):
             location = content.select("tr > td")[59].text
 
             insect = content.select("tr > td")[60].text
-            print(f"*********** {i} page {j+1} 번째 conetent ***********")
+            print(f"*********** {i} page {j + 1} 번째 conetent 시작 ***********")
+            print(image)
+
             print(botanical_name)
             print(english_name)
             print(general_name)
@@ -115,11 +132,11 @@ for i in range(1, 23):
             print(origin)
             print(advise_info)
             print(image_link)
-            print(heigt_info)
+            print(height_info)
             print(width_info)
             print(leaftype_info)
 
-            print(smell_info)
+            # print(smell_info)
             print(toxic_info)
             print(breeding_info)
             print(extraperiod_info)
@@ -138,26 +155,26 @@ for i in range(1, 23):
             print(insect_info)
             print(extragrow_info)
             print(functional_info)
-            print(potsize_big)
-            print(potsize_mid)
-
-            print(potsize_small)
-            print(width_big)
-            print(width_mid)
-            print(width_small)
-            print(length_big)
-            print(length_mid)
-            print(length_small)
-            print(heigt_big)
-            print(heigt_mid)
-            print(heigt_small)
-
-            print(volume_big)
-            print(volume_mid)
-            print(volume_small)
-            print(price_big)
-            print(price_mid)
-            print(price_small)
+            # print(potsize_big)
+            # print(potsize_mid)
+            #
+            # print(potsize_small)
+            # print(width_big)
+            # print(width_mid)
+            # print(width_small)
+            # print(length_big)
+            # print(length_mid)
+            # print(length_small)
+            # print(height_big)
+            # print(height_mid)
+            # print(height_small)
+            #
+            # print(volume_big)
+            # print(volume_mid)
+            # print(volume_small)
+            # print(price_big)
+            # print(price_mid)
+            # print(price_small)
             print(care_need)
             print(type)
             print(growth_type)
@@ -172,16 +189,40 @@ for i in range(1, 23):
             print(fluit_color)
             print(breeding_way)
             print(lux)
-            print(insect)
+            print(location)
 
-            print(botanical_name)
+            # print(insect)
 
         except:
-            break
+            continue
         else:
+            cursor.execute(
+                f"INSERT INTO plant_plant VALUES('{id_num}',"
+                f"'{category_name}',"
+                f"'{img}',"
+                f"'{title}',"
+                f"'{price.strip()}',"
+                f"'{description}',"
+                f"'{score}',"
+                f"'{alcohol}',"
+                f"'{style_info}',"
+                f"'{aroma_info}',"
+                f"'{flavor_info}',"
+                f"'{finish_info}',"
+                f"'{smoothness_info}',"
+                f"'{enjoy_info}',"
+                f"'{pairing_info}',"
+                f"'{page}')"
+            )
+
+            db.commit()
+
             print(f"==================================================================================")
-            print(f"*********** {i} page {j+1} 번째 conetent 끝 ***********")
+            print(f"*********** {i} page {j + 1} 번째 conetent 끝 ***********")
             print("==================================================================================")
+
+            time.sleep(1)
+
             # print(f"{i}::::::::::{content_number}")
 
 # driver = webdriver.Chrome()
