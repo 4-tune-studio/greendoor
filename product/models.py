@@ -6,15 +6,14 @@ from plant.models import Plant
 
 class ProductCategory(BaseModel):
     category = models.CharField(max_length=45)
-    plant_id = models.ForeignKey(
-        Plant, on_delete=models.CASCADE, related_name="product_category", db_column="plant_id", null=True
-    )
 
 
 class Product(BaseModel):
     product_category_id = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, related_name="product", db_column="product_category_id"
     )
+    plant_id = models.ForeignKey(Plant, on_delete=models.CASCADE, related_name="product", db_column="plant_id",
+                                 null=True)
     name = models.CharField(max_length=100)
     price = models.IntegerField()
     size = models.IntegerField()
