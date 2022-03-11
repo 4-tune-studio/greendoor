@@ -42,4 +42,7 @@ django_settings_module = "greendoor.settings"
 [tool.isort]
 profile = "black"
 
+[[tool.mypy.overrides]]
+module = "*.crawling.*"
+ignore_errors = true
 
