@@ -12,8 +12,9 @@ class Product(BaseModel):
     product_category_id = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, related_name="product", db_column="product_category_id"
     )
-    plant_id = models.ForeignKey(Plant, on_delete=models.CASCADE, related_name="product", db_column="plant_id",
-                                 null=True)
+    plant_id = models.ForeignKey(
+        Plant, on_delete=models.CASCADE, related_name="product", db_column="plant_id", null=True
+    )
     name = models.CharField(max_length=100)
     price = models.IntegerField()
     size = models.IntegerField()
