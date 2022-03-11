@@ -22,7 +22,7 @@ class FeedLike(BaseModel):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["user_id", "feed_id"], name="unique_user_feed"),
+            models.UniqueConstraint(fields=["user_id", "feed_id"], name="unique_user_feedlike"),
         ]
 
 class FeedBookmark(BaseModel):
@@ -31,5 +31,5 @@ class FeedBookmark(BaseModel):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["user_id", "feed_id"], name="unique_user_feed"),
+            models.UniqueConstraint(fields=["user_id", "feed_id"], name="unique_user_feedbookmark"),
         ]
