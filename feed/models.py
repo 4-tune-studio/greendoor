@@ -19,10 +19,18 @@ class FeedComment(BaseModel):
 class FeedLike(BaseModel):
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="feed_like", db_column="user_id")
     feed_id = models.ForeignKey(Feed, on_delete=models.CASCADE, related_name="feed_like", db_column="feed_id")
-    like = models.IntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user_id", "feed_id"], name="unique_user_feedlike"),
+        ]
 
 
 class FeedBookmark(BaseModel):
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="feed_bookmark", db_column="user_id")
     feed_id = models.ForeignKey(Feed, on_delete=models.CASCADE, related_name="feed_bookmark", db_column="feed_id")
-    bookmark = models.IntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user_id", "feed_id"], name="unique_user_feedbookmark"),
+        ]
