@@ -1,7 +1,16 @@
+import os
 from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "greendoor.settings")
+
+import django
+
+django.setup()
+
+from product.models import Product, ProductCategory
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36"
@@ -33,7 +42,7 @@ for page in range(last_pages):
         product_link_list.append(link)
 
     i = 0
-    for product_link in product_link_list[:2]:
+    for product_link in product_link_list:
         product = product_url_head + product_link
         product_result = requests.get(f"{product}", headers=headers)
         product_soup = BeautifulSoup(product_result.text, "html.parser")
@@ -47,22 +56,31 @@ for page in range(last_pages):
         # print(main_image)
         try:
             detail = product_soup.find("div", {"class": "cdtl_sec cdtl_seller_html"}).find("iframe")["src"]
-            print(detail)
+            # print(detail)
             detail_result = requests.get(f"{detail}", headers=headers)
             detail_soup = BeautifulSoup(detail_result.text, "html.parser")
             img_tag = detail_soup.find_all("img")
         except AttributeError:
             img_tag = None
         # print(img_list)
-        sleep(3)
 
         img_tag = str(img_tag).strip("[]")
+        img_tag = img_tag.replace(",", "")
         # print(img_tag)
         # print(str(img_tag).strip('[]'))
 
-        info = {"title": title, "price": price, "main_image": f"https:{main_image}", "img_tag": img_tag}
+        main_image = f"https:{main_image}"
+
+        product_category_id = ProductCategory.objects.get(id=1)
+
+        Product.objects.create(
+            product_category_id=product_category_id, name=title, price=price, image=main_image, image_tag=img_tag
+        )
+
+        info = {"title": title, "price": price, "main_image": main_image, "img_tag": img_tag}
         infos.append(info)
         i += 1
         print(f"{i} clear")
+        sleep(3)
 
 print(infos)
