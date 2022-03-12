@@ -42,9 +42,9 @@ time.sleep(3)
 
 # 2. > sql query문을 이용하여 table의 내용을 비우고 시작
 
+
 def category_insert(category, plant_plantcategory_id):
-    ptcategory = PlantCategory(id=plant_plantcategory_id,
-                               category=category)
+    ptcategory = PlantCategory(id=plant_plantcategory_id, category=category)
     # pt.save() 통해 새 객체를 database에 insert
     ptcategory.save()
     print(f"={plant_plantcategory_id}번 카테고리 입력완료={category}")
@@ -120,5 +120,3 @@ plant_plantcategory_id = category_insert("후추과", plant_plantcategory_id)
 
 plant_plantcategory_id = category_insert("쥐손이풀과", plant_plantcategory_id)
 plant_plantcategory_id = category_insert("범위귀과", plant_plantcategory_id)
-
-

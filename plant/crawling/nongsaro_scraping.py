@@ -86,12 +86,12 @@ for i in range(1, 23):
             image_link = content.select("tr > td")[6].text
 
             height_info = content.select("tr > td")[7].text
-            if height_info == '':
+            if height_info == "":
                 height_info = 0
             else:
                 pass
             width_info = content.select("tr > td")[8].text
-            if width_info == '':
+            if width_info == "":
                 width_info = 0
             else:
                 pass
@@ -237,56 +237,54 @@ for i in range(1, 23):
             else:
                 pass
 
-            pt = Plant(plant_category_id=plant_category_id,
-                       id=id,
-                       # updated_at=datetime.now(),
-                       # created_at=datetime.now(),
-                       image=image,
-                       botanical_name=botanical_name,
-                       english_name=english_name,
-                       general_name=general_name,
-                       type_name=type_name,
-                       origin=origin,
-                       advise_info=advise_info,
-                       image_link=image_link,
-                       height_info=int(height_info),
-                       width_info=int(width_info),
-                       leaftype_info=leaftype_info,
-
-                       toxic_info=toxic_info,
-                       breeding_info=breeding_info,
-                       extraperiod_info=extraperiod_info,
-                       grow_level=grow_level,
-                       growth_speed=growth_speed,
-                       growth_temp=growth_temp,
-                       lowest_temp=lowest_temp,
-                       humidity=humidity,
-                       fertilizer_info=fertilizer_info,
-
-                       soil_info=soil_info,
-                       water_spring=water_spring,
-                       water_summer=water_summer,
-                       water_fall=water_fall,
-                       water_winter=water_winter,
-                       insect_info=insect_info,
-                       extragrow_info=extragrow_info,
-                       functional_info=functional_info,
-
-                       care_need=care_need,
-                       type=type,
-                       growth_type=growth_type,
-                       indoor_garden=indoor_garden,
-
-                       ecology=ecology,
-                       leaf_pattern=leaf_pattern,
-                       leaf_color=leaf_color,
-                       flower_season=flower_season,
-                       flower_color=flower_color,
-                       fluit_season=fluit_season,
-                       fluit_color=fluit_color,
-                       breeding_way=breeding_way,
-                       lux=lux,
-                       location=location)
+            pt = Plant(
+                plant_category_id=plant_category_id,
+                id=id,
+                # updated_at=datetime.now(),
+                # created_at=datetime.now(),
+                image=image,
+                botanical_name=botanical_name,
+                english_name=english_name,
+                general_name=general_name,
+                type_name=type_name,
+                origin=origin,
+                advise_info=advise_info,
+                image_link=image_link,
+                height_info=int(height_info),
+                width_info=int(width_info),
+                leaftype_info=leaftype_info,
+                toxic_info=toxic_info,
+                breeding_info=breeding_info,
+                extraperiod_info=extraperiod_info,
+                grow_level=grow_level,
+                growth_speed=growth_speed,
+                growth_temp=growth_temp,
+                lowest_temp=lowest_temp,
+                humidity=humidity,
+                fertilizer_info=fertilizer_info,
+                soil_info=soil_info,
+                water_spring=water_spring,
+                water_summer=water_summer,
+                water_fall=water_fall,
+                water_winter=water_winter,
+                insect_info=insect_info,
+                extragrow_info=extragrow_info,
+                functional_info=functional_info,
+                care_need=care_need,
+                type=type,
+                growth_type=growth_type,
+                indoor_garden=indoor_garden,
+                ecology=ecology,
+                leaf_pattern=leaf_pattern,
+                leaf_color=leaf_color,
+                flower_season=flower_season,
+                flower_color=flower_color,
+                fluit_season=fluit_season,
+                fluit_color=fluit_color,
+                breeding_way=breeding_way,
+                lux=lux,
+                location=location,
+            )
 
             # pt.save() 통해 새 객체를 database에 insert
             pt.save()
