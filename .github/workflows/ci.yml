@@ -30,4 +30,3 @@ jobs:
 #          env
 #          poetry run python manage.py test
           
-          
