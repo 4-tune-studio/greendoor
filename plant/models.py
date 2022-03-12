@@ -15,7 +15,7 @@ class Plant(BaseModel):
     image = models.CharField(max_length=256, null=True, blank=True)
 
     botanical_name = models.CharField(max_length=100, null=True, blank=True)
-    english_name = models.CharField(max_length=100, null=True, blank=True)
+    english_name = models.CharField(max_length=150, null=True, blank=True)
     general_name = models.CharField(max_length=100, null=True, blank=True)
     type_name = models.CharField(max_length=100, null=True, blank=True)
     origin = models.CharField(max_length=100, null=True, blank=True)
@@ -41,9 +41,9 @@ class Plant(BaseModel):
     water_summer = models.CharField(max_length=100, null=True, blank=True)
     water_fall = models.CharField(max_length=100, null=True, blank=True)
     water_winter = models.CharField(max_length=100, null=True, blank=True)
-    insect_info = models.CharField(max_length=100, null=True, blank=True)
-    extragrow_info = models.CharField(max_length=100, null=True, blank=True)
-    functional_info = models.CharField(max_length=256, null=True, blank=True)
+    insect_info = models.CharField(max_length=256, null=True, blank=True)
+    extragrow_info = models.CharField(max_length=2000, null=True, blank=True)
+    functional_info = models.CharField(max_length=2000, null=True, blank=True)
     # potsize_big = models.IntegerField(null=True, blank=True)
     # potsize_mid = models.IntegerField(null=True, blank=True)
     #
@@ -78,6 +78,6 @@ class Plant(BaseModel):
     fluit_color = models.CharField(max_length=100, null=True, blank=True)
     breeding_way = models.CharField(max_length=100, null=True, blank=True)
     lux = models.CharField(max_length=100, null=True, blank=True)
-    location = models.CharField(max_length=100, null=True, blank=True)
+    location = models.CharField(max_length=256, null=True, blank=True)
 
     # insect = models.CharField(max_length=100, null=True, blank=True)
