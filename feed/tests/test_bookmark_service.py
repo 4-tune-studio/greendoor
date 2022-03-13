@@ -18,12 +18,8 @@ class TestBookmarkService(TestCase):
 
         # Then / 아래 내용을 검증한다.
         self.assertIsNotNone(bookmark.id)  # db에서 bookmark pk가 발급이 되었다
-        self.assertEqual(
-            user.id, bookmark.user_id.id
-        )  # user id가 bookmark의 user id와 같다.
-        self.assertEqual(
-            feed.id, bookmark.feed_id.id
-        )  # feed id가 bookmark의 feed id와 같다.
+        self.assertEqual(user.id, bookmark.user_id.id)  # user id가 bookmark의 user id와 같다.
+        self.assertEqual(feed.id, bookmark.feed_id.id)  # feed id가 bookmark의 feed id와 같다.
 
     # 한 유저가 하나의 피드는 한번만 북마크 할 수 있음을 검증
     def test_a_user_can_bookmark_an_feed_only_once(self) -> None:

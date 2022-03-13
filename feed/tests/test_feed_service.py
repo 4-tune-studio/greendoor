@@ -3,8 +3,12 @@ from django.test import TestCase
 from django.test.utils import CaptureQueriesContext
 
 from feed.models import Feed, FeedLike
-from feed.services.feed_service import (create_an_feed, delete_an_feed,
-                                             get_an_feed, get_feed_list)
+from feed.services.feed_service import (
+    create_an_feed,
+    delete_an_feed,
+    get_an_feed,
+    get_feed_list,
+)
 from feed.services.like_service import do_like
 from user.models import Users
 
@@ -45,9 +49,7 @@ class TestFeedService(TestCase):
     def test_get_feed_list_should_prefetch_likes(self) -> None:
         # Given
         user = Users.objects.create(username="test")
-        feeds = [
-            Feed.objects.create(content=f"{i}", user_id=user) for i in range(1, 21)
-        ]
+        feeds = [Feed.objects.create(content=f"{i}", user_id=user) for i in range(1, 21)]
         do_like(user.id, feeds[-1].id)
 
         with CaptureQueriesContext(connection) as ctx:
@@ -62,9 +64,7 @@ class TestFeedService(TestCase):
                 # 가장 최신 피드의 좋아요 개수가 1인지
                 self.assertEqual(1, result_counts[0])
                 # 만든 피드의 최신순 10개와 가져온 피드 10개의 아이디가 각각 일치하는지
-                self.assertEqual(
-                    [a.id for a in reversed(feeds[10:21])], [a.id for a in result_feeds]
-                )
+                self.assertEqual([a.id for a in reversed(feeds[10:21])], [a.id for a in result_feeds])
 
     def test_get_feed_list_should_contain_my_likes_when_like_exists(self) -> None:
         # Given

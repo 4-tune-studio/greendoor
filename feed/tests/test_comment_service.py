@@ -1,10 +1,12 @@
 from django.test import TestCase
 
 from feed.models import Feed, FeedComment
-from feed.services.comment_service import (create_an_comment,
-                                                delete_an_comment,
-                                                get_comment_list,
-                                                update_an_comment)
+from feed.services.comment_service import (
+    create_an_comment,
+    delete_an_comment,
+    get_comment_list,
+    update_an_comment,
+)
 from user.models import Users
 
 
@@ -27,10 +29,7 @@ class TestCommentService(TestCase):
         # Given
         user = Users.objects.create(username="test")
         feed = Feed.objects.create(user_id=user)
-        comments = [
-            FeedComment.objects.create(content=f"#{i}", user_id=user, feed_id=feed)
-            for i in range(1, 21)
-        ]
+        comments = [FeedComment.objects.create(content=f"#{i}", user_id=user, feed_id=feed) for i in range(1, 21)]
 
         # When
         with self.assertNumQueries(1):
@@ -40,9 +39,7 @@ class TestCommentService(TestCase):
             # 가져온 comment 리스트가 10 과 일치하는지
             self.assertEqual(len(result_comments), 10)
             # 만든 comment의 최신순 10개와 가져온 피드 10개의 아이디가 각각 일치하는지
-            self.assertEqual(
-                [a.id for a in (comments[0:10])], [a.id for a in result_comments]
-            )
+            self.assertEqual([a.id for a in (comments[0:10])], [a.id for a in result_comments])
 
     # comment가 삭제되는지 검증
     def test_you_can_delete_an_comment(self) -> None:
