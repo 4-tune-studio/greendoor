@@ -8,6 +8,7 @@ from feed.services.feed_service import (
     delete_an_feed,
     get_an_feed,
     get_feed_list,
+    update_an_feed,
 )
 from feed.services.like_service import do_like
 from user.models import Users
@@ -17,12 +18,17 @@ class TestFeedService(TestCase):
     def test_you_can_create_an_feed(self) -> None:
         # Given
         user = Users.objects.create(username="test")
+        title = "test_feed"
+        image = "https://test/image/url"
         content = "test_content"
 
         # When
-        feed = create_an_feed(user.id, content)
+        feed = create_an_feed(user_id=user.id, title=title, image=image, content=content)
 
         # Then
+        self.assertEqual(feed.user_id_id, user.id)
+        self.assertEqual(feed.title, title)
+        self.assertEqual(feed.image, image)
         self.assertEqual(feed.content, content)
 
     def test_you_can_get_an_feed_by_id(self) -> None:
@@ -92,11 +98,11 @@ class TestFeedService(TestCase):
         invalid_user_id = 0
 
         # When
-        articles = get_feed_list(invalid_user_id, 0, 10)
+        feeds = get_feed_list(invalid_user_id, 0, 10)
 
         # Then
-        self.assertEqual(0, len(articles[1].my_likes))
-        self.assertEqual(0, len(articles[0].my_likes))
+        self.assertEqual(0, len(feeds[1].my_likes))
+        self.assertEqual(0, len(feeds[0].my_likes))
 
     # 피드가 삭제되는지 검증(like도 같이)
     def test_you_can_delete_an_feed(self) -> None:
@@ -111,3 +117,25 @@ class TestFeedService(TestCase):
         # Then
         self.assertFalse(Feed.objects.filter(id=feed1.id).exists())
         self.assertFalse(FeedLike.objects.filter(id=like.id).exists())
+
+    # feed가 수정되는지 검증
+    def test_you_can_update_an_feed(self) -> None:
+        # Given
+        user = Users.objects.create(username="test")
+        title1 = "test feed"
+        image1 = "https://test.jpg"
+        content1 = "test feed"
+
+        feed = Feed.objects.create(user_id=user, title=title1, image=image1, content=content1)
+        title2 = "test2 feed"
+        image2 = "https://image2.jpg"
+        content2 = "update test feed"
+
+        # When
+        update_an_feed(feed_id=feed.id, title=title2, image=image2, content=content2)
+        result = Feed.objects.get(id=feed.id)
+
+        # Then
+        self.assertEqual(result.title, title2)  # 수정된 피드의 title이 주어진 title2와 일치하는지 확인
+        self.assertEqual(result.image, image2)  # 수정된 피드의 이미지와 주어진 이미지가 일치하는지 확인
+        self.assertEqual(result.content, content2)  # 수정된 피드의 컨텐츠와 주어진 컨텐츠가 일치하는지 확인

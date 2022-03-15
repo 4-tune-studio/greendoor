@@ -17,6 +17,9 @@ mypy = "0.931"
 bs4 = "^0.0.1"
 requests = "^2.27.1"
 PyMySQL = "^1.0.2"
+boto3 = "^1.21.19"
+django-storages = "^1.12.3"
+Pillow = "^9.0.1"
 
 
 [tool.poetry.dev-dependencies]

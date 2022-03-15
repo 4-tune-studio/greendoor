@@ -1,20 +1,25 @@
+from django.core.files.uploadedfile import UploadedFile
 from django.db.models import Prefetch, QuerySet
 
-from feed.models import Feed, FeedLike
+from feed.models import Feed, FeedLike, Img
 
 
-def create_an_feed(user_id: int, content: str) -> Feed:
-    return Feed.objects.create(user_id_id=user_id, content=content)
+def upload_feed_image(img_file: UploadedFile) -> Img:
+    return Img.objects.create(img=img_file)
 
 
-def get_an_feed(user_id: int, article_id: int) -> Feed:
+def create_an_feed(user_id: int, title: str, image: str, content: str) -> Feed:
+    return Feed.objects.create(user_id_id=user_id, title=title, image=image, content=content)
+
+
+def get_an_feed(user_id: int, feed_id: int) -> Feed:
     return Feed.objects.prefetch_related(
         Prefetch(
             "feed_like",
             queryset=FeedLike.objects.filter(user_id=user_id),
             to_attr="my_likes",
         )
-    ).get(id=article_id)
+    ).get(id=feed_id)
 
 
 # prefetch_related를 통해 lazy한 작업을 미리 처리 (관계된 데이터를 미리 가져오기)
@@ -29,5 +34,22 @@ def get_feed_list(user_id: int, offset: int, limit: int) -> QuerySet[Feed]:
     )[offset : offset + limit]
 
 
+# 좋아요 인기순으로 피드 가져오기
+def get_popular_feed_list(user_id: int, offset: int, limit: int) -> QuerySet[Feed]:
+    return Feed.objects.order_by("-like_count").prefetch_related(
+        Prefetch(
+            "feed_like",
+            queryset=FeedLike.objects.filter(user_id=user_id),
+            to_attr="my_likes",
+        )
+    )[offset : offset + limit]
+
+
+# 피드 삭제 함수
 def delete_an_feed(feed_id: int) -> None:
     Feed.objects.filter(id=feed_id).delete()
+
+
+# 피드 업데이트(수정) 함수
+def update_an_feed(feed_id: int, title: str, image: str, content: str) -> int:
+    return Feed.objects.filter(id=feed_id).update(title=title, image=image, content=content)

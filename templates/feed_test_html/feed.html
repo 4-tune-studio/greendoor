@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <a href="{% url "feed:community" %}">커뮤니티 페이지로 이동</a> <br>
+
+    <p>제목 : {{ feed.title }}</p>
+    <img src="{{ feed.image }}"
+         alt="{{ feed.user_id.nickname }}">
+    <p>내용 : {{ feed.content }}</p>
+    <p>작성 시간 : {{ feed.created_at|date:"y-m-d" }}</p>
+    <p>작성자 닉네임 : {{ feed.user_id.nickname }}</p>
+    <p>좋아요 수 : {{ feed.like_count }}</p>
+    {# 내가 좋아요한 피드면 #}
+    {% if feed.my_likes %}
+        {# 하트에 빨간표시! #}
+        <a href="{% url "feed:undo_like" feed.id %}">
+            <p>레드 하트</p>
+        </a>
+    {# 내가 좋아요한 피드가 아니면 #}
+    {% else %}
+        {# 그냥 하트 #}
+        <a href="{% url "feed:do_like" feed.id %}">
+            <p>하트</p>
+        </a>
+    {% endif %}
+    <br>
+    <br>
+    {% for comment in comments %}
+        <p>{{ comment.user_id.nickname }} : {{ comment.content }}</p>
+        <p></p>
+        <p></p>
+    {% endfor %}
+</div>
+</body>
+</html>
