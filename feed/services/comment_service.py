@@ -11,9 +11,9 @@ def get_comment_list(feed_id: int, offset: int, limit: int) -> QuerySet[FeedComm
     return FeedComment.objects.filter(feed_id=feed_id).order_by("id")[offset : offset + limit]
 
 
-def delete_an_comment(comment_id: int) -> None:
-    FeedComment.objects.filter(id=comment_id).delete()
+def delete_an_comment(user_id: int, comment_id: int) -> None:
+    FeedComment.objects.filter(id=comment_id, user_id=user_id).delete()
 
 
-def update_an_comment(comment_id: int, content: str) -> int:
-    return FeedComment.objects.filter(id=comment_id).update(content=content)
+def update_an_comment(user_id: int, comment_id: int, content: str) -> int:
+    return FeedComment.objects.filter(id=comment_id, user_id=user_id).update(content=content)

@@ -130,9 +130,9 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
 def api_delete_feed(request: HttpRequest, feed_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
-    # TODO 서버에서 피드 작성 유저랑 api 요청 유저가 같은지 확인 / 모델 객체를 인자로 받는 방법??
+    user_id = request.user.id
     # 댓글 삭제 서비스 함수 실행
-    delete_an_feed(feed_id=feed_id)
+    delete_an_feed(feed_id=feed_id, user_id=user_id)
     return redirect("feed:community")
 
 
@@ -193,23 +193,28 @@ def api_create_comment(request: HttpRequest, feed_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
 
-    # 사용자 정보 가져오기
-    user = request.user
-    # post 형식의 form 태그에서 content를 가져옴
-    content = request.POST.get("comment_content", "")
-    # content가 공백이라면
-    if content == "":
-        return render(request, "feed_test_html/feed.html", {"error": "댓글에 내용은 필수! :)"})
+    if request.method == "POST":
+        # 사용자 정보 가져오기
+        user = request.user
+        # post 형식의 form 태그에서 content를 가져옴
+        content = request.POST.get("comment_content", "")
+        # content가 공백이라면
+        if content == "":
+            return render(request, "feed_test_html/feed.html", {"error": "댓글에 내용은 필수! :)"})
+        else:
+            # 댓글 생성 서비스 함수 실행
+            create_an_comment(user_id=user.id, feed_id=feed_id, content=content)
+            return redirect("feed:feed", feed_id)
     else:
-        # 댓글 생성 서비스 함수 실행
-        create_an_comment(user_id=user.id, feed_id=feed_id, content=content)
-        return redirect("feed:feed", feed_id)
+        return redirect("feed:community")
 
 
+# 댓글 삭제 api
 def api_delete_comment(request: HttpRequest, feed_id: int, comment_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
-    # TODO 서버에서 댓글 작성 유저랑 api 요청 유저가 같은지 확인 / 모델 객체를 인자로 받는 방법??
+
+    user_id = request.user.id
     # 댓글 삭제 서비스 함수 실행
-    delete_an_comment(comment_id=comment_id)
+    delete_an_comment(comment_id=comment_id, user_id=user_id)
     return redirect("feed:feed", feed_id)

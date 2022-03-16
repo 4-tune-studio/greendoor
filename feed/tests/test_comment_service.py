@@ -50,7 +50,7 @@ class TestCommentService(TestCase):
         comment = create_an_comment(user.id, feed.id, content)
 
         # When
-        delete_an_comment(comment.id)
+        delete_an_comment(comment_id=comment.id, user_id=user.id)
 
         # Then
         self.assertFalse(FeedComment.objects.filter(id=comment.id).exists())
@@ -65,7 +65,7 @@ class TestCommentService(TestCase):
         content2 = "update test comment"
 
         # When
-        update_an_comment(comment.id, content2)
+        update_an_comment(comment_id=comment.id, user_id=user.id, content=content2)
         result = FeedComment.objects.get(id=comment.id)
 
         # Then

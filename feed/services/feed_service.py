@@ -76,10 +76,10 @@ def get_popular_feed_list(user_id: int, offset: int, limit: int) -> QuerySet[Fee
 
 
 # 피드 삭제 함수
-def delete_an_feed(feed_id: int) -> None:
-    Feed.objects.filter(id=feed_id).delete()
+def delete_an_feed(user_id: int, feed_id: int) -> None:
+    Feed.objects.filter(id=feed_id, user_id=user_id).delete()
 
 
 # 피드 업데이트(수정) 함수
-def update_an_feed(feed_id: int, title: str, image: str, content: str) -> int:
-    return Feed.objects.filter(id=feed_id).update(title=title, image=image, content=content)
+def update_an_feed(user_id: int, feed_id: int, title: str, image: str, content: str) -> int:
+    return Feed.objects.filter(id=feed_id, user_id=user_id).update(title=title, image=image, content=content)

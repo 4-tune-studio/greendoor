@@ -9,6 +9,11 @@
         <a href="{% url "feed:community" %}">커뮤니티 페이지로 이동</a> <br>
         {% if feed.user_id == user %}
             <a href="{% url "feed:delete_feed" feed_id=feed.id %}">
+                <span>수정</span>
+            </a>
+        {% endif %}
+        {% if feed.user_id == user %}
+            <a href="{% url "feed:delete_feed" feed_id=feed.id %}">
                 <span>삭제</span>
             </a>
         {% endif %}
@@ -25,15 +30,16 @@
         {% if feed.my_likes %}
             {# 하트에 빨간표시! #}
             <a href="{% url "feed:undo_like" feed.id %}">
-                <p>좋아요 취소</p>
+                <span>좋아요 취소</span>
             </a>
         {# 내가 좋아요한 피드가 아니면 #}
         {% else %}
             {# 그냥 하트 #}
             <a href="{% url "feed:do_like" feed.id %}">
-                <p>좋아요</p>
+                <span>좋아요</span>
             </a>
         {% endif %}
+        <br>
         {# 내가 북마크한 피드면 #}
         {% if feed.my_bookmark %}
             {# 체크된 북마크 #}
@@ -56,6 +62,9 @@
             <span>{{ comment.user_id.nickname }} : {{ comment.content }}</span>
             <span> - {{ comment.created_at | timesince }} 전</span>
             {% if comment.user_id == user %}
+                <a href="{% url "feed:delete_comment" feed_id=feed.id comment_id=comment.id %}">
+                    <span>수정</span>
+                </a>
                 <a href="{% url "feed:delete_comment" feed_id=feed.id comment_id=comment.id %}">
                     <span>삭제</span>
                 </a>

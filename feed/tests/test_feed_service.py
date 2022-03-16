@@ -112,7 +112,7 @@ class TestFeedService(TestCase):
         like = do_like(user.id, feed1.id)
 
         # When
-        delete_an_feed(feed1.id)
+        delete_an_feed(feed_id=feed1.id, user_id=user.id)
 
         # Then
         self.assertFalse(Feed.objects.filter(id=feed1.id).exists())
@@ -132,7 +132,7 @@ class TestFeedService(TestCase):
         content2 = "update test feed"
 
         # When
-        update_an_feed(feed_id=feed.id, title=title2, image=image2, content=content2)
+        update_an_feed(user_id=user.id, feed_id=feed.id, title=title2, image=image2, content=content2)
         result = Feed.objects.get(id=feed.id)
 
         # Then
