@@ -3,9 +3,15 @@ from datetime import datetime
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
-from feed.services.comment_service import get_comment_list
+from feed.services.bookmark_service import do_bookmark, undo_bookmark
+from feed.services.comment_service import (
+    create_an_comment,
+    delete_an_comment,
+    get_comment_list,
+)
 from feed.services.feed_service import (
     create_an_feed,
+    delete_an_feed,
     get_an_feed,
     get_feed_list,
     get_popular_feed_list,
@@ -49,6 +55,7 @@ def community_view(request: HttpRequest) -> HttpResponse:
         return redirect("feed:community")
 
 
+# 피드를 보여주는 함수
 def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
     # 요청 방식이 get 방식인지 확인
     if request.method == "GET":
@@ -71,6 +78,7 @@ def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
         return redirect("feed:community")
 
 
+# 피드 작성 페이지 뷰, api
 def create_feed_view(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
@@ -118,6 +126,17 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
         return redirect("feed:community")
 
 
+# 피드 삭제 api
+def api_delete_feed(request: HttpRequest, feed_id: int) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect(URL_LOGIN)
+    # TODO 서버에서 피드 작성 유저랑 api 요청 유저가 같은지 확인 / 모델 객체를 인자로 받는 방법??
+    # 댓글 삭제 서비스 함수 실행
+    delete_an_feed(feed_id=feed_id)
+    return redirect("feed:community")
+
+
+# 좋아요 api
 def api_do_like(request: HttpRequest, feed_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
@@ -126,10 +145,11 @@ def api_do_like(request: HttpRequest, feed_id: int) -> HttpResponse:
     user = request.user
 
     # 좋아요 서비스 함수 실행
-    do_like(user_id=user.id, feed_id=feed_id)  # TODO 좋아요를 했을 때
-    return HttpResponse("좋아요 성공", status=200)
+    do_like(user_id=user.id, feed_id=feed_id)
+    return redirect("feed:feed", feed_id)  # TODO 좋아요, 북마크 새로고침 부분 프론트와 맞춰봐야함
 
 
+# 좋아요 취소 api
 def api_undo_like(request: HttpRequest, feed_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
@@ -139,4 +159,57 @@ def api_undo_like(request: HttpRequest, feed_id: int) -> HttpResponse:
 
     # 좋아요 취소소 서비스 함수 행
     undo_like(user_id=user.id, feed_id=feed_id)
-    return HttpResponse("좋아요 취소 성공", status=200)
+    return redirect("feed:feed", feed_id)
+
+
+# 북마크 api
+def api_do_bookmark(request: HttpRequest, feed_id: int) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect(URL_LOGIN)
+
+    # 사용자 정보 가져오기
+    user = request.user
+
+    # 좋아요 서비스 함수 실행
+    do_bookmark(user_id=user.id, feed_id=feed_id)
+    return redirect("feed:feed", feed_id)
+
+
+# 북마크 취소 api
+def api_undo_bookmark(request: HttpRequest, feed_id: int) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect(URL_LOGIN)
+
+    # 사용자 정보 가져오기
+    user = request.user
+
+    # 좋아요 취소 서비스 함수 실행
+    undo_bookmark(user_id=user.id, feed_id=feed_id)
+    return redirect("feed:feed", feed_id)
+
+
+# 댓글 작성 api
+def api_create_comment(request: HttpRequest, feed_id: int) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect(URL_LOGIN)
+
+    # 사용자 정보 가져오기
+    user = request.user
+    # post 형식의 form 태그에서 content를 가져옴
+    content = request.POST.get("comment_content", "")
+    # content가 공백이라면
+    if content == "":
+        return render(request, "feed_test_html/feed.html", {"error": "댓글에 내용은 필수! :)"})
+    else:
+        # 댓글 생성 서비스 함수 실행
+        create_an_comment(user_id=user.id, feed_id=feed_id, content=content)
+        return redirect("feed:feed", feed_id)
+
+
+def api_delete_comment(request: HttpRequest, feed_id: int, comment_id: int) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect(URL_LOGIN)
+    # TODO 서버에서 댓글 작성 유저랑 api 요청 유저가 같은지 확인 / 모델 객체를 인자로 받는 방법??
+    # 댓글 삭제 서비스 함수 실행
+    delete_an_comment(comment_id=comment_id)
+    return redirect("feed:feed", feed_id)

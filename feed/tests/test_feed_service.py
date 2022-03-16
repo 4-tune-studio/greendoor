@@ -60,7 +60,7 @@ class TestFeedService(TestCase):
 
         with CaptureQueriesContext(connection) as ctx:
             # When
-            with self.assertNumQueries(2):
+            with self.assertNumQueries(3):
                 result_feeds = get_feed_list(user.id, 0, 10)
                 result_counts = [a.like_count for a in result_feeds]
 

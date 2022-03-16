@@ -14,6 +14,7 @@ class Feed(BaseModel):
     like_count = models.IntegerField(default=0)
 
     my_likes: List[Any]  # Prefetch 에서 사용용
+    my_bookmark: List[Any]  # Prefetch 에서 사용용
 
 
 class FeedComment(BaseModel):

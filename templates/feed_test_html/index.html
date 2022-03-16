@@ -8,19 +8,23 @@
 <div>
     <a href="{% url "feed:create_feed" %}">글쓰기</a> <br>
     <p>인기 피드</p>
+    <!-- 인기 피드 반복문 시작 -->
     {% for feed in popular_feeds %}
         <a href= "{% url "feed:feed" feed.id %}" >
         <img src="{{ feed.image }}" alt="{{ feed.user_id.nickname }}"> <br>
         </a>
     {% endfor %}
+    <!-- 인기 피드 반복문 끝 -->
 
 
     <p>피드</p>
+    <!-- 피드 반복문 시작 -->
     {% for feed in all_feed %}
         <a href= "{% url "feed:feed" feed.id %}" >
         <img src="{{ feed.image }}" alt="{{ feed.user_id.nickname }}"> <br>
         </a>
     {% endfor %}
+    <!-- 피드 반복문 끝 -->
 </div>
 </body>
 </html>
