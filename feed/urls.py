@@ -14,5 +14,6 @@ urlpatterns = [
     path("api/do_bookmark/<int:feed_id>", views.api_do_bookmark, name="do_bookmark"),
     path("api/undo_bookmark/<int:feed_id>", views.api_undo_bookmark, name="undo_bookmark"),
     path("api/create_comment/<int:feed_id>", views.api_create_comment, name="create_comment"),
-    path("api/delete_comment/<int:feed_id><int:comment_id>", views.api_delete_comment, name="delete_comment"),
+    path("api/update_comment", views.api_update_comment, name="update_comment"),
+    path("api/delete_comment/<int:feed_id>/<int:comment_id>", views.api_delete_comment, name="delete_comment"),
 ]

@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 from django.http import HttpRequest, HttpResponse
@@ -8,6 +9,7 @@ from feed.services.comment_service import (
     create_an_comment,
     delete_an_comment,
     get_comment_list,
+    update_an_comment,
 )
 from feed.services.feed_service import (
     create_an_feed,
@@ -198,15 +200,24 @@ def api_create_comment(request: HttpRequest, feed_id: int) -> HttpResponse:
         user = request.user
         # post 형식의 form 태그에서 content를 가져옴
         content = request.POST.get("comment_content", "")
-        # content가 공백이라면
-        if content == "":
-            return render(request, "feed_test_html/feed.html", {"error": "댓글에 내용은 필수! :)"})
-        else:
-            # 댓글 생성 서비스 함수 실행
-            create_an_comment(user_id=user.id, feed_id=feed_id, content=content)
-            return redirect("feed:feed", feed_id)
+        # 댓글 생성 서비스 함수 실행
+        create_an_comment(user_id=user.id, feed_id=feed_id, content=content)
+        return redirect("feed:feed", feed_id)
     else:
         return redirect("feed:community")
+
+
+# 댓글 수정
+def api_update_comment(request: HttpRequest) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect(URL_LOGIN)
+
+    user_id = request.user.id
+    comment_id = request.POST["comment_id"]
+    content = request.POST["content"]
+    update_an_comment(user_id=user_id, comment_id=comment_id, content=content)
+    context = {"msg": "success"}
+    return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 # 댓글 삭제 api
