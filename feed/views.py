@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from feed.services.bookmark_service import do_bookmark, undo_bookmark
 from feed.services.comment_service import (
@@ -17,6 +18,7 @@ from feed.services.feed_service import (
     get_an_feed,
     get_feed_list,
     get_popular_feed_list,
+    update_an_feed,
     upload_feed_image,
 )
 from feed.services.like_service import do_like, undo_like
@@ -89,6 +91,13 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
         return render(request, "feed_test_html/create_feed.html")
     # post 방식일 때
     elif request.method == "POST":
+        # title, content 정보 가져오기
+        title = request.POST.get("feed_title", "")
+        content = request.POST.get("feed_content", "")
+        # title 값이 공백이면
+        if title == "":
+            return render(request, "feed_test_html/create_feed.html", {"error": "피드에 제목은 필수! :)"})
+
         # request에 파일 정보가 있으면
         if "feed_img_file" in request.FILES:
             # 사용자 정보 가져오기
@@ -104,17 +113,10 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
                 img = upload_feed_image(img_file)
                 img_url = URL_S3 + img.img.name
                 # print(img.img.path)
-                # title, content 정보 가져오기
-                title = request.POST.get("feed_title", "")
-                content = request.POST.get("feed_content", "")
-                # title 값이 공백이면
-                if title == "":
-                    return render(request, "feed_test_html/create_feed.html", {"error": "피드에 제목은 필수! :)"})
                 # 모든 예외처리를 통과하면
-                else:
-                    # 피드 저장 후 저장된 피드의 페이지로 이동
-                    feed = create_an_feed(user_id=user.id, title=title, image=img_url, content=content)
-                    return redirect("feed:feed", feed.id)
+                # 피드 저장 후 저장된 피드의 페이지로 이동
+                feed = create_an_feed(user_id=user.id, title=title, image=img_url, content=content)
+                return redirect("feed:feed", feed.id)
             # 허용되지 않은 확장자인 경우
             else:
                 return render(
@@ -124,6 +126,59 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
         else:
             return render(request, "feed_test_html/create_feed.html", {"error": "피드에 사진은 필수! :)"})
     # 그 외 방식일 때
+    else:
+        return redirect("feed:community")
+
+
+# 피드 업데이트 함수
+def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect(URL_LOGIN)
+    user_id = request.user.id
+
+    # GET 방식일 때
+    if request.method == "GET":
+        feed = get_an_feed(user_id=user_id, feed_id=feed_id)
+        return render(request, "feed_test_html/update_feed.html", {"feed": feed})
+
+    # POST 방식일 때
+    elif request.method == "POST":
+        # title, content 정보 가져오기
+        title = request.POST.get("feed_title", "")
+        content = request.POST.get("feed_content", "")
+        # title 값이 공백이면
+        if title == "":
+            return render(request, "feed_test_html/create_feed.html", {"error": "피드에 제목은 필수! :)"})
+
+        # request에 파일 정보가 있으면
+        if "feed_img_file" in request.FILES:
+            # 사용자 정보 가져오기
+            user = request.user
+            # request에 있는 file 정보 가져오기
+            img_file = request.FILES["feed_img_file"]
+            # 파일의 확장자 검사 및 이름을 현재 시간으로 지정
+            if img_file and allowed_file(img_file.name):
+                ext = get_file_extension(img_file.name)
+                filename = f"file_{datetime.now().strftime('%Y%m%d%H%M%S')}.{ext}"
+                img_file.name = filename
+                # 이미지 업로드
+                img = upload_feed_image(img_file)
+                img_url = URL_S3 + img.img.name
+
+                # 모든 예외처리를 통과하면
+                # 피드 업데이트 후 저장된 피드의 페이지로 이동
+                update_an_feed(user_id=user.id, feed_id=feed_id, title=title, image=img_url, content=content)
+                return redirect("feed:feed", feed_id)
+                # 허용되지 않은 확장자인 경우
+            else:
+                return render(
+                    request, "feed_test_html/create_feed.html", {"error": "jpg, jpeg, gif, png 확장자를 사용해주세요 :)"}
+                )
+        # request에 파일 정보가 없으면
+        else:
+            return render(request, "feed_test_html/create_feed.html", {"error": "피드에 사진은 필수! :)"})
+
+    # POST와 GET 이외의 요청일 때
     else:
         return redirect("feed:community")
 
@@ -139,55 +194,54 @@ def api_delete_feed(request: HttpRequest, feed_id: int) -> HttpResponse:
 
 
 # 좋아요 api
-def api_do_like(request: HttpRequest, feed_id: int) -> HttpResponse:
+@require_POST
+def api_like(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
 
     # 사용자 정보 가져오기
     user = request.user
+    feed_id = request.POST["feed_id"]
+    feed = get_an_feed(user_id=user.id, feed_id=feed_id)
+    feed_like_count = feed.like_count
 
-    # 좋아요 서비스 함수 실행
-    do_like(user_id=user.id, feed_id=feed_id)
-    return redirect("feed:feed", feed_id)  # TODO 좋아요, 북마크 새로고침 부분 프론트와 맞춰봐야함
+    # 좋아요를 한 상태이면 좋아요 취소
+    if feed.my_likes:
+        undo_like(user_id=user.id, feed_id=feed_id)
+        msg = "좋아요 취소"
+        feed_like_count -= 1
+    # 좋아요를 안한 상태이면 좋아요
+    else:
+        do_like(user_id=user.id, feed_id=feed_id)
+        msg = "좋아요"
+        feed_like_count += 1
 
-
-# 좋아요 취소 api
-def api_undo_like(request: HttpRequest, feed_id: int) -> HttpResponse:
-    if not request.user.is_authenticated:
-        return redirect(URL_LOGIN)
-
-    # 사용자 정보 가져오기
-    user = request.user
-
-    # 좋아요 취소소 서비스 함수 행
-    undo_like(user_id=user.id, feed_id=feed_id)
-    return redirect("feed:feed", feed_id)
+    context = {"msg": msg, "like_count": feed_like_count}
+    return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 # 북마크 api
-def api_do_bookmark(request: HttpRequest, feed_id: int) -> HttpResponse:
+@require_POST
+def api_bookmark(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
 
     # 사용자 정보 가져오기
     user = request.user
+    feed_id = request.POST["feed_id"]
+    feed = get_an_feed(user_id=user.id, feed_id=feed_id)
 
-    # 좋아요 서비스 함수 실행
-    do_bookmark(user_id=user.id, feed_id=feed_id)
-    return redirect("feed:feed", feed_id)
+    # 북마크를 한 상태이면 북마크 취소
+    if feed.my_bookmark:
+        undo_bookmark(user_id=user.id, feed_id=feed_id)
+        msg = "북마크 취소"
+    # 북마크를 안한 상태이면 북마크
+    else:
+        do_bookmark(user_id=user.id, feed_id=feed_id)
+        msg = "북마크"
 
-
-# 북마크 취소 api
-def api_undo_bookmark(request: HttpRequest, feed_id: int) -> HttpResponse:
-    if not request.user.is_authenticated:
-        return redirect(URL_LOGIN)
-
-    # 사용자 정보 가져오기
-    user = request.user
-
-    # 좋아요 취소 서비스 함수 실행
-    undo_bookmark(user_id=user.id, feed_id=feed_id)
-    return redirect("feed:feed", feed_id)
+    context = {"msg": msg}
+    return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 # 댓글 작성 api
@@ -208,6 +262,7 @@ def api_create_comment(request: HttpRequest, feed_id: int) -> HttpResponse:
 
 
 # 댓글 수정
+@require_POST
 def api_update_comment(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
