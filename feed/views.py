@@ -201,7 +201,7 @@ def api_like(request: HttpRequest) -> HttpResponse:
 
     # 사용자 정보 가져오기
     user = request.user
-    feed_id = request.POST["feed_id"]
+    feed_id = int(request.POST["feed_id"])
     feed = get_an_feed(user_id=user.id, feed_id=feed_id)
     feed_like_count = feed.like_count
 
@@ -216,6 +216,7 @@ def api_like(request: HttpRequest) -> HttpResponse:
         msg = "좋아요"
         feed_like_count += 1
 
+    # 프론트에 보낼 정보를 json타입으로 만들어주기
     context = {"msg": msg, "like_count": feed_like_count}
     return HttpResponse(json.dumps(context), content_type="application/json")
 
@@ -228,7 +229,7 @@ def api_bookmark(request: HttpRequest) -> HttpResponse:
 
     # 사용자 정보 가져오기
     user = request.user
-    feed_id = request.POST["feed_id"]
+    feed_id = int(request.POST["feed_id"])
     feed = get_an_feed(user_id=user.id, feed_id=feed_id)
 
     # 북마크를 한 상태이면 북마크 취소
@@ -240,6 +241,7 @@ def api_bookmark(request: HttpRequest) -> HttpResponse:
         do_bookmark(user_id=user.id, feed_id=feed_id)
         msg = "북마크"
 
+    # 프론트에 보낼 정보를 json타입으로 만들어주기
     context = {"msg": msg}
     return HttpResponse(json.dumps(context), content_type="application/json")
 
@@ -268,9 +270,11 @@ def api_update_comment(request: HttpRequest) -> HttpResponse:
         return redirect(URL_LOGIN)
 
     user_id = request.user.id
-    comment_id = request.POST["comment_id"]
+    # request에 담긴 정보를 가져옴
+    comment_id = int(request.POST["comment_id"])
     content = request.POST["content"]
     update_an_comment(user_id=user_id, comment_id=comment_id, content=content)
+    # 프론트에 보낼 정보를 json타입으로 만들어주기
     context = {"msg": "success"}
     return HttpResponse(json.dumps(context), content_type="application/json")
 

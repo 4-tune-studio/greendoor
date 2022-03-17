@@ -212,15 +212,15 @@
                 success: function (response) { // 통신 성공했을 때 호출 함수
                     console.log(response.msg)
                     if (response.msg === "북마크") {
-                        // like 버튼의 클래스를 변경(채워져 있는 하트) / jquery 문법
+                        // 북마크 버튼의 클래스를 변경 / jquery 문법
                         $('#bookmark_btn_' + id).attr("class", "filled_bookmark")
                     } else if (response.msg === "북마크 취소") {
-                        // like 버튼의 클래스를 변경(비어있는 하트) / jquery 문법
+                        // 북마크 버튼의 클래스를 변경 / jquery 문법
                         $('#bookmark_btn_' + id).attr("class", "default_bookmark")
                     }
                 },
                 error: function () { // 통신 실패했을 때 호출 함수
-                    alert("좋아요 실패");
+                    alert("북마크 실패");
                 },
             });
         }
