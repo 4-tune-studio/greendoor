@@ -112,7 +112,7 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
                 # 이미지 업로드
                 img = upload_feed_image(img_file)
                 img_url = URL_S3 + img.img.name
-                # print(img.img.path)
+
                 # 모든 예외처리를 통과하면
                 # 피드 저장 후 저장된 피드의 페이지로 이동
                 feed = create_a_feed(user_id=user.id, title=title, image=img_url, content=content)
@@ -168,14 +168,14 @@ def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
                 # 피드 업데이트 후 저장된 피드의 페이지로 이동
                 update_a_feed(user_id=user_id, feed_id=feed_id, title=title, image=img_url, content=content)
                 return redirect("feed:feed", feed_id)
-                # 허용되지 않은 확장자인 경우
+            # 허용되지 않은 확장자인 경우
             else:
                 return render(
                     request,
                     "feed_test_html/update_feed.html",
                     {"feed": feed, "error": "jpg, jpeg, gif, png 확장자를 사용해주세요 :)"},
                 )
-        # request에 파일 정보가 없으면
+        # request에 파일 정보가 없으면 기존 이미지 사용
         else:
             # 피드 업데이트 후 저장된 피드의 페이지로 이동
             update_a_feed(user_id=user_id, feed_id=feed_id, title=title, image=feed.image, content=content)
@@ -250,20 +250,18 @@ def api_bookmark(request: HttpRequest) -> HttpResponse:
 
 
 # 댓글 작성 api
+@require_POST
 def api_create_comment(request: HttpRequest, feed_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
 
-    if request.method == "POST":
-        # 사용자 정보 가져오기
-        user = request.user
-        # post 형식의 form 태그에서 content를 가져옴
-        content = request.POST.get("comment_content", "")
-        # 댓글 생성 서비스 함수 실행
-        create_a_comment(user_id=user.id, feed_id=feed_id, content=content)
-        return redirect("feed:feed", feed_id)
-    else:
-        return redirect("feed:community")
+    # 사용자 정보 가져오기
+    user = request.user
+    # post 형식의 form 태그에서 content를 가져옴
+    content = request.POST.get("comment_content", "")
+    # 댓글 생성 서비스 함수 실행
+    create_a_comment(user_id=user.id, feed_id=feed_id, content=content)
+    return redirect("feed:feed", feed_id)
 
 
 # 댓글 수정
