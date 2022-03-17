@@ -4,18 +4,18 @@ from django.test.utils import CaptureQueriesContext
 
 from feed.models import Feed, FeedLike
 from feed.services.feed_service import (
-    create_an_feed,
-    delete_an_feed,
-    get_an_feed,
+    create_a_feed,
+    delete_a_feed,
+    get_a_feed,
     get_feed_list,
-    update_an_feed,
+    update_a_feed,
 )
 from feed.services.like_service import do_like
 from user.models import Users
 
 
 class TestFeedService(TestCase):
-    def test_you_can_create_an_feed(self) -> None:
+    def test_you_can_create_a_feed(self) -> None:
         # Given
         user = Users.objects.create(username="test")
         title = "test_feed"
@@ -23,7 +23,7 @@ class TestFeedService(TestCase):
         content = "test_content"
 
         # When
-        feed = create_an_feed(user_id=user.id, title=title, image=image, content=content)
+        feed = create_a_feed(user_id=user.id, title=title, image=image, content=content)
 
         # Then
         self.assertEqual(feed.user_id_id, user.id)
@@ -31,14 +31,14 @@ class TestFeedService(TestCase):
         self.assertEqual(feed.image, image)
         self.assertEqual(feed.content, content)
 
-    def test_you_can_get_an_feed_by_id(self) -> None:
+    def test_you_can_get_a_feed_by_id(self) -> None:
         # Given
         content = "test_content"
         user = Users.objects.create(username="test")
         feed = Feed.objects.create(user_id=user, content=content)
 
         # When
-        result_feed = get_an_feed(0, feed.id)
+        result_feed = get_a_feed(0, feed.id)
 
         # Then
         self.assertEqual(feed.id, result_feed.id)
@@ -50,7 +50,7 @@ class TestFeedService(TestCase):
 
         # Expect
         with self.assertRaises(Feed.DoesNotExist):
-            get_an_feed(0, invalid_feed_id)
+            get_a_feed(0, invalid_feed_id)
 
     def test_get_feed_list_should_prefetch_likes(self) -> None:
         # Given
@@ -105,21 +105,21 @@ class TestFeedService(TestCase):
         self.assertEqual(0, len(feeds[0].my_likes))
 
     # 피드가 삭제되는지 검증(like도 같이)
-    def test_you_can_delete_an_feed(self) -> None:
+    def test_you_can_delete_a_feed(self) -> None:
         # Given
         user = Users.objects.create(username="test")
         feed1 = Feed.objects.create(content="feed1", user_id=user)
         like = do_like(user.id, feed1.id)
 
         # When
-        delete_an_feed(feed_id=feed1.id, user_id=user.id)
+        delete_a_feed(feed_id=feed1.id, user_id=user.id)
 
         # Then
         self.assertFalse(Feed.objects.filter(id=feed1.id).exists())
         self.assertFalse(FeedLike.objects.filter(id=like.id).exists())
 
     # feed가 수정되는지 검증
-    def test_you_can_update_an_feed(self) -> None:
+    def test_you_can_update_a_feed(self) -> None:
         # Given
         user = Users.objects.create(username="test")
         title1 = "test feed"
@@ -132,7 +132,7 @@ class TestFeedService(TestCase):
         content2 = "update test feed"
 
         # When
-        update_an_feed(user_id=user.id, feed_id=feed.id, title=title2, image=image2, content=content2)
+        update_a_feed(user_id=user.id, feed_id=feed.id, title=title2, image=image2, content=content2)
         result = Feed.objects.get(id=feed.id)
 
         # Then

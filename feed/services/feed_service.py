@@ -8,11 +8,11 @@ def upload_feed_image(img_file: UploadedFile) -> Img:
     return Img.objects.create(img=img_file)
 
 
-def create_an_feed(user_id: int, title: str, image: str, content: str) -> Feed:
+def create_a_feed(user_id: int, title: str, image: str, content: str) -> Feed:
     return Feed.objects.create(user_id_id=user_id, title=title, image=image, content=content)
 
 
-def get_an_feed(user_id: int, feed_id: int) -> Feed:
+def get_a_feed(user_id: int, feed_id: int) -> Feed:
     return (
         Feed.objects.prefetch_related(
             Prefetch(
@@ -76,10 +76,10 @@ def get_popular_feed_list(user_id: int, offset: int, limit: int) -> QuerySet[Fee
 
 
 # 피드 삭제 함수
-def delete_an_feed(user_id: int, feed_id: int) -> None:
+def delete_a_feed(user_id: int, feed_id: int) -> None:
     Feed.objects.filter(id=feed_id, user_id=user_id).delete()
 
 
 # 피드 업데이트(수정) 함수
-def update_an_feed(user_id: int, feed_id: int, title: str, image: str, content: str) -> int:
+def update_a_feed(user_id: int, feed_id: int, title: str, image: str, content: str) -> int:
     return Feed.objects.filter(id=feed_id, user_id=user_id).update(title=title, image=image, content=content)

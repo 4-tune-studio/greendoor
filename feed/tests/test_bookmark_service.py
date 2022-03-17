@@ -8,7 +8,7 @@ from user.models import Users
 
 class TestBookmarkService(TestCase):
     # 북마크가 정상적으로 되는지 검증
-    def test_a_user_can_bookmark_an_feed(self) -> None:
+    def test_a_user_can_bookmark_a_feed(self) -> None:
         # Given / user와 feed가 주어지고
         user = Users.objects.create(username="test")
         feed = Feed.objects.create(user_id=user)
@@ -22,7 +22,7 @@ class TestBookmarkService(TestCase):
         self.assertEqual(feed.id, bookmark.feed_id.id)  # feed id가 bookmark의 feed id와 같다.
 
     # 한 유저가 하나의 피드는 한번만 북마크 할 수 있음을 검증
-    def test_a_user_can_bookmark_an_feed_only_once(self) -> None:
+    def test_a_user_can_bookmark_a_feed_only_once(self) -> None:
         # Given
         user = Users.objects.create(username="test")
         feed = Feed.objects.create(user_id=user)
