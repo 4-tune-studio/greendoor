@@ -30,7 +30,7 @@ def get_a_feed(user_id: int, feed_id: int) -> Feed:
 # prefetch_related를 통해 lazy한 작업을 미리 처리 (관계된 데이터를 미리 가져오기)
 # Prefetch object를 사용해서 prefetch를 할 때 필터링을 하고 조건에 맞는 값을 to_attr를 통해 해당 필드에 set
 def get_feed_list(user_id: int, offset: int, limit: int) -> QuerySet[Feed]:
-    return Feed.objects.order_by("-id").prefetch_related(
+    return Feed.objects.order_by("-created_at").prefetch_related(
         Prefetch(
             "feed_like",
             queryset=FeedLike.objects.filter(user_id=user_id),
@@ -73,7 +73,7 @@ def update_a_feed(user_id: int, feed_id: int, title: str, image: str, content: s
 # 내 피드 조회 함수
 def get_my_feed_list(user_id: int) -> QuerySet[Feed]:
     return (
-        Feed.objects.order_by("-id")
+        Feed.objects.order_by("-created_at")
         .prefetch_related(
             Prefetch(
                 "feed_like",
@@ -93,7 +93,7 @@ def get_my_feed_list(user_id: int) -> QuerySet[Feed]:
 # 내가 북마크한 피드 조회 함수
 def get_my_bookmark_feed_list(user_id: int) -> QuerySet[Feed]:
     return (
-        Feed.objects.order_by("-id")
+        Feed.objects
         .prefetch_related(
             Prefetch(
                 "feed_like",
@@ -106,5 +106,6 @@ def get_my_bookmark_feed_list(user_id: int) -> QuerySet[Feed]:
                 to_attr="my_bookmark",
             ),
         )
-        .filter(feed_bookmark__user_id=user_id)  # 역참조 관계에 있는 필드를 가져오려면 언더바 2개 사용
+        .filter(feed_bookmark__user_id=user_id) # 역참조 관계에 있는 필드를 가져오려면 언더바 2개 사용
+        .order_by("-feed_bookmark__created_at") # 역참조 관계에 있는 북마크 테이블의 최근 생성 순으로 정렬
     )
