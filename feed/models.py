@@ -12,6 +12,7 @@ class Feed(BaseModel):
     image = models.CharField(max_length=256)
     content = models.CharField(max_length=500, blank=True, null=True)
     like_count = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
 
     my_likes: List[Any]  # Prefetch 에서 사용용
     my_bookmark: List[Any]  # Prefetch 에서 사용용

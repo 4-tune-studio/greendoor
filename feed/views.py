@@ -18,6 +18,7 @@ from feed.services.feed_service import (
     get_a_feed,
     get_feed_list,
     get_popular_feed_list,
+    increase_views_when_get_a_feed,
     update_a_feed,
     upload_feed_image,
 )
@@ -71,9 +72,11 @@ def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
         else:
             # 없는 사용자 id
             user_id = 0
-        # 피드 가져오기
+
+        # 조회수 1증가시키고 피드 가져오기
+        increase_views_when_get_a_feed(feed_id=feed_id)
         feed = get_a_feed(user_id, feed_id)
-        comments = get_comment_list(feed.id, 0, 10)
+        comments = get_comment_list(feed.id, 0, 20)  # TODO 코멘트 몇개씩 보이게 할지 정해야함
 
         return render(request, "feed_test_html/feed.html", {"feed": feed, "comments": comments})
 
