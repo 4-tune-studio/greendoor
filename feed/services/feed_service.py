@@ -93,8 +93,7 @@ def get_my_feed_list(user_id: int) -> QuerySet[Feed]:
 # 내가 북마크한 피드 조회 함수
 def get_my_bookmark_feed_list(user_id: int) -> QuerySet[Feed]:
     return (
-        Feed.objects
-        .prefetch_related(
+        Feed.objects.prefetch_related(
             Prefetch(
                 "feed_like",
                 queryset=FeedLike.objects.filter(user_id=user_id),
@@ -106,6 +105,6 @@ def get_my_bookmark_feed_list(user_id: int) -> QuerySet[Feed]:
                 to_attr="my_bookmark",
             ),
         )
-        .filter(feed_bookmark__user_id=user_id) # 역참조 관계에 있는 필드를 가져오려면 언더바 2개 사용
-        .order_by("-feed_bookmark__created_at") # 역참조 관계에 있는 북마크 테이블의 최근 생성 순으로 정렬
+        .filter(feed_bookmark__user_id=user_id)  # 역참조 관계에 있는 필드를 가져오려면 언더바 2개 사용
+        .order_by("-feed_bookmark__created_at")  # 역참조 관계에 있는 북마크 테이블의 최근 생성 순으로 정렬
     )
