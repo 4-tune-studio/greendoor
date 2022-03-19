@@ -72,6 +72,7 @@ def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
         else:
             # 없는 사용자 id
             user_id = 0
+
         # 조회수 1증가시키고 피드 가져오기
         increase_views_when_get_a_feed(feed_id=feed_id)
         feed = get_a_feed(user_id, feed_id)
