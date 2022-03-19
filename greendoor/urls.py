@@ -23,7 +23,7 @@ from typing import Dict
 
 from django.contrib import admin
 from django.http import HttpRequest
-from django.urls import path
+from django.urls import path, include
 from ninja import NinjaAPI
 
 api = NinjaAPI()
@@ -37,4 +37,5 @@ def add(request: HttpRequest, a: int, b: int) -> Dict[str, int]:
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", api.urls),
+    path('cart/', include('cart.urls')),
 ]
