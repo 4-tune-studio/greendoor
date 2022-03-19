@@ -1,4 +1,5 @@
 from django.core.files.uploadedfile import UploadedFile
+
 from django.db.models import F, Prefetch, QuerySet
 
 from feed.models import Feed, FeedBookmark, FeedLike, Img
@@ -113,3 +114,7 @@ def get_my_bookmark_feed_list(user_id: int) -> QuerySet[Feed]:
 # 피드 조회수 함수
 def increase_views_when_get_a_feed(feed_id: int) -> None:
     Feed.objects.filter(id=feed_id).update(views=F("views") + 1)
+        .filter(feed_bookmark__user_id=user_id) # 역참조 관계에 있는 필드를 가져오려면 언더바 2개 사용
+        .order_by("-feed_bookmark__created_at") # 역참조 관계에 있는 북마크 테이블의 최근 생성 순으로 정렬
+    )
+
