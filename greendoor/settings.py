@@ -9,11 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import json
+import os
 from pathlib import Path
 from typing import List
 
-from .my_settings import MY_DATABASES, MY_SECRET
+from .my_settings import MY_DATABASES, MY_SECRET, MY_SECRET_ACCESS_KEY, S3_BUCKET_NAME
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     "product",
     "info",
     "feed",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -69,7 +71,7 @@ ROOT_URLCONF = "greendoor.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -133,3 +135,15 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user.Users"
+
+
+# aws s3 세팅
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+AWS_S3_REGION_NAME = "ap-northeast-2"
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_ACCESS_KEY_ID = MY_SECRET_ACCESS_KEY["ACCESS_KEY"]
+AWS_SECRET_ACCESS_KEY = MY_SECRET["SECRET_KEY"]
+AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME["BUCKET_NAME"]
+AWS_DEFAULT_ACL = "public-read"  # 올린 파일을 누구나 읽을 수 있게 지정합니다!
