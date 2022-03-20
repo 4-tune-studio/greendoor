@@ -14,7 +14,13 @@ import os
 from pathlib import Path
 from typing import List
 
-from .my_settings import MY_DATABASES, MY_SECRET, MY_SECRET_ACCESS_KEY, S3_BUCKET_NAME
+from .my_settings import (
+    EMAIL_SECRET_KEY,
+    MY_DATABASES,
+    MY_SECRET,
+    MY_SECRET_ACCESS_KEY,
+    S3_BUCKET_NAME,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,7 +60,12 @@ INSTALLED_APPS = [
     "info",
     "feed",
     "storages",
+    "crispy_forms",
 ]
+
+
+# 비번 리셋 필요 부분
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -147,3 +158,19 @@ AWS_ACCESS_KEY_ID = MY_SECRET_ACCESS_KEY["ACCESS_KEY"]
 AWS_SECRET_ACCESS_KEY = MY_SECRET["SECRET_KEY"]
 AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME["BUCKET_NAME"]
 AWS_DEFAULT_ACL = "public-read"  # 올린 파일을 누구나 읽을 수 있게 지정합니다!
+
+
+# =============== 비번 리셋 이메일 전송 설정 =============== #
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# gmail 통신 포트
+EMAIL_PORT = "587"
+# Email 호스트 서버
+EMAIL_HOST = "smtp.gmail.com"
+# 발신할 이메일
+EMAIL_HOST_USER = "greendoor2203@gmail.com"
+# 발신할 이메일 비번
+EMAIL_HOST_PASSWORD = EMAIL_SECRET_KEY["EMAIL_SECRET_KEY"]
+# TLS 보안 방법
+EMAIL_USE_TLS = True
+# 사이트 관련 자동 응답 받을 이메일 주소
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
