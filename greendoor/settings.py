@@ -167,7 +167,7 @@ EMAIL_PORT = "587"
 # Email 호스트 서버
 EMAIL_HOST = "smtp.gmail.com"
 # 발신할 이메일
-EMAIL_HOST_USER = "그린도어_메일주소"
+EMAIL_HOST_USER = "greendoor2203@gmail.com"
 # 발신할 이메일 비번
 EMAIL_HOST_PASSWORD = EMAIL_SECRET_KEY["EMAIL_SECRET_KEY"]
 # TLS 보안 방법
