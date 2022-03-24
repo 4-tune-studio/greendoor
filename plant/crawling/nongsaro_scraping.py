@@ -45,9 +45,9 @@ time.sleep(3)
 
 # 2. > sql query문을 이용하여 table의 내용을 비우고 시작
 
-id = 0
+# id = 0
 
-for i in range(1, 23):
+for i in range(1, 100):
     #####################################################################
     # bs4 사용법 요약
 
@@ -56,8 +56,12 @@ for i in range(1, 23):
     # soup = BeautifulSoup(html, 'html.parser')
     # print(soup.select_one('body').text)
     #####################################################################
+
+
+
     print(f"========================= {i}:page 시작 =========================")
-    url = f"http://api.nongsaro.go.kr/sample/ajax/ajax_local_callback.jsp?garden/gardenList?apiKey=nongsaroSampleKey&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&serviceType=ajaxType"
+    # url = f"http://api.nongsaro.go.kr/sample/ajax/ajax_local_callback.jsp?garden/gardenList?apiKey=nongsaroSampleKey&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&serviceType=ajaxType"
+    url = f"http://api.nongsaro.go.kr/service/ajax/ajax_local_callback.jsp?garden/gardenList?apiKey=20220310B12R88R0WTCQTCD4DYSJ7W&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&serviceType=ajaxType"
 
     html_txt = requests.get(url).text
     soup = BeautifulSoup(html_txt, "html.parser")
@@ -72,7 +76,9 @@ for i in range(1, 23):
             content_number = tr.replace("'", "")
 
             # 위에서 알아낸 상세페이지의 경로를 이용하여 상세페이지 url을 통하여 밑의 정보 추출
-            url = f"http://api.nongsaro.go.kr/sample/ajax/ajax_local_callback.jsp?garden/gardenDtl?apiKey=nongsaroSampleKey&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&cntntsNo={content_number}&serviceType=ajaxType"
+            # url = f"http://api.nongsaro.go.kr/sample/ajax/ajax_local_callback.jsp?garden/gardenDtl?apiKey=nongsaroSampleKey&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&cntntsNo={content_number}&serviceType=ajaxType"
+            url = f"http://api.nongsaro.go.kr/service/ajax/ajax_local_callback.jsp?garden/gardenDtl?apiKey=20220310B12R88R0WTCQTCD4DYSJ7W&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&cntntsNo={content_number}&serviceType=ajaxType"
+
             content_html = requests.get(url).text
 
             content = BeautifulSoup(content_html, "html.parser")

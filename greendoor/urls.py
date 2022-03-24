@@ -41,5 +41,4 @@ urlpatterns = [
     path("api/", api.urls),
     path('cart/', include('cart.urls')),
     path("community/", include("feed.urls")),
-
 ]

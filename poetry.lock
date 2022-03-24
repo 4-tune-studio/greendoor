@@ -149,6 +149,14 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-crispy-forms"
+version = "1.14.0"
+description = "Best way to have Django DRY forms"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "django-ninja"
 version = "0.16.1"
 description = "Django Ninja - Fast Django REST framework"
@@ -461,7 +469,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d722f36e35ae9e9cadd127126aa8dcba027aa4044842fdda727e3b07e43b6e38"
+content-hash = "bc31865fae29ca34943e251906b5d118bd801d722a39913ad588fd4b14626cd8"
 
 [metadata.files]
 asgiref = [
@@ -506,6 +514,10 @@ colorama = [
 django = [
     {file = "Django-4.0-py3-none-any.whl", hash = "sha256:59304646ebc6a77b9b6a59adc67d51ecb03c5e3d63ed1f14c909cdfda84e8010"},
     {file = "Django-4.0.tar.gz", hash = "sha256:d5a8a14da819a8b9237ee4d8c78dfe056ff6e8a7511987be627192225113ee75"},
+]
+django-crispy-forms = [
+    {file = "django-crispy-forms-1.14.0.tar.gz", hash = "sha256:35887b8851a931374dd697207a8f56c57a9c5cb9dbf0b9fa54314da5666cea5b"},
+    {file = "django_crispy_forms-1.14.0-py3-none-any.whl", hash = "sha256:bc4d2037f6de602d39c0bc452ac3029d1f5d65e88458872cc4dbc01c3a400604"},
 ]
 django-ninja = [
     {file = "django-ninja-0.16.1.tar.gz", hash = "sha256:039bc3324f2d38815241da791334acda0472c4429f772fe4af054d42dfe2af58"},
