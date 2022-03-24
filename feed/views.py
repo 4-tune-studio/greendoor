@@ -23,7 +23,7 @@ from feed.services.feed_service import (
     upload_feed_image,
 )
 from feed.services.like_service import do_like, undo_like
-from greendoor.utils import allowed_file, get_file_extension
+from config.utils import allowed_file, get_file_extension
 
 URL_LOGIN = "/login/"  # TODO login url 작업 완료 되면 수정
 URL_S3 = "https://nmdbucket.s3.amazonaws.com/"

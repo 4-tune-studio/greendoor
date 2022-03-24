@@ -1,6 +1,6 @@
 from django.db import models
 
-from greendoor.models import BaseModel
+from config.models import BaseModel
 
 
 # === plant 앱에 포함 ===
