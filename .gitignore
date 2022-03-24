@@ -5,4 +5,4 @@ __pycache__
 # 가상환경
 .venv
 # RDS 연결설정
-/greendoor/my_settings.py
+/config/my_settings.py
