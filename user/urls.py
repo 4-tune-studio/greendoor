@@ -29,4 +29,7 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name="password/password_reset_complete.html"),
         name="password_reset_complete",
     ),
+    # =============== user profile update ================ #
+    path("edit/<int:pk>", views.edit, name="edit"),
+    path("password/", views.password, name="password"),
 ]
