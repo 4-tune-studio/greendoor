@@ -25,6 +25,7 @@ class Product(BaseModel):
     image = models.CharField(max_length=256)
     image_tag = models.TextField(null=True, blank=True)
 
+
 # from django.db import models
 # from django.urls import reverse
 #

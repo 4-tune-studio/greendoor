@@ -5,6 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
+from config.utils import allowed_file, get_file_extension
 from feed.services.bookmark_service import do_bookmark, undo_bookmark
 from feed.services.comment_service import (
     create_a_comment,
@@ -23,7 +24,6 @@ from feed.services.feed_service import (
     upload_feed_image,
 )
 from feed.services.like_service import do_like, undo_like
-from config.utils import allowed_file, get_file_extension
 
 URL_LOGIN = "/login/"  # TODO login url 작업 완료 되면 수정
 URL_S3 = "https://nmdbucket.s3.amazonaws.com/"
