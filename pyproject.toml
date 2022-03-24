@@ -16,6 +16,11 @@ isort = "5.10.1"
 mypy = "0.931"
 bs4 = "^0.0.1"
 requests = "^2.27.1"
+PyMySQL = "^1.0.2"
+boto3 = "^1.21.19"
+django-storages = "^1.12.3"
+Pillow = "^9.0.1"
+django-crispy-forms = "^1.14.0"
 
 
 [tool.poetry.dev-dependencies]
@@ -38,6 +43,10 @@ ignore_errors = true
 
 [[tool.mypy.overrides]]
 module = "manage"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "*.crawling.*"
 ignore_errors = true
 
 [tool.django-stubs]
