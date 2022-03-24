@@ -4,7 +4,7 @@ from time import sleep
 import requests
 from bs4 import BeautifulSoup
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "greendoor.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
 import django
 

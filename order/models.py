@@ -1,6 +1,6 @@
 from django.db import models
 
-from greendoor.models import BaseModel
+from config.models import BaseModel
 from product.models import Product
 from user.models import Users
 
@@ -28,7 +28,7 @@ class OderProduct(BaseModel):
 
 # from django.db import models
 #
-# from greendoor.models import BaseModel
+# from config.models import BaseModel
 # from product.models import Product
 # from user.models import Users
 #

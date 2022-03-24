@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserM
 from django.db import models
 
 # Create your models here.
-from greendoor.models import BaseModel
+from config.models import BaseModel
 
 
 class Users(AbstractBaseUser, PermissionsMixin):

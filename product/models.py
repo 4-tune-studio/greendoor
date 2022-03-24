@@ -1,6 +1,6 @@
 from django.db import models
 
-from greendoor.models import BaseModel
+from config.models import BaseModel
 from plant.models import Plant
 
 
