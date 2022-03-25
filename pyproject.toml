@@ -50,7 +50,7 @@ module = "*.crawling.*"
 ignore_errors = true
 
 [tool.django-stubs]
-django_settings_module = "greendoor.settings"
+django_settings_module = "config.settings"
 
 [tool.isort]
 profile = "black"
