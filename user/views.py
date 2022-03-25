@@ -1,14 +1,17 @@
 from django.contrib import auth
+from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
+from config.utils import allowed_file, get_file_extension
 from user.forms import CustomUserChangeForm
 from user.models import Users
 
 # Create your views here.
+from user.services.userimg_service import update_user_image
 
 
 def sign_up_view(request):
@@ -30,7 +33,7 @@ def sign_up_view(request):
             if exist_user:
                 return render(request, "user/signup.html")  # 사용자가 존재하기 때문에 사용자를 저장하지 않고 회원가입 페이지를 다시 띄움
             else:
-                UserModel.objects.create_user(username=username, password=password)
+                Users.objects.create_user(username=username, password=password)
                 return redirect("/sign-in")  # 회원가입이 완료되었으므로 로그인 페이지로 이동
 
 
@@ -59,30 +62,32 @@ def logout(request):
 
 
 # =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
-# def accounts_login(request):
-#     if request.method == 'GET':
-#         return render(request, 'user/signin.html')
+def accounts_login(request):
+    if request.method == 'GET':
+        return render(request, 'user/signin.html')   # TODO 템플릿 변경시 경로 변경하기1
 
 
-# =============== user profile update ================ #
+# =============== user profile update (text) ================ #
 # user 프로필 update
-@login_required(login_url="signin")
 def edit(request, pk):
-    if request.method == "POST":
+    if not request.user.is_authenticated:
+        return redirect('user/signin.html')
+
+    elif request.method == "POST":
+        # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.email = request.POST["nickname"]
             form.bio = request.POST["zipcode"]
             form.image = request.POST["address"]
             form.image = request.POST["phonenumber"]
             form.save()
             return redirect("/")
-    # method == 'GET' 일 때
-    else:
+
+    elif request.method == "GET":
         form = CustomUserChangeForm(instance=request.user)
     context = {"form": form}
     # 관련 templates 기존 정보를 넘겨 준다
-    return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기
+    return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
 
 
 # user profile update 페이지 -> /password_reset/ url 연결
@@ -90,6 +95,25 @@ def password(request):
     return redirect("/password_reset/")
 
 
-@require_POST
+# =============== user profile update (image) ================ #
 def api_update_user_image(request):
-    return 0
+    if not request.user.is_authenticated:
+        return redirect('/')    # TODO 템플릿 변경시 경로 변경하기3
+    if request.method == 'POST':
+        if "image" in request.FILES:
+            # json 가져 온 data
+            user_id = request.POST["user_id"]
+            img_file = request.FILES["image"]
+
+            if img_file and allowed_file(img_file.name):
+                ext = get_file_extension(img_file.name)
+                filename = f"{user_id}.{ext}"
+                img_file.name = filename
+                # s3 image upload, s3 url 모델 저장
+                img_update = update_user_image(user_id, img_file)
+                img_url = f"https://nmdbucket.s3.amazonaws.com/user/{datetime.now().strftime('%Y%m%d%')}" + str(img_update) + f'.{ext}'
+                print(img_url)
+
+                return JsonResponse({'message': "가자!!!"})
+            else:
+                return JsonResponse({'message': 'file_none'})
