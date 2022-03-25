@@ -26,6 +26,8 @@ from django.http import HttpRequest
 from django.urls import include, path
 from ninja import NinjaAPI
 
+from user import views
+
 api = NinjaAPI()
 
 
@@ -40,4 +42,6 @@ urlpatterns = [
     path("cart/", include("cart.urls")),
     path("community/", include("feed.urls")),
     path("", include("user.urls")),
+    path("product/", include("product.urls")),
+
 ]
