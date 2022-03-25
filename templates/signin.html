@@ -7,9 +7,12 @@
         <link href="http://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
     </head>
 {% block static %}{% endblock static %}
+
 <body>
+{% block content %}
     <div class="header-logo">
-        <img id="logo" src="../static/img/textlogo_green.png">
+{#        <img id="logo" src="../static/img/textlogo_green.png">#}
+        <img id="logo" src="{% static 'img/textlogo_green.png' %}">
     </div>
     <div class="container">
       <div class="overlay" id="overlay">
@@ -85,6 +88,6 @@
 <script type="text/javascript" src="{% static 'js/category.js' %}">
 
 </script>
-
+{% endblock content %}
 </body>
 </html>
