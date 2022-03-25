@@ -1,19 +1,16 @@
+from datetime import datetime
+
 from django.contrib import auth
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
-
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 
+from config.utils import allowed_file, get_file_extension
 from user.forms import CustomUserChangeForm
 from user.models import Users
+from user.services.userimg_service import update_user_image, update_user_image_url
 
 # Create your views here.
-
-# =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
-# def accounts_login(request):
-#     if request.method == 'GET':
-#         return render(request, 'user/signin.html')
 
 
 def sign_up_view(request: HttpRequest) -> HttpResponse:
@@ -62,41 +59,71 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
     else:
         return redirect("/")
 
-    else:
-        return redirect("/")
-
 
 def logout(request: HttpRequest) -> HttpResponse:
     auth.logout(request)  # 인증 되어있는 정보를 없애기
     return redirect("/")
 
 
-# user 프로필 update
-@login_required(login_url="signin")
-def edit(request: HttpRequest, pk: int) -> HttpResponse:
-    if request.method == "POST":
+# =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
+def accounts_login(request) -> HttpResponse:
+    if request.method == "GET":
+        return render(request, "user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+
+
+# =============== user profile update (text) ================ #
+# user 주소, 번호 update
+def edit(request, pk: int) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect("user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+
+    elif request.method == "POST":
+        # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.nickname = request.POST["nickname"]
-            form.zipcode = request.POST["zipcode"]
-            form.address = request.POST["address"]
-            form.phonenumber = request.POST["phonenumber"]
+            form.bio = request.POST["zipcode"]
+            form.image = request.POST["address"]
+            form.image = request.POST["phonenumber"]
             form.save()
             return redirect("/")
-    # method == 'GET' 일 때
-    else:
+
+    elif request.method == "GET":
         form = CustomUserChangeForm(instance=request.user)
     context = {"form": form}
     # 관련 templates 기존 정보를 넘겨 준다
-    return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기
+    return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
 
 
-
-# user profile update 페이지 /password_reset/ url 연결
+# user profile update 페이지 -> /password_reset/ url 연결
 def password(request: HttpRequest) -> HttpResponse:
     return redirect("/password_reset/")
 
 
-@require_POST
+# =============== user profile update (image) ================ #
 def api_update_user_image(request):
-    return 0
+    if not request.user.is_authenticated:
+        return redirect("/")  # TODO 템플릿 변경시 경로 변경하기3
+    if request.method == "POST":
+        if "image" in request.FILES:
+            # json data 변수에 저장
+            user_id = request.POST["user_id"]
+            img_file = request.FILES["image"]
+            # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
+            if img_file and allowed_file(img_file.name):
+                ext = get_file_extension(img_file.name)
+                filename = f"{user_id}.{ext}"
+                img_file.name = filename
+                # s3 image upload, s3 url - users 모델 저장
+                img_update = update_user_image(user_id, img_file)
+                img_url = (
+                    f"https://nmdbucket.s3.amazonaws.com/user/{datetime.now().strftime('%Y%m%d%')}"
+                    + str(img_update)
+                    + f".{ext}"
+                )
+                print(img_url)
+                # Users 'image' 필드에 url update
+                url_update = update_user_image_url(img_update, img_url)
+
+                return JsonResponse({"message": url_update})
+            else:
+                return JsonResponse({"message": "file_none"})
