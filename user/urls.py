@@ -1,6 +1,5 @@
 from django.contrib.auth import views as auth_views
-from django.urls import path
-
+from django.urls import path, include
 from . import views
 
 app_name = "user"
@@ -29,4 +28,14 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name="password/password_reset_complete.html"),
         name="password_reset_complete",
     ),
+
+    path('sign-up/', views.sign_up_view, name='sign-up'),
+    path('sign-in/', views.sign_in_view, name='sign-in'),
+    path('logout/', views.logout, name='logout'),
+    path('google/', include('allauth.urls')),
+
+    # =============== user profile update ================ #
+    path("edit/<int:pk>", views.edit, name="edit"),
+    path("password/", views.password, name="password"),
+
 ]
