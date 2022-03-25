@@ -116,7 +116,7 @@ def api_update_user_image(request):
                     + f".{ext}"
                 )
                 print(img_url)
-
+                Users.objects.get(id=user_id).update(image=img_url)
                 return JsonResponse({"message": "가자!!!"})
             else:
                 return JsonResponse({"message": "file_none"})
