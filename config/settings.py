@@ -93,7 +93,6 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # "DIRS": [BASE_DIR],
         "DIRS": [BASE_DIR / "templates"],
-
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -187,9 +186,6 @@ EMAIL_USE_TLS = True
 # 사이트 관련 자동 응답 받을 이메일 주소
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-<<<<<<< HEAD:greendoor/settings.py
-
-
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of 'allauth'
@@ -201,5 +197,4 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
-=======
->>>>>>> 240a0f8f1a92e33791c19dc6f5bf5dd08f7a004e:config/settings.py
+
