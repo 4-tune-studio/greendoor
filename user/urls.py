@@ -8,7 +8,7 @@ app_name = "user"
 urlpatterns = [
     # =============== 장고 인증 URL + 템플릿 연결 ================ #
     # 장고 URL -> 로그인 템플릿 연결 버튼
-    path('accounts/login/', views.accounts_login, name='accounts-login'),
+    path("accounts/login/", views.accounts_login, name="accounts-login"),
     path(
         "password_reset/",
         auth_views.PasswordResetView.as_view(template_name="password/password_reset.html"),

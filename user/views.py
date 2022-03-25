@@ -1,17 +1,16 @@
-from django.contrib import auth
 from datetime import datetime
+
+from django.contrib import auth
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from django.views.decorators.http import require_POST
 
 from config.utils import allowed_file, get_file_extension
 from user.forms import CustomUserChangeForm
 from user.models import Users
+from user.services.userimg_service import update_user_image
 
 # Create your views here.
-from user.services.userimg_service import update_user_image
 
 
 def sign_up_view(request):
@@ -63,15 +62,15 @@ def logout(request):
 
 # =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
 def accounts_login(request):
-    if request.method == 'GET':
-        return render(request, 'user/signin.html')   # TODO 템플릿 변경시 경로 변경하기1
+    if request.method == "GET":
+        return render(request, "user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
 
 
 # =============== user profile update (text) ================ #
-# user 프로필 update
+# user 주소, 번호 update
 def edit(request, pk):
     if not request.user.is_authenticated:
-        return redirect('user/signin.html')
+        return redirect("user/signin.html")
 
     elif request.method == "POST":
         # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
@@ -98,8 +97,8 @@ def password(request):
 # =============== user profile update (image) ================ #
 def api_update_user_image(request):
     if not request.user.is_authenticated:
-        return redirect('/')    # TODO 템플릿 변경시 경로 변경하기3
-    if request.method == 'POST':
+        return redirect("/")  # TODO 템플릿 변경시 경로 변경하기3
+    if request.method == "POST":
         if "image" in request.FILES:
             # json 가져 온 data
             user_id = request.POST["user_id"]
@@ -111,9 +110,13 @@ def api_update_user_image(request):
                 img_file.name = filename
                 # s3 image upload, s3 url 모델 저장
                 img_update = update_user_image(user_id, img_file)
-                img_url = f"https://nmdbucket.s3.amazonaws.com/user/{datetime.now().strftime('%Y%m%d%')}" + str(img_update) + f'.{ext}'
+                img_url = (
+                    f"https://nmdbucket.s3.amazonaws.com/user/{datetime.now().strftime('%Y%m%d%')}"
+                    + str(img_update)
+                    + f".{ext}"
+                )
                 print(img_url)
 
-                return JsonResponse({'message': "가자!!!"})
+                return JsonResponse({"message": "가자!!!"})
             else:
-                return JsonResponse({'message': 'file_none'})
+                return JsonResponse({"message": "file_none"})

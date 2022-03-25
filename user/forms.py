@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserChangeForm
 
-
 # get_user_model
 # 프로젝트에서 활성화 된 사용자 모델을 반환해 준다
 
