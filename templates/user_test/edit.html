@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+    <div style="width: 70%; margin: 10% 0 0 15%">
+        <div class="card mb-3">
+            <img src="{{ user.img }}" class="card-img-top" alt="image" style="width: 50%; height: 30%;">
+            <div class="card-body">
+                <h5 class="card-title">프로필 사진</h5>
+                <input type="file" id="file">
+                <button class="btn btn-primary" onclick="update_image_api({{ user.id }})">수정</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+           function update_image_api(id) {
+            let user_id = id
+            let file = $('#file')[0].files[0]
+            let form_data = new FormData()
+
+            form_data.append("user_id", user_id)
+            form_data.append("image", file)
+            $.ajax({
+                type: "POST",
+                url: "{% url "api_update_user_image" %}",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                dataType: 'json',
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    alert("성공")
+                    console.log(response)
+                },
+                error: function () {
+                    alert("실패")
+                },
+            })
+        }
+    </script>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div style="width: 70%; margin: 10% 0 0 15%">
+            {{ form|crispy }}
+            <button class="btn btn-primary" type="submit">수정</button>
+        </div>
+    </form>
+{% endblock %}

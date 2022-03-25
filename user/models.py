@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserM
 from django.db import models
 
 # Create your models here.
-from greendoor.models import BaseModel
+from config.models import BaseModel
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
@@ -28,3 +28,8 @@ class Users(AbstractBaseUser, PermissionsMixin):
 class UsersFav(BaseModel):
 
     pass
+
+
+class UserImg(BaseModel):
+    user = models.OneToOneField(Users, on_delete=models.CASCADE)
+    img = models.ImageField(upload_to="user/%Y%m%d", max_length=255)

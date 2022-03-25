@@ -1,4 +1,4 @@
-"""greendoor URL Configuration
+"""config URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -19,20 +19,29 @@ Including another URLconf
 # urlpatterns = [
 #     path("admin/", admin.site.urls),
 # ]
+from typing import Dict
 
 from django.contrib import admin
-from django.urls import path
+from django.http import HttpRequest
+from django.urls import include, path
 from ninja import NinjaAPI
+
+from user import views
 
 api = NinjaAPI()
 
 
 @api.get("/add")
-def add(request, a: int, b: int):
+def add(request: HttpRequest, a: int, b: int) -> Dict[str, int]:
     return {"result": a + b}
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", api.urls),
+    path("cart/", include("cart.urls")),
+    path("community/", include("feed.urls")),
+    path("", include("user.urls")),
+    path("product/", include("product.urls")),
+
 ]
