@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 from typing import List
 
+import django_stubs_ext
+
 from .my_settings import (
     EMAIL_SECRET_KEY,
     MY_DATABASES,
@@ -21,6 +23,8 @@ from .my_settings import (
     MY_SECRET_ACCESS_KEY,
     S3_BUCKET_NAME,
 )
+
+django_stubs_ext.monkeypatch()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,7 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.sites',
+    "django.contrib.sites",
     "order",
     "user",
     "plant",
@@ -63,13 +67,13 @@ INSTALLED_APPS = [
     "cart",
     "storages",
     "crispy_forms",
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.instagram',
-    'allauth.socialaccount.providers.kakao',
-    'allauth.socialaccount.providers.naver',
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.instagram",
+    "allauth.socialaccount.providers.kakao",
+    "allauth.socialaccount.providers.naver",
 ]
 
 
@@ -189,12 +193,10 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of 'allauth'
-    'django.contrib.auth.backends.ModelBackend',
-
+    "django.contrib.auth.backends.ModelBackend",
     # 'allauth' specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
-
+LOGIN_REDIRECT_URL = "/"
