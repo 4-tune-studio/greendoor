@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from user.forms import CustomUserChangeForm
 from user.models import Users
@@ -87,3 +88,8 @@ def edit(request, pk):
 # user profile update 페이지 -> /password_reset/ url 연결
 def password(request):
     return redirect("/password_reset/")
+
+
+@require_POST
+def api_update_user_image(request):
+    return 0
