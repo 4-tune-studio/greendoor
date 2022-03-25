@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
+
 from django.shortcuts import redirect, render
 
 from user.forms import CustomUserChangeForm
@@ -16,6 +17,7 @@ from user.models import Users
 
 
 def sign_up_view(request: HttpRequest) -> HttpResponse:
+
     if request.method == "GET":
         user = request.user.is_authenticated  # 로그인 된 사용자가 요청하는지 검사
         if user:  # 로그인이 되어있다면
@@ -38,6 +40,8 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
                 return redirect("/sign-in")  # 회원가입이 완료되었으므로 로그인 페이지로 이동
     else:
         return redirect("/")
+
+
 def sign_in_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         username = request.POST.get("username", None)
@@ -55,6 +59,9 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
             return redirect("/")
         else:  # 로그인이 되어 있지 않다면
             return render(request, "user/signin.html")
+    else:
+        return redirect("/")
+
     else:
         return redirect("/")
 
@@ -80,10 +87,16 @@ def edit(request: HttpRequest, pk: int) -> HttpResponse:
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {"form": form}
-    # 관련 템플릿에 기존 정보를 넘겨 준다
-    return render(request, "tweet/edit.html", context)
+    # 관련 templates 기존 정보를 넘겨 준다
+    return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기
+
 
 
 # user profile update 페이지 /password_reset/ url 연결
 def password(request: HttpRequest) -> HttpResponse:
     return redirect("/password_reset/")
+
+
+@require_POST
+def api_update_user_image(request):
+    return 0

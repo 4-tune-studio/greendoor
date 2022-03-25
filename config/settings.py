@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 from typing import List
 
+import django_stubs_ext
+
 from .my_settings import (
     EMAIL_SECRET_KEY,
     MY_DATABASES,
@@ -21,6 +23,8 @@ from .my_settings import (
     MY_SECRET_ACCESS_KEY,
     S3_BUCKET_NAME,
 )
+
+django_stubs_ext.monkeypatch()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
