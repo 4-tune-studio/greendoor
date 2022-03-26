@@ -108,5 +108,5 @@ def password(request: HttpRequest) -> HttpResponse:
 
 
 @require_POST
-def api_update_user_image(request: HttpRequest) :
+def api_update_user_image(request: HttpRequest):
     return 0

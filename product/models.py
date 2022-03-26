@@ -55,9 +55,11 @@ class Product(BaseModel):
     # 옵션 일부 수정함 db_column 삭제 가능 여부 확인 필요
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="products")
     # db_column 이 없으면 앞에 적힌 필드 값에 _id로 만들어주는것을 내가 알아서 설정하기 위함
-    plant_id = models.ForeignKey(
-        Plant, on_delete=models.SET_NULL, related_name="products", db_column="plant_id", null=True
-    )
+
+    # 이 내용은 삭제 예정 3/26
+    # plant_id = models.ForeignKey(
+    #     Plant, on_delete=models.SET_NULL, related_name="products", db_column="plant_id", null=True
+    # )
 
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True, unique=True, allow_unicode=True, default="")
@@ -82,7 +84,9 @@ class Product(BaseModel):
     # 추가된 필드 내용
     size = models.IntegerField(null=True, blank=True)
     info = models.CharField(max_length=500, null=True, blank=True)
-    qty = models.IntegerField(default=0)
+
+    # 삭제예정 Stock으로 대체 3/26
+    # qty = models.IntegerField(default=0)
     image_tag = models.TextField(null=True, blank=True)
 
     # class Meta 잠시 설명 nastied class라고 하여 다양한 정보를 품고 있다 이런 뜻으로 검색 옵션 디스플레이되는 이름등의 정보를 담고 있음
