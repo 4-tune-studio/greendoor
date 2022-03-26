@@ -1,3 +1,4 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
@@ -9,7 +10,7 @@ from .forms import AddProductForm
 
 # 데코레이터 의미 POST method만으로 접속이 가능하다
 @require_POST
-def add(request, product_id):
+def add(request: HttpRequest, product_id: str) -> HttpResponse:
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
 
@@ -24,16 +25,16 @@ def add(request, product_id):
     return redirect("cart:detail")
 
 
-def remove(request, product_id):
+def remove(request: HttpRequest, product_id: str) -> HttpResponse:
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect("cart:detail")
 
 
-def detail(request):
+def detail(request: HttpRequest) -> HttpResponse:
     cart = Cart(request)
     for product in cart:
         product["quantity_form"] = AddProductForm(initial={"quantity": product["quantity"], "is_update": True})
 
-    return render(request, "templates/product/detail.html", {"cart": cart})
+    return render(request, "product/detail.html", {"cart": cart})

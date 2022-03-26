@@ -2,7 +2,8 @@ from datetime import datetime
 
 from django.contrib import auth
 from django.contrib.auth import get_user_model
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
 from config.utils import allowed_file, get_file_extension
@@ -95,8 +96,10 @@ def edit(request, pk: int) -> HttpResponse:
 
 
 # user profile update 페이지 -> /password_reset/ url 연결
+
 def password(request: HttpRequest) -> HttpResponse:
     return redirect("/password_reset/")
+
 
 
 # =============== user profile update (image) ================ #
@@ -127,3 +130,4 @@ def api_update_user_image(request):
                 return JsonResponse({"message": url_update})
             else:
                 return JsonResponse({"message": "file_none"})
+
