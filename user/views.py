@@ -1,9 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-
 from django.http import HttpRequest, HttpResponse
-
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
@@ -20,7 +18,6 @@ from user.models import Users
 
 
 def sign_up_view(request: HttpRequest) -> HttpResponse:
-
 
     if request.method == "GET":
         user = request.user.is_authenticated  # 로그인 된 사용자가 요청하는지 검사
@@ -105,13 +102,11 @@ def edit(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기
 
 
-
 # user profile update 페이지 /password_reset/ url 연결
 def password(request: HttpRequest) -> HttpResponse:
     return redirect("/password_reset/")
 
 
 @require_POST
-def api_update_user_image(request):
+def api_update_user_image(request: HttpRequest) :
     return 0
-

@@ -37,5 +37,4 @@ urlpatterns = [
     path("edit/<int:pk>", views.edit, name="edit"),
     path("password/", views.password, name="password"),
     path("api/api_update_user_image", views.api_update_user_image, name="api_update_user_image"),
-
 ]
