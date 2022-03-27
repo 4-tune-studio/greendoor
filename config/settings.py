@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.instagram",
     "allauth.socialaccount.providers.kakao",
     "allauth.socialaccount.providers.naver",
+    "corsheaders"
 ]
 
 
@@ -88,6 +89,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -200,3 +202,7 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
+
+# 아래는 새로 작성
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8000' ,'http://localhost:8000'] # 요청을 받아도 되는 리스트를 작성하는거에요!
+CORS_ALLOW_CREDENTIALS = True
