@@ -64,14 +64,14 @@ def logout(request: HttpRequest) -> HttpResponse:
 
 
 # =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
-def accounts_login(request) -> HttpResponse:
+def accounts_login(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         return render(request, "user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
 
 
 # =============== user profile update (text) ================ #
 # user 주소, 번호 update
-def edit(request, pk: int) -> HttpResponse:
+def edit(request: HttpRequest, pk: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect("user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
 
@@ -98,7 +98,7 @@ def password(request: HttpRequest) -> HttpResponse:
 
 
 # =============== user profile update (image) ================ #
-def api_update_user_image(request) -> HttpResponse:
+def api_update_user_image(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect("/")  # TODO 템플릿 변경시 경로 변경하기3
     if request.method == "POST":
