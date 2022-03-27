@@ -97,9 +97,9 @@ def edit(request, pk: int) -> HttpResponse:
 
 # user profile update 페이지 -> /password_reset/ url 연결
 
+
 def password(request: HttpRequest) -> HttpResponse:
     return redirect("/password_reset/")
-
 
 
 # =============== user profile update (image) ================ #
@@ -130,4 +130,3 @@ def api_update_user_image(request):
                 return JsonResponse({"message": url_update})
             else:
                 return JsonResponse({"message": "file_none"})
-
