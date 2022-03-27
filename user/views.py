@@ -1,9 +1,6 @@
-from datetime import datetime
-
 from django.contrib import auth
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 
 from config.utils import allowed_file, get_file_extension
@@ -96,14 +93,12 @@ def edit(request, pk: int) -> HttpResponse:
 
 
 # user profile update 페이지 -> /password_reset/ url 연결
-
-
 def password(request: HttpRequest) -> HttpResponse:
     return redirect("/password_reset/")
 
 
 # =============== user profile update (image) ================ #
-def api_update_user_image(request):
+def api_update_user_image(request) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect("/")  # TODO 템플릿 변경시 경로 변경하기3
     if request.method == "POST":
@@ -111,22 +106,18 @@ def api_update_user_image(request):
             # json data 변수에 저장
             user_id = request.POST["user_id"]
             img_file = request.FILES["image"]
+
             # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
             if img_file and allowed_file(img_file.name):
                 ext = get_file_extension(img_file.name)
                 filename = f"{user_id}.{ext}"
                 img_file.name = filename
-                # s3 image upload, s3 url - users 모델 저장
-                img_update = update_user_image(user_id, img_file)
-                img_url = (
-                    f"https://nmdbucket.s3.amazonaws.com/user/{datetime.now().strftime('%Y%m%d%')}"
-                    + str(img_update)
-                    + f".{ext}"
-                )
-                print(img_url)
-                # Users 'image' 필드에 url update
-                url_update = update_user_image_url(img_update, img_url)
 
+                # s3 image upload, s3 url - users 모델 저장
+                img_update = update_user_image(img_file)
+
+                # Users 'image' 필드에 url update
+                url_update = update_user_image_url(user_id, img_update)
                 return JsonResponse({"message": url_update})
             else:
                 return JsonResponse({"message": "file_none"})
