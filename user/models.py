@@ -32,5 +32,4 @@ class UsersFav(BaseModel):
 
 
 class UserImg(BaseModel):
-    user = models.OneToOneField(Users, on_delete=models.CASCADE)
     img = models.ImageField(upload_to="user/%Y%m%d", max_length=255)
