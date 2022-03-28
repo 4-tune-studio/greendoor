@@ -194,7 +194,7 @@ def api_delete_feed(request: HttpRequest, feed_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
     user_id = request.user.id
-    # 댓글 삭제 서비스 함수 실행
+    # 피드 삭제 서비스 함수 실행
     delete_a_feed(feed_id=feed_id, user_id=user_id)
     return redirect("feed:community")
 

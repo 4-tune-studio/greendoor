@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from django.conf import settings
+from django.http import HttpRequest
 
 from product.models import Product
 
@@ -8,7 +9,7 @@ from product.models import Product
 class Cart(object):
     # 밑의 init, len, iter 등의 method 파이썬 기본 method 장고에서 새로 추가된 내용이 아님
     # 초기화 작업
-    def __init__(self, request):
+    def __init__(self, request: HttpRequest):
         self.session = request.session
         cart = self.session.get(settings.CART_ID)
         if not cart:
@@ -51,7 +52,7 @@ class Cart(object):
         self.session[settings.CART_ID] = self.cart
         self.session.modified = True
 
-    def remove(self, product):
+    def remove(self, product) -> None:
         product_id = str(product.id)
         if product_id in self.cart:
             del self.cart[product_id]

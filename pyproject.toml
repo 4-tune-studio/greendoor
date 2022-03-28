@@ -21,6 +21,9 @@ boto3 = "^1.21.19"
 django-storages = "^1.12.3"
 Pillow = "^9.0.1"
 django-crispy-forms = "^1.14.0"
+django-allauth = "^0.49.0"
+django-stubs-ext = "^0.3.1"
+django-cors-headers = "^3.11.0"
 
 
 [tool.poetry.dev-dependencies]
@@ -50,12 +53,11 @@ module = "*.crawling.*"
 ignore_errors = true
 
 [tool.django-stubs]
-django_settings_module = "greendoor.settings"
+django_settings_module = "config.settings"
 
 [tool.isort]
 profile = "black"
 
-[[tool.mypy.overrides]]
-module = "*.crawling.*"
-ignore_errors = true
+
+
 

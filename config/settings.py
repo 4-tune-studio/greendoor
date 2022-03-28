@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 from typing import List
 
+import django_stubs_ext
+
 from .my_settings import (
     EMAIL_SECRET_KEY,
     MY_DATABASES,
@@ -21,6 +23,8 @@ from .my_settings import (
     MY_SECRET_ACCESS_KEY,
     S3_BUCKET_NAME,
 )
+
+django_stubs_ext.monkeypatch()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,6 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "order",
     "user",
     "plant",
@@ -62,6 +67,14 @@ INSTALLED_APPS = [
     "cart",
     "storages",
     "crispy_forms",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.instagram",
+    "allauth.socialaccount.providers.kakao",
+    "allauth.socialaccount.providers.naver",
+    "corsheaders",
 ]
 
 
@@ -76,6 +89,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -180,3 +194,21 @@ EMAIL_HOST_PASSWORD = EMAIL_SECRET_KEY["EMAIL_SECRET_KEY"]
 EMAIL_USE_TLS = True
 # 사이트 관련 자동 응답 받을 이메일 주소
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+<<<<<<< HEAD
+=======
+
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of 'allauth'
+    "django.contrib.auth.backends.ModelBackend",
+    # 'allauth' specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = "/"
+
+# 아래는 새로 작성
+CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # 요청을 받아도 되는 리스트를 작성하는거에요!
+CORS_ALLOW_CREDENTIALS = True
+>>>>>>> 813c772df3dcf24466e3f1fe2187bbed5e7bb616
