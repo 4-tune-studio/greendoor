@@ -43,6 +43,6 @@ urlpatterns = [
     path("community/", include("feed.urls")),
     path("", include("user.urls")),
     path("", include("product.urls")),
-    path('order/', include('order.urls')),
+    path("order/", include("order.urls")),
     # path("product/", include("product.urls")),
 ]

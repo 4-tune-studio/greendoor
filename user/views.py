@@ -4,6 +4,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 
 from config.utils import allowed_file, get_file_extension
+from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
 from user.forms import CustomUserChangeForm
 from user.models import Users
 from user.services.userimg_service import update_user_image, update_user_image_url
@@ -67,11 +68,13 @@ def logout(request: HttpRequest) -> HttpResponse:
 def accounts_login(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         return render(request, "user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+    else:
+        return redirect("/")
 
 
 # =============== user profile update (text) ================ #
 # user 주소, 번호 update
-def edit(request: HttpRequest, pk: int) -> HttpResponse:
+def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect("user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
 
@@ -121,3 +124,17 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
                 return JsonResponse({"message": url_update})
             else:
                 return JsonResponse({"message": "file_none"})
+
+
+# =============== user my page ================ #
+def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
+    if not request.user.is_authenticated:
+        return redirect("/sign-in/")
+    if request.method == "GET":
+        my_feed_list = get_my_feed_list(pk)
+        my_bookmark_list = get_my_bookmark_feed_list(pk)
+        return render(
+            request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list}
+        )
+    else:
+        return redirect("/")
