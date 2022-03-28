@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+      <link href="{% static 'css/index.css' %}" rel="stylesheet">
+      <script defer src="{% static 'js/index.js' %}"></script>
+{% block static %}{% endblock static %}
+</head>
+<body>
+{% block content %}
+<!--헤더 + 네비게이션 바-->
+    <header>
+        <div class="header">
+            <img class="logo" src="{% static 'img/textlogo_white.png' %}">
+            <nav>
+                <ul class="nav-link">
+                    <li><a href="{% url '' %}">store</a></li>
+                    <li><a href="{% url '' %}">order</a></li>
+                    <li><a href="{% url '' %}">mypage</a></li>
+                </ul>
+                <div class="m-nav-link">
+                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>
+                    <a href="{% url '' %}"><img src="{% static 'img/order_white.png' %}"></a>
+                    <a href="{% url '' %}"><img src="{% static 'img/profile_white.png' %}"></a>
+                </div>
+                <div class="m-nav-menu">
+                    <li><a href="{% url '' %}">store</a></li>
+                    <li><a href="{% url '' %}">order</a></li>
+                    <li><a href="{% url '' %}">mypage</a></li>
+                </div>
+            </nav>
+            <a class="sign" href="{% url '' %}"><button>log in</button></a>
+        </div>
+    </header>
+    <!-- 피드 상단 이미지 -->
+    <div class="feed-header">
+        <img src="{% static 'img/main.png' %}">
+<!--        <div class="feed-header-text">-->
+<!--            <h3>플랜테리어</h3>-->
+<!--            <h3>어떻게 활용하면</h3>-->
+<!--            <h3>좋을까</h3>-->
+<!--            <button><a href="">자세히보기</a></button>-->
+<!--        </div>-->
+    </div>
+    <div class="popular-feed">
+        <div id="feed-category">
+            <h3>· 인기피드 ·</h3>
+        </div>
+        <div class="feed-img">
+            <figure class="feed-img">
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
+              <figcaption>
+                <h3>Fleece Marigold</h3>
+                <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
+              </figcaption>
+              <a href="{% url '' %}"></a>
+            </figure>
+            <figure class="feed-img">
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
+              <figcaption>
+                <h3>Fleece Marigold</h3>
+                <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
+              </figcaption>
+              <a href="{% url '' %}"></a>
+            </figure>
+        </div>
+    </div>
+    <div class="new-feed">
+        <div id="feed-category">
+            <h3>· 최신피드 ·</h3>
+        </div>
+        <div class="feed-img">
+            <figure class="feed-img">
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
+              <figcaption>
+                <h3>Fleece Marigold</h3>
+                <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
+              </figcaption>
+              <a href="{% url '' %}"></a>
+            </figure>
+            <figure class="feed-img">
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
+              <figcaption>
+                <h3>Fleece Marigold</h3>
+                <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
+              </figcaption>
+              <a href="{% url '' %}"></a>
+            </figure>
+        </div>
+    </div>
+    </div>
+    <!-- PC 글쓰기 버튼 -->
+    <div onclick="" id="scrollTopPc">
+        <img src="{% static 'img/write.png' %}" width="50px" height="50px">
+    </div>
+    <!-- 모바일 글쓰기 버튼 -->
+    <div onclick="" id="scrollTopMob">
+        <img src="{% static 'img/write.png' %}write.png" width="50px" height="50px">
+    </div>
+{% endblock content %}
+</body>
+</html>

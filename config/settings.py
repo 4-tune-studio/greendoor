@@ -155,6 +155,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),  # base_dir은 프로젝트 폴더
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -191,6 +194,8 @@ EMAIL_HOST_PASSWORD = EMAIL_SECRET_KEY["EMAIL_SECRET_KEY"]
 EMAIL_USE_TLS = True
 # 사이트 관련 자동 응답 받을 이메일 주소
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+<<<<<<< HEAD
+=======
 
 
 AUTHENTICATION_BACKENDS = (
@@ -206,3 +211,4 @@ LOGIN_REDIRECT_URL = "/"
 # 아래는 새로 작성
 CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # 요청을 받아도 되는 리스트를 작성하는거에요!
 CORS_ALLOW_CREDENTIALS = True
+>>>>>>> 813c772df3dcf24466e3f1fe2187bbed5e7bb616

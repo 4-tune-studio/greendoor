@@ -1,6 +1,11 @@
+<<<<<<< HEAD
+from allauth.account.signals import user_signed_up
+from django.dispatch import receiver
+=======
 from allauth.account.signals import user_signed_up  # type: ignore
 from django.dispatch import receiver
 from django.http import HttpRequest, HttpResponse
+>>>>>>> 813c772df3dcf24466e3f1fe2187bbed5e7bb616
 from django.shortcuts import get_object_or_404, render
 
 from cart.forms import AddProductForm
@@ -23,12 +28,18 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
         current_category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=current_category)
 
+<<<<<<< HEAD
+    return render(
+        request,
+        "templates/product/list.html",
+=======
     ######################################################################################
     # templates의 구조에 따라서 다르게 쓸 수 있으나 앱기반으로 하여 이렇게 되어있다. 수정이 필요한 부분
     ######################################################################################
     return render(
         request,
         "product/list.html",
+>>>>>>> 813c772df3dcf24466e3f1fe2187bbed5e7bb616
         {
             "current_category": current_category,
             "categories": categories,
@@ -40,6 +51,9 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
 def product_detail(request: HttpRequest, id: int, product_slug=None) -> HttpResponse:
     product = get_object_or_404(Product, id=id, slug=product_slug)
     add_to_cart = AddProductForm(initial={"quantity": 1})
+<<<<<<< HEAD
+    return render(request, "templates/product/detail.html", {"product": product, "add_to_cart": add_to_cart})
+=======
     return render(request, "product/detail.html", {"product": product, "add_to_cart": add_to_cart})
 
 
@@ -50,3 +64,4 @@ def user_signed_up_(**kwargs) -> None:
     user.last_name = extra_data["name"][0:4]
     user.first_name = extra_data["name"][4:]
     user.save()
+>>>>>>> 813c772df3dcf24466e3f1fe2187bbed5e7bb616
