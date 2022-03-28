@@ -85,7 +85,6 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # "DIRS": [BASE_DIR],
         "DIRS": [BASE_DIR / "templates"],
-
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -143,7 +142,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # base_dir은 프로젝트 폴더
+    os.path.join(BASE_DIR, "static"),  # base_dir은 프로젝트 폴더
 ]
 
 # Default primary key field type
@@ -181,4 +180,3 @@ EMAIL_HOST_PASSWORD = EMAIL_SECRET_KEY["EMAIL_SECRET_KEY"]
 EMAIL_USE_TLS = True
 # 사이트 관련 자동 응답 받을 이메일 주소
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-

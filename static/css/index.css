@@ -7,15 +7,12 @@
         box-sizing: border-box;
         background-image: url('../img/bg.png');
         background-size: 300%;
-        /*background-repeat: no-repeat;*/
+        background-repeat: no-repeat;
         margin: 0;
         padding: 0;
         z-index: 1;
     }
 
-    header {
-
-    }
 
     .header {
         display: flex;
@@ -24,13 +21,9 @@
         margin-left: 40px;
         margin-right: 20px;
     }
-    .nav-link {
-        display: none;
-    }
 
-    .sign {
-        display: none;
-    }
+    .nav-link { display: none; }
+    .sign { display: none; }
 
     .logo {
         width: 30%;
@@ -39,7 +32,7 @@
         filter: alpha(opacity=90);
     }
 
-    .m-nave-link img {
+    .m-nav-link img {
         margin-top: 15px;
         margin-right: 10px;
         padding: 0 10px;
@@ -47,36 +40,44 @@
         opacity: 0.9;
         filter: alpha(opacity=90);
     }
-    .feed-header {
-        display: flex;
-        justify-content: center;
-    }
 
-    .feed-header img {
 
-    }
-
-    .feed-header-text {
-        margin-top: 200px;
-        margin-left: -70px;
-        margin-right: 100px;
-    }
-    .feed-header-text h3 {
-        /*border: #39f595 solid 2px;*/
-        /*background: #39f595;*/
-        color: #efebeb;
-        margin-top: 0;
-    }
-
-    .feed-header button {
+    .m-nav-menu {
+        display: none;
+        flex-direction: column;
+        list-style: none;
+        width: 100%;
         margin-top: 20px;
     }
 
-    .feed-header a {
-        font-weight: 800;
-        color: #edf0f1;
+    .m-nav-menu a {
         text-decoration: none;
+        color: white;
     }
+
+    .m-nav-menu li {
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .m-nav-menu li, a:hover {
+        color: #ffd433;
+    }
+
+    .m-nav-menu.active {
+        display: flex;
+    }
+    .logo.active {
+        margin-top: 0;
+    }
+
+
+
+    .feed-header { display: flex; justify-content: center; }
+    /*.feed-header-text { margin-top: 200px; margin-left: -70px; margin-right: 100px; }*/
+    /*.feed-header-text h3 { color: #efebeb; margin-top: 0; }*/
+    /*.feed-header button { margin-top: 20px; }*/
+    /*.feed-header a { font-weight: 800; color: #edf0f1; text-decoration: none; }*/
 
     button {
         padding: 9px 25px;
@@ -87,62 +88,35 @@
         transition: all 0.3s ease 0s;
     }
 
+    button:hover { background-color: rgb(253, 104, 1); }
 
-    button:hover {
-        background-color: rgb(253, 104, 1);
-    }
-
-
-    .feed-header {
-        display: flex;
-        justify-content: center;
-    }
-
-    .feed-header img {
-
-    }
-
-    .feed-header-text {
-        margin-top: 100px;
-    }
-    .feed-header-text h3 {
-        /*border: #39f595 solid 2px;*/
-        /*background: #39f595;*/
-        color: #efebeb;
-        margin-top: 0;
-    }
-
-    .feed-header button {
-        margin-top: 50px;
-    }
 
     .popular-feed {
         display: flex;
         align-items: center;
         flex-direction: column;
         margin-top: 50px;
+        flex-wrap: nowrap;
     }
 
     .feed-img {
         display: flex;
         flex-direction: row;
         margin: 0 50px;
+        float: left;
     }
+
 
     .new-feed {
         display: flex;
         align-items: center;
         flex-direction: column;
         margin-top: 80px;
+        flex-wrap: nowrap;
     }
 
-    .popular-feed h3 {
-        color: #fd6801;
-    }
-
-    .new-feed h3 {
-        color: #fd6801;
-    }
+    .popular-feed h3 { color: #fd6801; }
+    .new-feed h3 { color: #fd6801; }
 
 
     @import url(https://fonts.googleapis.com/css?family=Raleway:300,700);
@@ -257,7 +231,17 @@
       opacity: 1;
     }
 
+    #scrollTopMob {
+      display: flex;
+      position: fixed;
+      bottom: 64px; /* 아랫쪽 끝에서부터의 거리 */
+      right: 25px; /* 오른쪽 끝에서부터의 거리 */
+      z-index: 99;
+    }
 
+    #scrollTopPc {
+        display: none;
+    }
 
 }
 
@@ -295,35 +279,17 @@
         z-index: 10;
     }
 
-    .logo {
-        cursor: pointer;
-    }
+    .logo { cursor: pointer; width: 120px; }
 
-    .logo {
-        width: 120px;
-    }
-
-    .m-nave-link {
+    .m-nav-menu {
         display: none;
     }
 
-    .nav-link {
-        list-style: none;
-    }
-
-
-    .nav-link li {
-        display: inline-block;
-        padding: 0px 20px;
-    }
-
-    .nav-link li a {
-        transition: all 0.3s ease 0s;
-    }
-
-    .nav-link li a:hover {
-        color: #ffd433;
-    }
+    .m-nav-link { display: none; }
+    .nav-link { list-style: none; }
+    .nav-link li { display: inline-block; padding: 0 20px; }
+    .nav-link li a { transition: all 0.3s ease 0s; }
+    .nav-link li a:hover { color: #ffd433; }
 
     button {
         padding: 9px 25px;
@@ -334,32 +300,14 @@
         transition: all 0.3s ease 0s;
     }
 
-    button:hover {
-        background-color: rgb(253, 104, 1);
-    }
+    button:hover { background-color: rgb(253, 104, 1); }
 
-    .feed-header {
-        display: flex;
-        justify-content: center;
-    }
+    .feed-header { display: flex; justify-content: center; }
+    .feed-header img { margin-top: -30px }
 
-    .feed-header img {
-
-    }
-
-    .feed-header-text {
-        margin-top: 100px;
-    }
-    .feed-header-text h3 {
-        /*border: #39f595 solid 2px;*/
-        /*background: #39f595;*/
-        color: #efebeb;
-        margin-top: 0;
-    }
-
-    .feed-header button {
-        margin-top: 50px;
-    }
+    .feed-header-text { margin-top: 100px; }
+    .feed-header-text h3 { color: #efebeb; margin-top: 0; }
+    .feed-header button { margin-top: 50px; }
 
     .popular-feed {
         display: flex;
@@ -380,13 +328,8 @@
         margin-top: 80px;
     }
 
-    .popular-feed h3 {
-        color: #fd6801;
-    }
-
-    .new-feed h3 {
-        color: #fd6801;
-    }
+    .popular-feed h3 { color: #fd6801; }
+    .new-feed h3 { color: #fd6801; }
 
 
     @import url(https://fonts.googleapis.com/css?family=Raleway:300,700);
@@ -504,6 +447,19 @@
       -webkit-transform: translate(0px, 0px);
       transform: translate(0px, 0px);
       opacity: 1;
+    }
+
+    #scrollTopPc {
+      display: flex;
+      position: fixed;
+      bottom: 64px; /* 윗쪽 끝에서부터의 거리 */
+      right: 35px; /* 오른쪽 끝에서부터의 거리 */
+      cursor: pointer;
+      z-index: 99;
+    }
+
+    #scrollTopMob {
+        display: none;
     }
 
 }
