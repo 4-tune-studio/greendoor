@@ -10,7 +10,7 @@ from .forms import AddProductForm
 
 # 데코레이터 의미 POST method만으로 접속이 가능하다
 @require_POST
-def add(request: HttpRequest, product_id: str) -> HttpResponse:
+def add(request: HttpRequest, product_id: int) -> HttpResponse:
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
 
