@@ -28,17 +28,18 @@ from ninja import NinjaAPI
 
 from user import views
 
-api = NinjaAPI()
-
-
-@api.get("/add")
-def add(request: HttpRequest, a: int, b: int) -> Dict[str, int]:
-    return {"result": a + b}
+#
+# api = NinjaAPI()
+#
+#
+# @api.get("/add")
+# def add(request: HttpRequest, a: int, b: int) -> Dict[str, int]:
+#     return {"result": a + b}
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", api.urls),
+    # path("api/", api.urls),
     path("cart/", include("cart.urls")),
     path("community/", include("feed.urls")),
     path("", include("user.urls")),

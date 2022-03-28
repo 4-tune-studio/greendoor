@@ -4,8 +4,8 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
 from cart.forms import AddProductForm
+from product.models import Category, Product
 
-from product.models import Product, Category
 
 # request는 장고 뷰가 던져질때 자연스럽게 들어오는 request 객체를 이용
 def product_in_category(request: HttpRequest, category_slug=None) -> HttpResponse:
@@ -37,7 +37,7 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
     )
 
 
-def product_detail(request: HttpRequest, id : str, product_slug=None) -> HttpResponse:
+def product_detail(request: HttpRequest, id: int, product_slug=None) -> HttpResponse:
     product = get_object_or_404(Product, id=id, slug=product_slug)
     add_to_cart = AddProductForm(initial={"quantity": 1})
     return render(request, "product/detail.html", {"product": product, "add_to_cart": add_to_cart})

@@ -11,6 +11,7 @@ from .forms import AddProductForm
 # 데코레이터 의미 POST method만으로 접속이 가능하다
 @require_POST
 def add(request: HttpRequest, product_id: int) -> HttpResponse:
+    print(type(product_id))
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
 
@@ -25,7 +26,7 @@ def add(request: HttpRequest, product_id: int) -> HttpResponse:
     return redirect("cart:detail")
 
 
-def remove(request: HttpRequest, product_id: str) -> HttpResponse:
+def remove(request: HttpRequest, product_id: int) -> HttpResponse:
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
@@ -37,4 +38,4 @@ def detail(request: HttpRequest) -> HttpResponse:
     for product in cart:
         product["quantity_form"] = AddProductForm(initial={"quantity": product["quantity"], "is_update": True})
 
-    return render(request, "product/detail.html", {"cart": cart})
+    return render(request, "cart/detail.html", {"cart": cart})
