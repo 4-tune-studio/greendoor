@@ -131,11 +131,10 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect("/sign-in/")
     if request.method == "GET":
-        user_info = Users.objects.get(id=pk)
         my_feed_list = get_my_feed_list(pk)
         my_bookmark_list = get_my_bookmark_feed_list(pk)
         return render(
-            request, "mypage.html", {"user": user_info, "feed_list": my_feed_list, "bookmark_list": my_bookmark_list}
+            request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list}
         )
     else:
         return redirect("/")
