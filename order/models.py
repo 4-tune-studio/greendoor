@@ -1,32 +1,32 @@
 import hashlib
 
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import post_save
 
+# from django.core.validators import MinValueValidator, MaxValueValidator
 # from coupon.models import Coupon
-from config.models import BaseModel
+# from config.models import BaseModel
 from product.models import Product
 
 from .iamport import find_transaction, payments_prepare
 
-
-class Order(BaseModel):
+class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     address = models.CharField(max_length=250)
     postal_code = models.CharField(max_length=20)
     city = models.CharField(max_length=100)
-    # created = models.DateTimeField(auto_now_add=True)
-    # updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+
 
     # coupon = models.ForeignKey(Coupon, on_delete=models.PROTECT, related_name='order_coupon', null=True, blank=True)
     # discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100000)])
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-created"]
 
     def __str__(self):
         return "Order {}".format(self.id)
@@ -36,7 +36,10 @@ class Order(BaseModel):
 
     def get_total_price(self):
         total_product = self.get_total_product()
-        return total_product - self.discount
+
+        # return total_product - self.discount
+        return total_product
+
 
 
 class OrderItem(models.Model):
@@ -61,9 +64,11 @@ class OrderTransactionManager(models.Manager):
         final_hash = hashlib.sha1((order_hash + email_hash).encode("utf-8")).hexdigest()[:10]
         merchant_order_id = "%s" % final_hash
 
+
         payments_prepare(merchant_order_id, amount)
 
         transaction = self.model(order=order, merchant_order_id=merchant_order_id, amount=amount)
+
 
         if success is not None:
             transaction.success = success
@@ -84,14 +89,17 @@ class OrderTransactionManager(models.Manager):
             return None
 
 
-class OrderTransaction(BaseModel):
+
+class OrderTransaction(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     merchant_order_id = models.CharField(max_length=120, null=True, blank=True)
     transaction_id = models.CharField(max_length=120, null=True, blank=True)
     amount = models.PositiveIntegerField(default=0)
     transaction_status = models.CharField(max_length=220, null=True, blank=True)
     type = models.CharField(max_length=120, blank=True)
-    # created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
 
     objects = OrderTransactionManager()
 
@@ -99,7 +107,11 @@ class OrderTransaction(BaseModel):
         return str(self.order.id)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-created"]
+
+
+def order_payment_validation(sender, instance, created, *args, **kwargs):
+
 
 
 def order_payment_validation(sender, instance, created_at, *args, **kwargs):

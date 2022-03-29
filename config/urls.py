@@ -45,8 +45,5 @@ urlpatterns = [
     path("survey/", include("survey.urls")),
     path("", include("product.urls")),
     path('order/', include('order.urls')),
-    path("product/", include("product.urls")),
-    path("order/", include("order.urls")),
-    # path("product/", include("product.urls")),
-
+    path("product/", include("product.urls")),  
 ]
