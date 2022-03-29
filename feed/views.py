@@ -51,9 +51,9 @@ def community_view(request: HttpRequest) -> HttpResponse:
         # 첫 페이지라면
         if offset == 0:
             popular_feeds = get_popular_feed_list(user_id, offset, 20)
-            return render(request, "feed_test_html/index.html", {"all_feed": all_feed, "popular_feeds": popular_feeds})
+            return render(request, "index.html", {"all_feed": all_feed, "popular_feeds": popular_feeds})
 
-        return render(request, "feed_test_html/index.html", {"all_feed": all_feed})
+        return render(request, "index.html", {"all_feed": all_feed})
 
     # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
     else:
