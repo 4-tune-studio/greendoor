@@ -2,7 +2,7 @@ from typing import Any, List
 
 from django.db import models
 
-from greendoor.models import BaseModel
+from config.models import BaseModel
 from user.models import Users
 
 

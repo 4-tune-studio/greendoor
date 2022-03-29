@@ -1,13 +1,13 @@
 # < 1. 장고 내부명령어로 생성된 앱이 아닐때 또는 패키지가 아닐때 앱에서 모델을 불러와서 DB에 접근할때 위치를 제대로 못찾을 때가 있음
 import os
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "greendoor.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
 import django
 
 django.setup()
 
-# 1. > 이럴때는 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "greendoor.settings")와 django.setup을 하고 실행하면 작동함
+# 1. > 이럴때는 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")와 django.setup을 하고 실행하면 작동함
 # 해당 내용은 settings.py에도 있는 내용이지만 경로를 찾지 못하기에 직접 여기서 실행할 수 있게 함
 
 # time.sleep() 함수를 사용준비
@@ -16,7 +16,7 @@ import time
 # pymysql을 이용해서 sql query문을 사용준비
 import pymysql
 
-from greendoor.my_settings import MY_DATABASES
+from config.my_settings import MY_DATABASES
 from plant.models import *
 
 # < 2. pymysql을 이용하여 DB에 접근, sql query문을 사용하는 부분

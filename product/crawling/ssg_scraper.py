@@ -4,13 +4,13 @@ from time import sleep
 import requests
 from bs4 import BeautifulSoup
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "greendoor.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
 import django
 
 django.setup()
 
-from product.models import Product, ProductCategory
+from product.models import Category, Product
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36"
@@ -71,7 +71,7 @@ for page in range(last_pages):
 
         main_image = f"https:{main_image}"
 
-        product_category_id = ProductCategory.objects.get(id=1)
+        product_category_id = Category.objects.get(id=1)
 
         Product.objects.create(
             product_category_id=product_category_id, name=title, price=price, image=main_image, image_tag=img_tag

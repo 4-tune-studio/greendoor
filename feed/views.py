@@ -5,6 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
+from config.utils import allowed_file, get_file_extension
 from feed.services.bookmark_service import do_bookmark, undo_bookmark
 from feed.services.comment_service import (
     create_a_comment,
@@ -23,7 +24,6 @@ from feed.services.feed_service import (
     upload_feed_image,
 )
 from feed.services.like_service import do_like, undo_like
-from greendoor.utils import allowed_file, get_file_extension
 
 URL_LOGIN = "/login/"  # TODO login url 작업 완료 되면 수정
 URL_S3 = "https://nmdbucket.s3.amazonaws.com/"
@@ -194,7 +194,7 @@ def api_delete_feed(request: HttpRequest, feed_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
     user_id = request.user.id
-    # 댓글 삭제 서비스 함수 실행
+    # 피드 삭제 서비스 함수 실행
     delete_a_feed(feed_id=feed_id, user_id=user_id)
     return redirect("feed:community")
 

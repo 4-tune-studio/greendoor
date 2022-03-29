@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <script defer src="{% static 'js/index.js' %}"></script>
+{% block static %}{% endblock static %}
+</head>
+<body>
+{% block content %}
+<!--헤더 + 네비게이션 바-->
+    <header>
+        <div class="header">
+            <img class="logo" src="{% static 'img/textlogo_white.png' %}">
+            <nav>
+                <ul class="nav-link">
+                    <li><a href="{% url 'feed:community' %}">store</a></li>
+                    <li><a href="{% url 'feed:community' %}">order</a></li>
+                    <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                </ul>
+                <div class="m-nav-link">
+                    <a id="list" href="{% url 'feed:community' %}"><img src="{% static 'img/list_white.png' %}"></a>
+                    <a href="{% url 'feed:community' %}"><img src="{% static 'img/order_white.png' %}"></a>
+                    <a href="{% url 'feed:community' %}"><img src="{% static 'img/profile_white.png' %}"></a>
+                </div>
+                <div class="m-nav-menu">
+                    <li><a href="{% url 'feed:community' %}">store</a></li>
+                    <li><a href="{% url 'feed:community' %}">order</a></li>
+                    <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                </div>
+            </nav>
+            <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
+        </div>
+    </header>
+<!--content-->
+    <div class="content-container">
+        <div class="content-wrapper">
+            <div class="profile">
+                <img src="{{ user.image }}">
+                <h5>{{user.nickname}}님 안녕하세요!</h5>
+                <a href="{% url 'user:profile_edit' user.id %}"><button>프로필 변경</button></a>
+            </div>
+
+            <div class="userfeed">
+                <div class="usercreated">
+                    <h5>· 내가 작성한 게시물 ·</h5>
+                    {% for feed in feed_list %}
+                    <div class="feed-img">
+                        <figure class="feed-img">
+                          <img src="{{ feed.image }}" alt="sample83" />
+                          <figcaption>
+                            <h3>{{ feed.title }}</h3>
+                            <p>{{ feed.content }}</p><i class="ion-ios-arrow-right"></i>
+                          </figcaption>
+                          <a href="{% url 'feed:feed' feed.id %}"></a>
+                        </figure>
+                        {% endfor %}
+
+                        <figure class="feed-img">
+                          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
+                          <figcaption>
+                            <h3>Fleece Marigold</h3>
+                            <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
+                          </figcaption>
+                          <a href="{% url 'feed:community' %}"></a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="userscrap">
+                    <h5>· 내가 스크랩한 게시물 ·</h5>
+                    {% for bookmark in bookmark_list %}
+                    <div class="feed-img">
+                        <figure class="feed-img">
+                          <img src="{{ bookmark.image }}" alt="sample83" />
+                          <figcaption>
+                            <h3>{{ bookmark.title }}</h3>
+                            <p>{{ bookmark.content }}</p><i class="ion-ios-arrow-right"></i>
+                          </figcaption>
+                          <a href="{% url 'feed:feed' bookmark.id %}"></a>
+                        </figure>
+                        {% endfor %}
+                        <figure class="feed-img">
+                          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
+                          <figcaption>
+                            <h3>Fleece Marigold</h3>
+                            <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
+                         </figcaption>
+                          <a href="{% url 'feed:community' %}"></a>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--footer-->
+    <footer>
+        <div class="footer">
+            <h4>Website created with Team 4-tune</h4>
+        </div>
+    </footer>
+{% endblock content %}
+</body>
+</html>
