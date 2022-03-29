@@ -54,7 +54,7 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
         if user:  # 로그인이 되어 있다면
             return redirect("/")
         else:  # 로그인이 되어 있지 않다면
-            return render(request, "signin.html")
+            return render(request, "user/signin.html")
     else:
         return redirect("/")
 
