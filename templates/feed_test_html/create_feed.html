@@ -15,7 +15,7 @@
         <input type="text" name="feed_title" id="feed_title" required> <br>
         <!--피드 내용-->
         <input type="text" name="feed_content" id="feed_content"> <br>
-        <button type="submit">작성하기</button>
+        <button id="feed_commit" type="submit">작성하기</button>
     </form>
     {% if error %}
         <div class="alert alert-danger" role="alert">
@@ -38,10 +38,15 @@ function readImage(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function clickCommitBtn() {
+    alert("feed commit")
+}
 // 이벤트 리스너
 document.getElementById('feed_img_file').addEventListener('change', (e) => {
     readImage(e.target);
 })
+document.getElementById('feed_commit').addEventListener('click', clickCommitBtn);
 </script>
 </body>
 </html>
