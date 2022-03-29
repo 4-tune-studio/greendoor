@@ -42,7 +42,7 @@ urlpatterns = [
     path("cart/", include("cart.urls")),
     path("community/", include("feed.urls")),
     path("", include("user.urls")),
-    path("", include("product.urls")),
-    path('order/', include('order.urls')),
-    # path("product/", include("product.urls")),
+    # path("", include("product.urls")),
+    path("order/", include("order.urls")),
+    path("product/", include("product.urls")),
 ]

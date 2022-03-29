@@ -29,6 +29,7 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
     return render(
         request,
         "product/list.html",
+        # "storeindex.html",
         {
             "current_category": current_category,
             "categories": categories,
