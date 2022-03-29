@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>write.html</title>
+
+    <style>
+        #wrap { width:450px; margin:auto }
+
+        #table { border-collapse: collapse; width:100% }
+        #th,td { padding:8px; text-align:left;
+        border-bottom: 1px solid #ddd;
+        }
+        tr:hover { background:#f5f5f5; cursor:pointer }
+    </style>
+</head>
+
+<body>
+<div id="wrap"><h1> write (설문 등록폼) </h1>
+<form method="post" action="insert">
+    <!-- view.py의 save_question 를 정의한 곳으로 이동해서 DB로 보낼 것. -->
+
+    {% csrf_token%}
+
+  <table>
+    <tr><td>질문</td><td><input type="text" name="question"></td></tr>
+    <tr><td>응답1</td><td><input type="text" name="ans1"></td></tr>
+    <tr><td>응답2</td><td><input type="text" name="ans2"></td></tr>
+    <tr><td>응답3</td><td><input type="text" name="ans3"></td></tr>
+    <tr><td>응답4</td><td><input type="text" name="ans4"></td></tr>
+    <tr><td>상태</td><td><input type="text" name="status"></td></tr>
+    <tr><input type="submit"></tr>
+  </table>
+
+</form>
+</div>
+</body>
+</html>
