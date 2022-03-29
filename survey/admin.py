@@ -1,8 +1,9 @@
 from django.contrib import admin
 
+from survey.models import Answer, Survey
+
 # Register your models here.
 
-from survey.models import Survey, Answer
 
 
 class SurveyAdmin(admin.ModelAdmin):
