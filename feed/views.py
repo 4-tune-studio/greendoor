@@ -113,7 +113,7 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
                 filename = f"file_{datetime.now().strftime('%Y%m%d%H%M%S')}.{ext}"
                 img_file.name = filename
                 # 이미지 업로드
-                img_url = upload_feed_image(img_file) # ?를 기준으로 split한 앞쪽 url주소 반환
+                img_url = upload_feed_image(img_file)  # ?를 기준으로 split한 앞쪽 url주소 반환
 
                 # 모든 예외처리를 통과하면
                 # 피드 저장 후 저장된 피드의 페이지로 이동
