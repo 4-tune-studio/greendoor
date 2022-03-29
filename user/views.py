@@ -135,6 +135,7 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
     # 사용자 로그인 확인
     if not request.user.is_authenticated:
         return redirect("/sign-in/")
+
     # 다른 사용자 수정 불가
     if request.user.id == pk:
         if request.method == "GET":
@@ -143,5 +144,4 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
             return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
         else:
             return redirect("/")  # TODO 잘못된 접근 경고문 여부
-    else:
-        return redirect("/")  # TODO 잘못된 접근 경고문 여부
+
