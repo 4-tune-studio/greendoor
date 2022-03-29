@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # 설문조사 문항
 class Survey(models.Model):
     # 설문 인덱스
@@ -13,7 +14,6 @@ class Survey(models.Model):
     ans2 = models.TextField(null=True)
     ans3 = models.TextField(null=True)
     ans4 = models.TextField(null=True)
-
 
     # 설문진행상태(y=진행중, n=종료)
     status = models.CharField(max_length=1, default="y")
