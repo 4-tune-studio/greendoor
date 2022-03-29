@@ -4,48 +4,73 @@
 {% block content %}
     <div style="width: 70%; margin: 10% 0 0 15%">
         <div class="card mb-3">
-            <img src="{{ user.image }}" class="card-img-top" alt="image" style="width: 50%; height: 30%;">
-            <div class="card-body">
-                <h5 class="card-title">프로필 사진</h5>
-                <input type="file" id="file">
-                <button class="btn btn-primary" onclick="update_image_api({{ user.id }})">수정</button>
+            {# 이미지 미리보기 함수 이벤트 발생하면 user.image 안보이게 숨기기 #}
+            <img src="{{ user.image }}" class="card-img-top" id="user-image" alt="image" style="width: 50%; height: 30%;">
+            {# 미리보기 이미지 붙이는 곳 #}
+            <div id="preview"></div>
+
+            <div class="file-edit-icon">
+                <div class="card-body">
+                    <h5 class="card-title">프로필 사진</h5>
+                    {# 이미지 미리보기 함수 이벤트 발생 #}
+                    <input type="file" name="file" id="file" class="upload-box upload-plus" accept="image/*">
+                    {# user 이미지 변경 함수 - 비동기 통신 #}
+                    <button class="btn btn-primary" onclick="update_image_api({{ user.id }})">수정</button>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-           function update_image_api(id) {
-            let user_id = id
-            let file = $('#file')[0].files[0]
-            let form_data = new FormData()
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            function update_image_api(id) {
+                let user_id = id
+                let file = $('#file')[0].files[0]
+                let form_data = new FormData()
 
-            form_data.append("user_id", user_id)
-            form_data.append("image", file)
-            $.ajax({
-                type: "POST",
-                url: "{% url "user:api_update_user_image" %}",
-                headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                dataType: 'json',
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(response){
-                    alert("성공")
-                    console.log(response)
-                },
-                error: function () {
-                    alert("실패")
-                },
-            })
-        }
-    </script>
+                form_data.append("user_id", user_id)
+                form_data.append("image", file)
+                $.ajax({
+                    type: "POST",
+                    url: "{% url "user:api_update_user_image" %}",
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    dataType: 'json',
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        alert("성공")
+                        console.log(response)
+                    },
+                    error: function () {
+                        alert("실패")
+                    },
+                })
+            }
 
-    <form action="" method="POST">
-        {% csrf_token %}
-        <div style="width: 70%; margin: 10% 0 0 15%">
-            {{ form|crispy }}
-            <button class="btn btn-primary" type="submit">수정</button>
-        </div>
-    </form>
+            {# 이미지 미리 보기 함수 #}
+            function handleFileSelect(event) {
+                var input = this;
+                console.log(input.files)
+                if (input.files && input.files.length) {
+                    var reader = new FileReader();
+                    this.enabled = false
+                    reader.onload = (function (e) {
+                        console.log(e)
+                        $("#preview").html(['<img class="thumb" src="', e.target.result, '" title="', escape(e.name), '"/>'].join(''))
+                    });
+                    reader.readAsDataURL(input.files[0]);
+                    $("#user-image").hide();
+                }
+            }
+
+
+        </script>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div style="width: 70%; margin: 10% 0 0 15%">
+                {{ form|crispy }}
+                <button class="btn btn-primary" type="submit">수정</button>
+            </div>
+        </form>
 {% endblock %}
