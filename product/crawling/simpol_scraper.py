@@ -26,12 +26,10 @@ import django
 
 django.setup()
 
-from time import sleep
-
 import requests
 from bs4 import BeautifulSoup
 
-from product.models import Category, Product
+from product.models import Product
 
 # 헤더 지정
 HEADERS = {
