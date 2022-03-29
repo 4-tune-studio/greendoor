@@ -144,4 +144,5 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
             return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
         else:
             return redirect("/")  # TODO 잘못된 접근 경고문 여부
-
+    else:
+        return redirect("/")  # TODO 잘못된 접근 경고문 여부
