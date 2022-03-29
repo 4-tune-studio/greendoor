@@ -34,7 +34,8 @@ urlpatterns = [
     path("logout/", views.logout, name="logout"),
     path("google/", include("allauth.urls")),
     # =============== user profile update ================ #
-    path("edit/<int:pk>", views.edit, name="edit"),
+    path("user/profile_edit/<int:pk>", views.profile_edit, name="profile_edit"),
     path("password/", views.password, name="password"),
-    path("api_update_user_image", views.api_update_user_image, name="api_update_user_image"),
+    path("user/api_update_user_image", views.api_update_user_image, name="api_update_user_image"),
+    path("user/my_page/<int:pk>", views.user_my_page, name="user_my_page"),
 ]
