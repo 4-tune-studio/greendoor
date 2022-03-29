@@ -1,7 +1,7 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>커뮤니티</title>
       <link href="{% static 'css/index.css' %}" rel="stylesheet">
       <script defer src="{% static 'js/index.js' %}"></script>
 {% block static %}{% endblock static %}
@@ -14,22 +14,22 @@
             <img class="logo" src="{% static 'img/textlogo_white.png' %}">
             <nav>
                 <ul class="nav-link">
-                    <li><a href="{% url '' %}">store</a></li>
-                    <li><a href="{% url '' %}">order</a></li>
-                    <li><a href="{% url '' %}">mypage</a></li>
+{#                    <li><a href="{% url '' %}">store</a></li>#}
+{#                    <li><a href="{% url '' %}">order</a></li>#}
+                    <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
                 </ul>
-                <div class="m-nav-link">
-                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>
-                    <a href="{% url '' %}"><img src="{% static 'img/order_white.png' %}"></a>
-                    <a href="{% url '' %}"><img src="{% static 'img/profile_white.png' %}"></a>
-                </div>
-                <div class="m-nav-menu">
-                    <li><a href="{% url '' %}">store</a></li>
-                    <li><a href="{% url '' %}">order</a></li>
-                    <li><a href="{% url '' %}">mypage</a></li>
-                </div>
+{#                <div class="m-nav-link">#}
+{#                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>#}
+{#                    <a href="{% url '' %}"><img src="{% static 'img/order_white.png' %}"></a>#}
+{#                    <a href="{% url '' %}"><img src="{% static 'img/profile_white.png' %}"></a>#}
+{#                </div>#}
+{#                <div class="m-nav-menu">#}
+{#                    <li><a href="{% url '' %}">store</a></li>#}
+{#                    <li><a href="{% url '' %}">order</a></li>#}
+{#                    <li><a href="{% url '' %}">mypage</a></li>#}
+{#                </div>#}
             </nav>
-            <a class="sign" href="{% url '' %}"><button>log in</button></a>
+{#            <a class="sign" href="{% url '' %}"><button>log in</button></a>#}
         </div>
     </header>
     <!-- 피드 상단 이미지 -->
@@ -42,60 +42,53 @@
 <!--            <button><a href="">자세히보기</a></button>-->
 <!--        </div>-->
     </div>
-    <div class="popular-feed">
-        <div id="feed-category">
-            <h3>· 인기피드 ·</h3>
+    {% if popular_feeds %}
+        <div class="popular-feed">
+            <div id="feed-category">
+                <h3>· 인기피드 ·</h3>
+            </div>
+            {% for feed in popular_feeds %}
+                <div class="feed-img">
+                    <figure class="feed-img">
+                        <a href="{% url 'feed:feed' feed.id %}">
+                            <img src="{{ feed.image }}" alt="{{ feed.content }}" />
+                            <figcaption>
+                                <h3>{{ feed.title }}</h3>
+                                <p>{{ feed.user_id.nickname }}</p><i class="ion-ios-arrow-right"></i>
+                            </figcaption>
+                        </a>
+                    </figure>
+                </div>
+            {% endfor %}
         </div>
-        <div class="feed-img">
-            <figure class="feed-img">
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
-              <figcaption>
-                <h3>Fleece Marigold</h3>
-                <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
-              </figcaption>
-              <a href="{% url '' %}"></a>
-            </figure>
-            <figure class="feed-img">
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
-              <figcaption>
-                <h3>Fleece Marigold</h3>
-                <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
-              </figcaption>
-              <a href="{% url '' %}"></a>
-            </figure>
-        </div>
-    </div>
+    {% endif %}
     <div class="new-feed">
         <div id="feed-category">
             <h3>· 최신피드 ·</h3>
         </div>
         <div class="feed-img">
-            <figure class="feed-img">
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
-              <figcaption>
-                <h3>Fleece Marigold</h3>
-                <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
-              </figcaption>
-              <a href="{% url '' %}"></a>
-            </figure>
-            <figure class="feed-img">
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
-              <figcaption>
-                <h3>Fleece Marigold</h3>
-                <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
-              </figcaption>
-              <a href="{% url '' %}"></a>
-            </figure>
+            {% for feed in all_feed %}
+                <figure class="feed-img">
+                    <a href="{% url "feed:feed" feed.id %}">
+                        <img src="{{ feed.image }}" alt="{{ feed.content }}" />
+                        <figcaption>
+                            <h3>{{ feed.title }}</h3>
+                            <p>{{ feed.user_id.nickname }}</p><i class="ion-ios-arrow-right"></i>
+                        </figcaption>
+                    </a>
+                </figure>
+            {% endfor %}
         </div>
     </div>
     </div>
     <!-- PC 글쓰기 버튼 -->
     <div onclick="" id="scrollTopPc">
-        <a href="{% url '' %}"><img src="{% static 'img/write.png' %}" width="50px" height="50px"></a>
+        <a href="{% url 'feed:create_feed' %}"><img src="{% static 'img/write.png' %}" width="50px" height="50px"></a>
     </div>
     <!-- 모바일 글쓰기 버튼 -->
     <div onclick="" id="scrollTopMob">
-        <a href="{% url '' %}"><img src="{% static 'img/write.png' %}write.png" width="50px" height="50px"></a>
+        <a href="{% url 'feed:create_feed' %}"><img src="{% static 'img/write.png' %}write.png" width="50px" height="50px"></a>
+
     </div>
 {% endblock content %}
 </body>
