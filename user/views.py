@@ -131,10 +131,11 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect("/sign-in/")
     if request.method == "GET":
-        my_feed_list = get_my_feed_list(pk)
-        my_bookmark_list = get_my_bookmark_feed_list(pk)
-        return render(
-            request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list}
-        )
+        if request.user.id == pk:
+            my_feed_list = get_my_feed_list(pk)
+            my_bookmark_list = get_my_bookmark_feed_list(pk)
+            return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
+        else:
+            return redirect("/")  # TODO 잘못된 접근 경고문 여부
     else:
-        return redirect("/")
+        return redirect("/")  # TODO 잘못된 접근 경고문 여부
