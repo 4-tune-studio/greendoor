@@ -18,7 +18,11 @@
                 <ul class="nav-link">
 {#                    <li><a href="{% url '' %}">store</a></li>#}
 {#                    <li><a href="{% url '' %}">order</a></li>#}
-                    <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                    {% if user.id %}
+                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                    {% else %}
+                        <li><a href="{% url 'user:sign-up' %}">mypage</a></li>
+                    {% endif %}
                 </ul>
 {#                <div class="m-nav-link">#}
 {#                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>#}
