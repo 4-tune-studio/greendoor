@@ -75,24 +75,28 @@ def accounts_login(request: HttpRequest) -> HttpResponse:
 # =============== user profile update (text) ================ #
 # user 주소, 번호 update
 def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
+    # 사용자 로그인 확인
     if not request.user.is_authenticated:
         return redirect("user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+    # 다른 사용자 수정 불가
+    if request.user.id == pk:
+        if request.method == "POST":
+            # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
+            form = CustomUserChangeForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.bio = request.POST["zipcode"]
+                form.image = request.POST["address"]
+                form.image = request.POST["phonenumber"]
+                form.save()
+                return redirect("/")
 
-    elif request.method == "POST":
-        # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
-        form = CustomUserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.bio = request.POST["zipcode"]
-            form.image = request.POST["address"]
-            form.image = request.POST["phonenumber"]
-            form.save()
-            return redirect("/")
-
-    elif request.method == "GET":
-        form = CustomUserChangeForm(instance=request.user)
-    context = {"form": form}
-    # 관련 templates 기존 정보를 넘겨 준다
-    return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
+        elif request.method == "GET":
+            form = CustomUserChangeForm(instance=request.user)
+        context = {"form": form}
+        # 관련 templates 기존 정보를 넘겨 준다
+        return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
+    else:
+        return redirect("/")  # TODO 잘못된 접근 경고문 여부
 
 
 # user profile update 페이지 -> /password_reset/ url 연결
@@ -123,15 +127,17 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
                 url_update = update_user_image_url(user_id, img_update)
                 return JsonResponse({"message": url_update})
             else:
-                return JsonResponse({"message": "file_none"})
+                return JsonResponse({"message": "올바른 이미지 확장자가 아닙니다."})
 
 
 # =============== user my page ================ #
 def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
+    # 사용자 로그인 확인
     if not request.user.is_authenticated:
         return redirect("/sign-in/")
-    if request.method == "GET":
-        if request.user.id == pk:
+    # 다른 사용자 수정 불가
+    if request.user.id == pk:
+        if request.method == "GET":
             my_feed_list = get_my_feed_list(pk)
             my_bookmark_list = get_my_bookmark_feed_list(pk)
             return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
