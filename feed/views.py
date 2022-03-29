@@ -78,7 +78,7 @@ def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
         feed = get_a_feed(user_id, feed_id)
         comments = get_comment_list(feed.id, 0, 20)  # TODO 코멘트 몇개씩 보이게 할지 정해야함
 
-        return render(request, "feed_test_html/feed.html", {"feed": feed, "comments": comments})
+        return render(request, "feeddetail.html", {"feed": feed, "comments": comments})
 
     # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
     else:
