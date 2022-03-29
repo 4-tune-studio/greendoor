@@ -1,9 +1,11 @@
 import requests
 from django.conf import settings
+
 from django.http import JsonResponse
 
 
 def get_token() -> JsonResponse:
+
     access_data = {"imp_key": settings.IAMPORT_KEY, "imp_secret": settings.IAMPORT_SECRET}
 
     url = "http://api.iamport.kr/users/getToken"

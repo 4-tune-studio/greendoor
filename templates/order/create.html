@@ -31,12 +31,16 @@ order_complete_url = "{% url 'order:order_complete' %}";
                 <span>{{item.total_price}}</span>
             </li>
         {% endfor %}
+
 {#        {% if cart.coupon %}#}
 {#            <li class="list-group-item">#}
 {#                "{{ cart.coupon.code }}" ({{ cart.coupon.amount }} off)#}
 {#                <span>- ${{ cart.get_total_discount|floatformat:"2" }}</span>#}
 {#            </li>#}
 {#        {% endif %}#}
+
+
+
         </ul>
         <div class="alert alert-success" role="alert">Total : {{cart.get_total_price|floatformat:"2"}}</div>
 

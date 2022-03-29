@@ -10,7 +10,6 @@ from product.models import Product
 
 from .iamport import find_transaction, payments_prepare
 
-
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -21,6 +20,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+
 
     # coupon = models.ForeignKey(Coupon, on_delete=models.PROTECT, related_name='order_coupon', null=True, blank=True)
     # discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100000)])
@@ -36,8 +36,10 @@ class Order(models.Model):
 
     def get_total_price(self):
         total_product = self.get_total_product()
+
         # return total_product - self.discount
         return total_product
+
 
 
 class OrderItem(models.Model):
@@ -62,13 +64,11 @@ class OrderTransactionManager(models.Manager):
         final_hash = hashlib.sha1((order_hash + email_hash).encode("utf-8")).hexdigest()[:10]
         merchant_order_id = "%s" % final_hash
 
-        print(f"order:{order}")
 
-        print(f"merchant_order_id:{merchant_order_id}")
         payments_prepare(merchant_order_id, amount)
 
         transaction = self.model(order=order, merchant_order_id=merchant_order_id, amount=amount)
-        print(f"transaction{transaction}")
+
 
         if success is not None:
             transaction.success = success
@@ -89,6 +89,7 @@ class OrderTransactionManager(models.Manager):
             return None
 
 
+
 class OrderTransaction(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     merchant_order_id = models.CharField(max_length=120, null=True, blank=True)
@@ -96,7 +97,9 @@ class OrderTransaction(models.Model):
     amount = models.PositiveIntegerField(default=0)
     transaction_status = models.CharField(max_length=220, null=True, blank=True)
     type = models.CharField(max_length=120, blank=True)
+
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
 
     objects = OrderTransactionManager()
 
@@ -108,6 +111,10 @@ class OrderTransaction(models.Model):
 
 
 def order_payment_validation(sender, instance, created, *args, **kwargs):
+
+
+
+def order_payment_validation(sender, instance, created_at, *args, **kwargs):
     if instance.transaction_id:
         import_transaction = OrderTransaction.objects.get_transaction(merchant_order_id=instance.merchant_order_id)
 

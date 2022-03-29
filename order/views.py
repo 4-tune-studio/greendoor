@@ -18,23 +18,22 @@ def order_create(request):
     cart = Cart(request)
     if request.method == "POST":
         form = OrderCreateForm(request.POST)
-        print("1번구역")
+
         if form.is_valid():
             order = form.save(commit=False)
-            # if cart.coupon:
-            #     order.coupon = cart.coupon
-            #     order.discount = cart.coupon.amount
-            print("2번구역")
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.coupon.amount
             order.save()
             for item in cart:
-                print("3번구역")
+
                 OrderItem.objects.create(
                     order=order, product=item["product"], price=item["price"], quantity=item["quantity"]
                 )
             cart.clear()
-            return render(request, "order/create.html", {"order": order})
+            return render(request, "order/created.html", {"order": order})
     else:
-        print("4번구역")
+
         form = OrderCreateForm()
     return render(request, "order/create.html", {"cart": cart, "form": form})
 
@@ -47,13 +46,12 @@ def order_complete(request):
 
 class OrderCreateAjaxView(View):
     def post(self, request, *args, **kwargs):
-
         if not request.user.is_authenticated:
-            print("권한이 없을때")
             return JsonResponse({"authenticated": False}, status=403)
 
         cart = Cart(request)
         form = OrderCreateForm(request.POST)
+
         print(f"form: {form}")
 
         if form.is_valid():
@@ -62,6 +60,7 @@ class OrderCreateAjaxView(View):
             # if cart.coupon:
             #     order.coupon = cart.coupon
             #     order.discount = cart.coupon.amount
+
             order.save()
             for item in cart:
                 OrderItem.objects.create(
@@ -71,7 +70,6 @@ class OrderCreateAjaxView(View):
             data = {"order_id": order.id}
             return JsonResponse(data)
         else:
-            print("6번 구역")
             return JsonResponse({}, status=401)
 
 
@@ -97,6 +95,7 @@ class OrderCheckoutAjaxView(View):
             print(merchant_order_id)
         except:
             print("14번 구역")
+
             merchant_order_id = None
 
         if merchant_order_id is not None:
@@ -139,13 +138,16 @@ class OrderImpAjaxView(View):
 @staff_member_required
 def admin_order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
+
     return render(request, "admin/detail.html", {"order": order})
+
 
 
 @staff_member_required
 def admin_order_pdf(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     html = render_to_string("admin/pdf.html", {"order": order})
+
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = "filename=order_{}.pdf".format(order.id)
     # weasyprint.HTML(string=html).write_pdf(response, stylesheets=[weasyprint.CSS(settings.STATICFILES_DIRS[0]+'/css/pdf.css')])

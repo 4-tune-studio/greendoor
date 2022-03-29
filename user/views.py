@@ -4,6 +4,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 
 from config.utils import allowed_file, get_file_extension
+from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
 from user.forms import CustomUserChangeForm
 from user.models import Users
 from user.services.userimg_service import update_user_image, update_user_image_url
@@ -66,30 +67,36 @@ def logout(request: HttpRequest) -> HttpResponse:
 # =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
 def accounts_login(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
-        return render(request, "user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+        return render(request, "signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+    else:
+        return redirect("/")
 
 
 # =============== user profile update (text) ================ #
 # user 주소, 번호 update
-def edit(request: HttpRequest, pk: int) -> HttpResponse:
+def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
+    # 사용자 로그인 확인
     if not request.user.is_authenticated:
         return redirect("user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+    # 다른 사용자 수정 불가
+    if request.user.id == pk:
+        if request.method == "POST":
+            # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
+            form = CustomUserChangeForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.bio = request.POST["zipcode"]
+                form.image = request.POST["address"]
+                form.image = request.POST["phonenumber"]
+                form.save()
+                return redirect("/")
 
-    elif request.method == "POST":
-        # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
-        form = CustomUserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.bio = request.POST["zipcode"]
-            form.image = request.POST["address"]
-            form.image = request.POST["phonenumber"]
-            form.save()
-            return redirect("/")
-
-    elif request.method == "GET":
-        form = CustomUserChangeForm(instance=request.user)
-    context = {"form": form}
-    # 관련 templates 기존 정보를 넘겨 준다
-    return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
+        elif request.method == "GET":
+            form = CustomUserChangeForm(instance=request.user)
+        context = {"form": form}
+        # 관련 templates 기존 정보를 넘겨 준다
+        return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
+    else:
+        return redirect("/")  # TODO 잘못된 접근 경고문 여부
 
 
 # user profile update 페이지 -> /password_reset/ url 연결
@@ -120,4 +127,22 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
                 url_update = update_user_image_url(user_id, img_update)
                 return JsonResponse({"message": url_update})
             else:
-                return JsonResponse({"message": "file_none"})
+                return JsonResponse({"message": "올바른 이미지 확장자가 아닙니다."})
+
+
+# =============== user my page ================ #
+def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
+    # 사용자 로그인 확인
+    if not request.user.is_authenticated:
+        return redirect("/sign-in/")
+
+    # 다른 사용자 수정 불가
+    if request.user.id == pk:
+        if request.method == "GET":
+            my_feed_list = get_my_feed_list(pk)
+            my_bookmark_list = get_my_bookmark_feed_list(pk)
+            return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
+        else:
+            return redirect("/")  # TODO 잘못된 접근 경고문 여부
+    else:
+        return redirect("/")  # TODO 잘못된 접근 경고문 여부
