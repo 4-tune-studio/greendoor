@@ -16,22 +16,26 @@
             <img class="logo" src="{% static 'img/textlogo_white.png' %}">
             <nav>
                 <ul class="nav-link">
-{#                    <li><a href="{% url '' %}">store</a></li>#}
-{#                    <li><a href="{% url '' %}">order</a></li>#}
+                    <li><a href="{% url 'product:product_all' %}">store</a></li>
+                    <li><a href="{% url 'product:product_all' %}">order</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
                     {% else %}
                         <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
                     {% endif %}
                 </ul>
+                <div class="m-nav-link">
+                    <a id="list" href="{% url 'product:product_all' %}"><img src="{% static 'img/list_white.png' %}"></a>
+                    <a href="{% url 'product:product_all' %}"><img src="{% static 'img/order_white.png' %}"></a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'user:user_my_page' user.id %}"><img src="{% static 'img/profile_white.png' %}"></a>
+                    {% else %}
+                        <a href="{% url 'user:sign-in' %}"><img src="{% static 'img/profile_white.png' %}"></a>
+                    {% endif %}
+                </div>
                 <div class="m-nav-menu">
-{#                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>#}
-{#                    <a href="{% url '' %}"><img src="{% static 'img/order_white.png' %}"></a>#}
-{#                    <a href="{% url '' %}"><img src="{% static 'img/profile_white.png' %}"></a>#}
-{#                </div>#}
-{#                <div class="m-nav-menu">#}
-{#                    <li><a href="{% url '' %}">store</a></li>#}
-{#                    <li><a href="{% url '' %}">order</a></li>#}
+                    <li><a href="{% url 'product:product_all' %}">store</a></li>
+                    <li><a href="{% url 'product:product_all' %}">order</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
                     {% else %}
