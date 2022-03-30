@@ -71,10 +71,11 @@ for page in range(last_pages):
 
         main_image = f"https:{main_image}"
 
-        product_category_id = Category.objects.get(id=1)
+        product_category_id = Category.objects.get(id=2)
+        slug = title
 
         Product.objects.create(
-            product_category_id=product_category_id, name=title, price=price, image=main_image, image_tag=img_tag
+            category=product_category_id, name=title, price=price, image=main_image, image_tag=img_tag, slug=slug
         )
 
         info = {"title": title, "price": price, "main_image": main_image, "img_tag": img_tag}
