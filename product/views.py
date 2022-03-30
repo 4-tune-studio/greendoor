@@ -14,7 +14,6 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
     # Category 전체를 불러올것
     categories = Category.objects.all()
 
-
     # 제품을 보여줄 수 있는 것만 불러오기
     products = Product.objects.filter(available_display=True)
     # Category 전체를 불러올것
@@ -37,14 +36,12 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
         request,
         # "product/list.html",
         "storeindex.html",
-
         {
             "current_category": current_category,
             "categories": categories,
             "products": products,
         },
     )
-
 
 
 def product_detail(request: HttpRequest, id, product_slug=None) -> HttpResponse:
