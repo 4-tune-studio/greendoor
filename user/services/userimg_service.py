@@ -11,6 +11,6 @@ def update_user_image(img_file: UploadedFile) -> Any:
 
 
 # update user image url 함수
-def update_user_image_url(user_id: int, img_url: str) -> str:
+def update_user_image_url(user_id: Any, img_url: str) -> Any:
     Users.objects.filter(id=user_id).update(image=img_url)
     return Users.objects.get(id=user_id).image
