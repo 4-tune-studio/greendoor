@@ -145,7 +145,7 @@ for W in WORDS:
     # print(WORD)
     URL = f"https://www.simpol.co.kr/front/productsearch.php?&search={WORD}"
 
-# -------------- 단어 검색 추출 설정 (끝)-------------- #
+    # -------------- 단어 검색 추출 설정 (끝)-------------- #
 
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # WORD로 스크래핑 할 경우 word당 1~3건 정도의 데이터만 필요하기에 last 페이지 추출할 필요는 없음
@@ -155,8 +155,7 @@ for W in WORDS:
     # 따로 단어 str에서 예외처리 해줄 필요는 없어보임
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
-# -------------- 페이지 스크래핑 (시작)-------------- #
+    # -------------- 페이지 스크래핑 (시작)-------------- #
 
     page_result = requests.get(f"{URL}", headers=HEADERS)
     # 인코딩 추측을 하지 않도록 None 지정 (UTF-8, EUC-KR 로 지정해도 된다)
@@ -230,7 +229,9 @@ for W in WORDS:
                         slug_title = f"{slug_title}_{str(products_index)}"
 
                     # DB Product 테이블에 정보 저장
-                    Product.objects.create(category_id=1, name=title, slug=slug_title, image=image, price=price, plant_id=W)
+                    Product.objects.create(
+                        category_id=1, name=title, slug=slug_title, image=image, price=price, plant_id=W
+                    )
                     products_index += 1
 
 # -------------- 페이지 스크래핑 (끝)-------------- #
