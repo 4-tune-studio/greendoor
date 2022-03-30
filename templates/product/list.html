@@ -1,6 +1,11 @@
-{% extends 'base.html' %}
-{% block title %}Category Page{% endblock %}
-{% block content %}
+{% extends "indexbase.html" %}
+{% block extrahead %}
+    {% endblock %}
+    {% block content %}
+    <!-- 피드 상단 이미지 -->
+    <div class="feed-header">
+        <img src="{% static 'img/storemain.png' %}">
+    </div>
     <script type="text/javascript">
         alert("진행상황확인1.");
     </script>

@@ -1,8 +1,7 @@
-const togglebtn = document.querySelector('#list')
-const menu = document.querySelector('.m-nav-menu')
-const logo = document.querySelector('.logo')
+const togglebtn = document.querySelector('.navbar-toggle')
+const category = document.querySelector('.category')
+
 
 togglebtn.addEventListener('click',()=>{
-    menu.classList.toggle('active');
-    logo.classList.toggle('active')
+    category.classList.toggle('active');
 });
