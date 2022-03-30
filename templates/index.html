@@ -18,7 +18,7 @@
                 <ul class="nav-link">
 {#                    <li><a href="{% url '' %}">store</a></li>#}
 {#                    <li><a href="{% url '' %}">order</a></li>#}
-                    {% if user.id %}
+                    {% if user.is_authenticated %}
                         <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
                     {% else %}
                         <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
@@ -32,7 +32,7 @@
 {#                <div class="m-nav-menu">#}
 {#                    <li><a href="{% url '' %}">store</a></li>#}
 {#                    <li><a href="{% url '' %}">order</a></li>#}
-                    {% if user.id %}
+                    {% if user.is_authenticated %}
                         <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
                     {% else %}
                         <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
