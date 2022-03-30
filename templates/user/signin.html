@@ -13,7 +13,7 @@
 <body>
 {% block content %}
     <div class="header-logo">
-        {#        <img id="logo" src="../static/img/textlogo_green.png">#}
+{#                <img id="logo" src="../static/img/textlogo_green.png">#}
         <img id="logo" src="{% static 'img/textlogo_green.png' %}">
     </div>
     <div class="container">
@@ -56,7 +56,7 @@
                 <form id="sign-in-form">
                     <input type="email" placeholder="Email"/>
                     <input type="password" placeholder="Password"/>
-                    <p class="forgot-password">Forgot your password?</p>
+                    <p class="forgot-password"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
                     <button class="control-button in">Sign In</button>
                 </form>
             </div>
@@ -80,11 +80,18 @@
                     </div>
                 </div>
                 <p class="small">or use your email for registration:</p>
-                <form id="sign-up-form">
-                    <input type="text" placeholder="Name"/>
-                    <input type="email" placeholder="Email"/>
-                    <input type="password" placeholder="Password"/>
-                    <button class="control-button up">Sign Up</button>
+                <form id="sign-up-form" method="post" action="{% url "user:sign-up" %}">
+                    {% csrf_token %}
+                    <input type="text" placeholder="NickName" name="nickname">
+                    <input type="email" placeholder="Email" name="email">
+                    <input type="password" placeholder="Password" name="password">
+                    <input type="password" placeholder="Verify Password" name="password2">
+                    {% if error %}
+                        <p class="small" style="color: darkred">{{ error }}</p>
+                    {% elif msg %}
+                        <p class="small" style="color: olivedrab">{{ msg }}</p>
+                    {% endif %}
+                    <button type="submit" class="control-button up">Sign Up</button>
                 </form>
             </div>
         </div>
