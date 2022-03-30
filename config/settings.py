@@ -28,27 +28,15 @@ from .my_settings import (
 
 django_stubs_ext.monkeypatch()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-zhi_y6fvy1nv=*d8%tqdi&ac=*isw41d-g16e&@_jvxros7j=a'
-# try:
 SECRET_KEY = MY_SECRET["SECRET_KEY"]
 DATABASES = MY_DATABASES
-# except:
-#     SECRET_KEY = ${{ secrets.SECRET_KEY }}
-#     DATABASES = MY_DATABASES
-# else:
-#     print("success")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS: List[str] = []
+# ALLOWED_HOSTS: List[str] = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -80,7 +68,6 @@ INSTALLED_APPS = [
     "survey",
 ]
 
-
 # password reset
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
@@ -100,7 +87,6 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # "DIRS": [BASE_DIR],
         "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -182,7 +168,6 @@ AWS_SECRET_ACCESS_KEY = MY_SECRET["SECRET_KEY"]
 AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME["BUCKET_NAME"]
 AWS_DEFAULT_ACL = "public-read"  # its make read anybody
 
-
 # =============== password reset email setting =============== #
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # gmail connect port
@@ -197,7 +182,6 @@ EMAIL_HOST_PASSWORD = EMAIL_SECRET_KEY["EMAIL_SECRET_KEY"]
 EMAIL_USE_TLS = True
 # site auto response setting
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of 'allauth'

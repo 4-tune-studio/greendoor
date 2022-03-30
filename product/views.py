@@ -23,6 +23,7 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
         current_category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=current_category)
 
+    products
     ######################################################################################
     # templates의 구조에 따라서 다르게 쓸 수 있으나 앱기반으로 하여 이렇게 되어있다. 수정이 필요한 부분
     ######################################################################################

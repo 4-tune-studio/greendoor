@@ -2,28 +2,33 @@
 {% block title %}Product Detail{% endblock %}
 {% block content %}
 
-        <div class="container">
-            <div class="row">
-                <div class="col-4">
-                        {% if not product.image.url %}
-                            <img src="{{ product.image.url }}" width = 100% />
-                        {% else %}
-                            <img src="{{ product.image_tag }}" width = 100% />
-                        {% endif %}
-                </div>
-                <div class="col">
-                    <h1 class="display-6">{{product.name}}</h1>
-
-                    <p><span class="badge badge-secondary">Price</span> &#8361;{{product.price}}</p>
-
-                    <form action="{% url 'cart:product_add' product.id %}" method="post">
-                        {{add_to_cart}}
-                        {% csrf_token %}
-                        <input type="submit" class="btn btn-primary btn-sm" value="Add to Cart">
-                    </form>
-                    <h5><span class="badge badge-secondary">Description</span>{{product.description|linebreaks}}</h5>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                {#                        {% if not product.image.url %}#}
+                {#                            <img src="{{ product.image.url }}" width = 100% />#}
+                {#                        {% else %}#}
+                <img src="{{ product.image }}" width=100%/>
+                {#                        {% endif %}#}
             </div>
+            <div class="col">
+                <h1 class="display-6">{{ product.name }}</h1>
+
+                <p><span class="badge badge-secondary">Price</span> &#8361;{{ product.price }}</p>
+
+                <form action="{% url 'cart:product_add' product.id %}" method="post">
+                    {{ add_to_cart }}
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-primary btn-sm" value="Add to Cart">
+                </form>
+                <h5><span class="badge badge-secondary">Description</span>{{ product.description|linebreaks }}</h5>
+            </div>
+            {% if product.image_tag %}
+                <div class="col-4">
+                    {{ product.image_tag }}
+                </div>
+            {% endif %}
         </div>
+    </div>
 
 {% endblock %}

@@ -28,7 +28,7 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
         email = request.POST.get("email", None)
         password = str(request.POST.get("password", None))
         password2 = request.POST.get("password2", None)
-        
+
         # 회원가입 예외처리
         if email == "" or nickname == "" or password == "" or password2 == "":
             return render(request, "user/signin.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
