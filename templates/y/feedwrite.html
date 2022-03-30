@@ -1,0 +1,63 @@
+{% extends "detailbase.html" %}
+{% block extrahead %}
+    {% load static %}
+    <link href="{% static 'css/feedwrite.css' %}" rel="stylesheet">
+    {% endblock %}
+    {% block content %}
+    <a href="{% url "feed:community" %}">커뮤니티 페이지로 이동</a> <br>
+        <form action="{% url "feed:create_feed" %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--피드 이미지-->
+            <input type="file" name="feed_img_file" id="feed_img_file" accept="image/*" required> <br>
+            <img style="width: 500px;" id="previewImage" src=""> <br>
+            <!--피드 제목-->
+            <input type="text" name="feed_title" id="feed_title" required> <br>
+            <!--피드 내용-->
+            <input type="text" name="feed_content" id="feed_content"> <br>
+            <button type="submit">작성하기</button>
+        </form>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+    <script defer type="text/javascript">
+    /**
+     * 단일파일 업로드
+     */
+    function readImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    // 이벤트 리스너
+    document.getElementById('feed_img_file').addEventListener('change', (e) => {
+        readImage(e.target);
+    })
+    </script>
+{#    <div class="write-contatiner">#}
+{#        <div class="write-wrapper">#}
+{#            <h1>글쓰기</h1>#}
+{#            <div class="input-group mb-3">#}
+{#              <span class="input-group-text" id="inputGroup-sizing-default">제목</span><br>#}
+{#              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">#}
+{#            </div>#}
+{#            <div class="input-content">#}
+{#                <span class="input-group-text" id="inputGroup-sizing-default">내용</span><br>#}
+{#                <textarea id="content"></textarea>#}
+{#            </div>#}
+{#            <div class="input-group mb-3">#}
+{#              <input type="file" class="form-control" id="inputGroupFile02">#}
+{#            </div>#}
+{#            <a class="write" href=""><button>글쓰기</button></a>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+{% endblock content %}

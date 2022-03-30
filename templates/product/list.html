@@ -1,6 +1,12 @@
-{% extends 'base.html' %}
-{% block title %}Category Page{% endblock %}
-{% block content %}
+{% extends "indexbase.html" %}
+{% block extrahead %}
+    {% endblock %}
+    {% block content %}
+    <!-- 피드 상단 이미지 -->
+    <div class="feed-header">
+        <img src="{% static 'img/storemain.png' %}">
+    </div>
+
     <div class="row">
         <div class="col-2">
             <div class="list-group">

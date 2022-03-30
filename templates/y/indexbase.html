@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% block static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Greendoor{% endblock %}</title>
+    <link href="{% static 'css/indexbase.css' %}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6bc056fb5e.js" crossorigin="anonymous"></script>
+    <script defer src="{% static 'js/base.js' %}"></script>
+{% endblock static %}
+</head>
+<body>
+{% block content %}
+<!--헤더 + 네비게이션 바-->
+<nav class="navbar">
+    <div class="logo">
+        <img src="{% static 'img/textlogo_white.png' %}">
+    </div>
+    <ul class="category">
+        <li><a href="">community</a></li>
+        <li><a href="">store</a></li>
+        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+    </ul>
+    <div class="sign">
+        <a class="sign" href=""><button>log out</button></a>
+    </div>
+    <a href="#" class="navbar-toggle">
+        <i class="fa-solid fa-bars"></i>
+    </a>
+    <a href="#" class="navbar-logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+</nav>
+{% endblock content %}

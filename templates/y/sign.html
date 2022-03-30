@@ -1,0 +1,84 @@
+{% extends "detailbase.html" %}
+{% block extrahead %}
+    {% load static %}
+    <link href="{% static 'css/sign.css' %}" rel="stylesheet">
+    <link href="http://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+
+    {% endblock %}
+    {% block content %}
+    <div class="container">
+      <div class="overlay" id="overlay">
+        <div class="sign-in" id="sign-in">
+          <h1>Welcome Back!</h1>
+          <p>이미 가입하셨나요? <br><br>로그인하고 지금 바로 <br><br>그린도어 서비스를<br><br>이용해보세요.</p>
+          <button class="switch-button" id="slide-right-button">로그인하기</button>
+        </div>
+        <div class="sign-up" id="sign-up">
+          <h1>Welcome!</h1>
+          <p>아직 가입안하셨나요?<br><br>가입하고 지금 바로<br><br>그린도어 서비스를<br><br>이용해보세요.</p>
+          <button class="switch-button" id="slide-left-button">가입하기</button>
+        </div>
+      </div>
+      <div class="form">
+      {% csrf_token %}
+        <div class="sign-in" id="sign-in-info">
+          <h1>Sign In</h1>
+          <div class="social-media-buttons">
+            <div class="icon">
+              <svg viewBox="0 0 24 24">
+              <a href="{% provider_login_url 'google' %}">
+                <path fill="#000000" d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
+            </a>
+              </svg>
+            </div>
+            <div class="icon">
+            <svg viewBox="0 0 24 24">
+                <path fill="#000000" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+            </svg>
+            </div>
+          </div>
+          <p class="small">or use your email account:</p>
+          <form id="sign-in-form" method="post", action="{% url "user:sign-in" %}">
+            <input type="email" placeholder="Email"/>
+            <input type="password" placeholder="Password"/>
+            <p class="forgot-password"><a href="{% url 'password_reset' %}">비밀번호를 잊으셨나요?</a></p>
+            <button class="control-button in" type="submit">Sign In</button>
+          </form>
+        </div>
+        <div class="sign-up" id="sign-up-info">
+          <h1>Create Account</h1>
+          <div class="social-media-buttons">
+            <div class="icon">
+              <svg viewBox="0 0 24 24">
+              <a href="{% provider_login_url 'google' %}">
+                <path fill="#000000" d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
+            </a>
+              </svg>
+            </div>
+            <div class="icon">
+            <svg viewBox="0 0 24 24">
+                <path fill="#000000" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+            </svg>
+            </div>
+          </div>
+          <p class="small">or use your email for registration:</p>
+           <form id="sign-up-form" method="post" action="{% url "user:sign-up" %}">
+            {% csrf_token %}
+            <input type="text" placeholder="NickName" name="nickname">
+            <input type="email" placeholder="Email" name="email">
+            <input type="password" placeholder="Password" name="password">
+            <input type="password" placeholder="Verify Password" name="password2">
+            {% if error %}
+                <p class="small" style="color: darkred">{{ error }}</p>
+            {% elif msg %}
+                <p class="small" style="color: olivedrab">{{ msg }}</p>
+            {% endif %}
+            <button type="submit" class="control-button up">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+<script type="text/javascript" src="{% static 'js/signin.js' %}">
+</script>
+
+{% endblock content %}
