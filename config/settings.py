@@ -143,10 +143,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),  # base_dir is project folder
+    STATIC_DIR
 ]
+
+# STATIC_URL = "https://nmdbucket.s3.ap-northeast-2.amazonaws.com/"
+# # STATICFILES_DIRS = [
+# #     os.path.join(BASE_DIR, "static"),  # base_dir is project folder
+# # ]
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -161,12 +169,15 @@ CART_ID = "cart item"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
+# with open(os.path.join(BASE_DIR, 'config/conf/aws.json')) as f:
+#     secrets = json.loads(f.read())
+
 AWS_S3_REGION_NAME = "ap-northeast-2"
 AWS_S3_SIGNATURE_VERSION = "s3v4"
 AWS_ACCESS_KEY_ID = MY_SECRET_ACCESS_KEY["ACCESS_KEY"]
 AWS_SECRET_ACCESS_KEY = MY_SECRET["SECRET_KEY"]
 AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME["BUCKET_NAME"]
-AWS_DEFAULT_ACL = "public-read"  # its make read anybody
+AWS_DEFAULT_ACL = None  # its make read anybody
 
 # =============== password reset email setting =============== #
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

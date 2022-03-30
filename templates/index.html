@@ -1,81 +1,28 @@
-{% load static %}
-<head>
-    <meta charset="UTF-8">
-    <title>커뮤니티</title>
-      <link href="{% static 'css/index.css' %}" rel="stylesheet">
-      <script defer src="{% static 'js/index.js' %}"></script>
-{% block static %}{% endblock static %}
-</head>
-<body>
-{% block content %}
-
-<!--헤더 + 네비게이션 바-->
-    <header>
-        <div class="header">
-            <img class="logo" src="{% static 'img/textlogo_white.png' %}">
-            <nav>
-                <ul class="nav-link">
-                    <li><a href="{% url 'product:product_all' %}">store</a></li>
-                    <li><a href="{% url 'product:product_all' %}">order</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
-                    {% else %}
-                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
-                    {% endif %}
-                </ul>
-                <div class="m-nav-link">
-                    <a id="list" href="{% url 'product:product_all' %}"><img src="{% static 'img/list_white.png' %}"></a>
-                    <a href="{% url 'product:product_all' %}"><img src="{% static 'img/order_white.png' %}"></a>
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'user:user_my_page' user.id %}"><img src="{% static 'img/profile_white.png' %}"></a>
-                    {% else %}
-                        <a href="{% url 'user:sign-in' %}"><img src="{% static 'img/profile_white.png' %}"></a>
-                    {% endif %}
-                </div>
-                <div class="m-nav-menu">
-                    <li><a href="{% url 'product:product_all' %}">store</a></li>
-                    <li><a href="{% url 'product:product_all' %}">order</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
-                    {% else %}
-                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
-                    {% endif %}
-                </div>
-            </nav>
-            {% if user.is_authenticated %}
-                <a class="sign" href="{% url 'user:logout' %}"><button>log out</button></a>
-            {% else %}
-                <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
-            {% endif %}
-        </div>
-    </header>
+{% extends "indexbase.html" %}
+{#{% block extrahead %}#}
+    {% load static %}
+    <link href="{% static 'css/feedindex.css' %}" rel="stylesheet" type="text/css">
+{#    {% endblock %}#}
+    {% block content %}
     <!-- 피드 상단 이미지 -->
     <div class="feed-header">
         <img src="{% static 'img/main.png' %}">
-<!--        <div class="feed-header-text">-->
-<!--            <h3>플랜테리어</h3>-->
-<!--            <h3>어떻게 활용하면</h3>-->
-<!--            <h3>좋을까</h3>-->
-<!--            <button><a href="">자세히보기</a></button>-->
-<!--        </div>-->
     </div>
     {% if popular_feeds %}
-        <div class="popular-feed">
-            <div id="feed-category">
-                <h3>· 인기피드 ·</h3>
-            </div>
-            {% for feed in popular_feeds %}
-                <div class="feed-img">
-                    <figure class="feed-img">
-                        <a href="{% url 'feed:feed' feed.id %}">
-                            <img src="{{ feed.image }}" alt="{{ feed.content }}" />
-                            <figcaption>
-                                <h3>{{ feed.title }}</h3>
-                                <p>{{ feed.user_id.nickname }}</p><i class="ion-ios-arrow-right"></i>
-                            </figcaption>
-                        </a>
-                    </figure>
-                </div>
+    <div class="popular-feed">
+        <div id="feed-category">
+            <h3>· 인기피드 ·</h3>
+        </div>
+        {% for feed in popular_feeds %}
+        <div class="feed-img">
+              <div class="grid-container">
+                <article id="3685" class="location-listing">
+                  <a class="location-title" href="{% url 'feed:feed' feed.id %}">{{ feed.title }}</a>
+                  <div class="location-image">
+                    <a href="{% url 'feed:feed' feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
+                  </div>
+                </article>
+              </div>
             {% endfor %}
         </div>
     {% endif %}
@@ -83,20 +30,18 @@
         <div id="feed-category">
             <h3>· 최신피드 ·</h3>
         </div>
+        {% for feed in all_feed %}
         <div class="feed-img">
-            {% for feed in all_feed %}
-                <figure class="feed-img">
-                    <a href="{% url "feed:feed" feed.id %}">
-                        <img src="{{ feed.image }}" alt="{{ feed.content }}" />
-                        <figcaption>
-                            <h3>{{ feed.title }}</h3>
-                            <p>{{ feed.user_id.nickname }}</p><i class="ion-ios-arrow-right"></i>
-                        </figcaption>
-                    </a>
-                </figure>
-            {% endfor %}
+          <div class="grid-container">
+            <article id="3685" class="location-listing">
+              <a class="location-title" href={% url "feed:feed" feed.id %}">{{ feed.title }}</a>
+              <div class="location-image">
+                <a href="{% url "feed:feed" feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
+              </div>
+            </article>
+         </div>
         </div>
-    </div>
+        {% endfor %}
     </div>
     <!-- PC 글쓰기 버튼 -->
     <div onclick="" id="scrollTopPc">
@@ -104,8 +49,6 @@
     </div>
     <!-- 모바일 글쓰기 버튼 -->
     <div onclick="" id="scrollTopMob">
-        <a href="{% url 'feed:create_feed' %}"><img src="{% static 'img/write.png' %}write.png" width="50px" height="50px"></a>
+        <a href="{% url 'feed:create_feed' %}"><img src="{% static 'img/write.png' %}" width="50px" height="50px"></a>
     </div>
 {% endblock content %}
-</body>
-</html>

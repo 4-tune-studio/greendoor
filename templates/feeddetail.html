@@ -1,117 +1,55 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>feed</title>
+{% extends "detailbase.html" %}
+{% block extrahead %}
+    {% load static %}
+    {% block static %}
     <link href="{% static 'css/feeddetail.css' %}" rel="stylesheet">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
-    <script defer src="{% static 'js/index.js' %}"></script>
-{% block static %}{% endblock static %}
-
-</head>
-<body>
-{% block content %}
-<!--헤더 + 네비게이션 바-->
-    <header>
-        <div class="header">
-            <img class="logo" src="{% static 'img/textlogo_white.png' %}">
-            <nav>
-                <ul class="nav-link">
-                    <li><a href="{% url 'product:product_all' %}">store</a></li>
-                    <li><a href="{% url 'product:product_all' %}">order</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
-                    {% else %}
-                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
-                    {% endif %}
-                </ul>
-                <div class="m-nav-link">
-                    <a id="list" href="{% url 'product:product_all' %}"><img src="{% static 'img/list_white.png' %}"></a>
-                    <a href="{% url 'product:product_all' %}"><img src="{% static 'img/order_white.png' %}"></a>
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'user:user_my_page' user.id %}"><img src="{% static 'img/profile_white.png' %}"></a>
-                    {% else %}
-                        <a href="{% url 'user:sign-in' %}"><img src="{% static 'img/profile_white.png' %}"></a>
-                    {% endif %}
-                </div>
-                <div class="m-nav-menu">
-                    <li><a href="{% url 'product:product_all' %}">store</a></li>
-                    <li><a href="{% url 'product:product_all' %}">order</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
-                    {% else %}
-                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
-                    {% endif %}
-                </div>
-            </nav>
-            {% if user.is_authenticated %}
-                <a class="sign" href="{% url 'user:logout' %}"><button>log out</button></a>
-            {% else %}
-                <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
-            {% endif %}
-        </div>
-    </header>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    {% endblock static %}
+    {% endblock %}
+    {% block content %}
 <!-- feed -->
     <div class="feed">
-        <!-- 임의로 feed_btn 클래스 생성, div 태그에 style 속성을 바로 입혔습니다. 검토 후 css로 이동 or 삭제할게요! -->
-        <div class="feed_btn" style="display: flex; justify-content: space-between; margin-bottom: 5px">
-            {% if feed.user_id == user %}
-                <button type="button" onclick="location.href='{% url "feed:update_feed" feed_id=feed.id %}';">수정</button>
-                <button type="button" onclick="location.href='{% url "feed:delete_feed" feed_id=feed.id %}';">삭제</button>
-            {% endif %}
-        </div>
-        <img src="{{ feed.image }}">
-        <!-- 게시물 관련 변수 확인 변경 필요 -->
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg">
         <button id="feed-title">{{ feed.title }}</button>
-        <h5 id="date">{{ feed.created_at|date:"y-m-d" }}</h5>
-        <h5 id="username">{{ feed.user_id.nickname }}</h5>
+        <img id="userprofile" src="{{ user.image }}"> <!-- 작성자 프로필사진-->
+        <h5 id="date">{{ feed.date }}</h5>
+        <h5 id="username">{{ user.nickname }}</h5>
+        <div class="feed-icon-default">
+            <i class="fi fi-rr-heart"></i>
+            <i class="fi fi-rr-bookmark"></i>
+        </div>
+        <div class="feed-icon-filled">
+            <i class="fi fi-sr-heart"></i>
+            <i class="fi fi-sr-bookmark"></i>
+        </div>
         <div class="feed-icon">
-            <ul class="m-footer-link">
-                <li><a href=""><i class="fi fi-rr-heart"></i></a></li>
-                <li><a href=""><i class="fi fi-rr-bookmark"></i></a></li>
-                <li><a href=""><i class="fi fi-rr-share"></i></a></li>
-            </ul>
+            <a href=""><button>수정</button></a>
+            <a href=""><button>삭제</button></a>
         </div>
         <div id="contents">
-            <h5>조회수 : {{ feed.views }}</h5>
-            <h5>{{ feed.like_count }}명이 좋아합니다</h5>
-            <h5>내용 : {{ feed.content }}</h5>
+            <h5>게시물 작성 내용 노출</h5>
+            <h5>게시물 작성 내용 노출</h5>
+            <h5>게시물 작성 내용 노출</h5>
+            <h5>게시물 작성 내용 노출</h5>
         </div>
         <div class="comment">
-            <h5>댓글</h5>
-            <!-- 코멘트 반복문 시작 -->
-            <!-- for comment in feed.feed_comment.all 사용 가능-->
-            {% for comment in comments %}
-                <div id="comment_{{ comment.id }}_div">
-                    <h5>{{ comment.user_id.nickname }}</h5>
-                    <h5> - {{ comment.created_at }}</h5>
-                    <input id="comment_{{ comment.id }}_input" type="text" value="{{ comment.content }} "
-                           readonly required size="100" maxlength="100">
-                    {% if comment.user_id == user %}
-                        <a href="#comment_{{ comment.id }}_input" id="comment_update_{{ comment.id }}"
-                           onclick="update_comment({{ comment.id }})">
-                            <button>수정</button>
-                        </a>
-                        <a href="#comment_{{ comment.id }}_input" id="comment_update_api_{{ comment.id }}"
-                           onclick="update_comment_api({{ comment.id }})" style="display: none">
-                            <button>전송</button>
-                        </a>
-                        <a href="{% url "feed:delete_comment" feed_id=feed.id comment_id=comment.id %}">
-                            <button>삭제</button>
-                        </a>
-                    {% endif %}
+            <h3>댓글</h3>
+            <div class="commentview">
+                <img id="commentuserprofile" src="{{ user.image }}"> <!-- 현재유저 프로필사진-->
+                <div class="commentuser">
+                    <h5 id="userid">userid</h5>
+                    <h5 id="comment">comment</h5>
                 </div>
-            {% endfor %}
-            <!-- 코멘트 반복문 끝 -->
-            <h5>댓글 작성하기</h5>
-            <!-- 코멘트 input -->
-            <form action="{% url "feed:create_comment" feed_id=feed.id %}" method="POST">
-                {% csrf_token %}
-                <input type="text" name="comment_content" id="comment_content" required size="100" maxlength="100" >
-                <button type="submit">작성하기</button>
-            </form>
-            <!-- 코멘트 input 끝 -->
+            </div>
+            <div class="commenticon">
+                    <a href=""><button>수정</button></a>
+                    <a href=""><button>삭제</button></a>
+            </div>
+            <div class="commentwrite">
+                <input type="text" id="comment">
+                <a href=""><button>등록</button></a>
+            </div>
         </div>
     </div>
 
@@ -120,13 +58,12 @@
         <div class="footer">
             <h4>Website created with Team 4-tune</h4>
         </div>
-        <ul class="m-footer-link">
-            <li><a href=""><i class="fi fi-rr-heart"></i></a></li>
-            <li><a href=""><i class="fi fi-rr-bookmark"></i></a></li>
-            <li><a href=""><i class="fi fi-rr-share"></i></a></li>
-        </ul>
+        <div class="m-nav-link">
+            <a href=""><i class="fi fi-sr-heart"></i></a>
+            <a href=""><i class="fi fi-rr-bookmark"></i></a>
+        </div>
     </footer>
-    <script type="text/javascript">
+        <script type="text/javascript">
         //댓글 수정 가능 함수
         function update_comment(id) {
             const commentInput = document.querySelector(`#comment_${id}_input`);
@@ -195,7 +132,7 @@
                     $("#like_count").text(`${response.like_count}명이 좋아합니다`);
                 },
                 error: function () { // 통신 실패했을 때 호출 함수
-                    alert("좋아요 실패\n로그인을 해주세요 :)");
+                    alert("좋아요 실패");
                 },
             });
         }
@@ -224,11 +161,9 @@
                     }
                 },
                 error: function () { // 통신 실패했을 때 호출 함수
-                    alert("북마크 실패\n로그인을 해주세요 :)");
+                    alert("북마크 실패");
                 },
             });
         }
     </script>
-{% endblock content %}
-</body>
-</html>
+{% endblock %}
