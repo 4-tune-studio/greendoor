@@ -28,7 +28,7 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
         email = request.POST.get("email", None)
         password = str(request.POST.get("password", None))
         password2 = request.POST.get("password2", None)
-        
+
         # 회원가입 예외처리
         if email == "" or nickname == "" or password == "" or password2 == "":
             return render(request, "user/signin.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
@@ -57,23 +57,23 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
 
 def sign_in_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        username = request.POST.get("username", None)
+        email = request.POST.get("email", None)
         password = request.POST.get("password", None)
 
-        me = auth.authenticate(request, username=username, password=password)  # 사용자 불러오기
+        me = auth.authenticate(request, email=email, password=password)  # 사용자 불러오기
         if me is not None:  # 저장된 사용자의 패스워드와 입력받은 패스워드 비교
             auth.login(request, me)
-            return redirect("/")
+            return redirect("feed:community")  # 로그인 성공
         else:
-            return redirect("/sign-in")  # 로그인 실패
+            return redirect("user/signin.html")  # 로그인 실패
     elif request.method == "GET":
         user = request.user.is_authenticated  # 사용자가 로그인 되어 있는지 검사
         if user:  # 로그인이 되어 있다면
-            return redirect("/")
+            return redirect("feed:community")
         else:  # 로그인이 되어 있지 않다면
             return render(request, "user/signin.html")
     else:
-        return redirect("/")
+        return redirect("feed:community")
 
 
 def logout(request: HttpRequest) -> HttpResponse:
