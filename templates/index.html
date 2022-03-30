@@ -39,7 +39,11 @@
                     {% endif %}
                 </div>
             </nav>
-            <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
+            {% if user.is_authenticated %}
+                <a class="sign" href="{% url 'user:logout' %}"><button>log out</button></a>
+            {% else %}
+                <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
+            {% endif %}
         </div>
     </header>
     <!-- 피드 상단 이미지 -->
