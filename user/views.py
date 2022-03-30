@@ -19,9 +19,10 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
         if user:  # 로그인이 되어있다면
             return redirect("/")
         else:  # 로그인이 되어있지 않다면
-            return render(request, "user/signup.html")
+            return redirect("/sign-in")
     elif request.method == "POST":
         username = str(request.POST.get("username", None))
+        email = request.POST.get("password", None)
         password = request.POST.get("password", None)
         password2 = request.POST.get("password2", None)
 
