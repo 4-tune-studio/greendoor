@@ -2,7 +2,7 @@
 {% block extrahead %}
     {% load static %}
     <link href="{% static 'css/sign.css' %}" rel="stylesheet">
-     <link href="http://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="http://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
 
     {% endblock %}
     {% block content %}
@@ -38,11 +38,11 @@
             </div>
           </div>
           <p class="small">or use your email account:</p>
-          <form id="sign-in-form">
+          <form id="sign-in-form" method="post", action="{% url "user:sign-in" %}">
             <input type="email" placeholder="Email"/>
             <input type="password" placeholder="Password"/>
-            <p class="forgot-password">비밀번호를 잊으셨나요?</p>
-            <button class="control-button in">Sign In</button>
+            <p class="forgot-password"><a href="{% url 'password_reset' %}">비밀번호를 잊으셨나요?</a></p>
+            <button class="control-button in" type="submit">Sign In</button>
           </form>
         </div>
         <div class="sign-up" id="sign-up-info">
@@ -62,11 +62,18 @@
             </div>
           </div>
           <p class="small">or use your email for registration:</p>
-          <form id="sign-up-form">
-            <input type="text" placeholder="Name"/>
-            <input type="email" placeholder="Email"/>
-            <input type="password" placeholder="Password"/>
-            <button class="control-button up">Sign Up</button>
+           <form id="sign-up-form" method="post" action="{% url "user:sign-up" %}">
+            {% csrf_token %}
+            <input type="text" placeholder="NickName" name="nickname">
+            <input type="email" placeholder="Email" name="email">
+            <input type="password" placeholder="Password" name="password">
+            <input type="password" placeholder="Verify Password" name="password2">
+            {% if error %}
+                <p class="small" style="color: darkred">{{ error }}</p>
+            {% elif msg %}
+                <p class="small" style="color: olivedrab">{{ msg }}</p>
+            {% endif %}
+            <button type="submit" class="control-button up">Sign Up</button>
           </form>
         </div>
       </div>
