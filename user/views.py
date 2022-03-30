@@ -19,9 +19,9 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         user = request.user.is_authenticated  # 로그인 된 사용자가 요청하는지 검사
         if user:  # 로그인이 되어있다면
-            return redirect("/")
+            return redirect("feed:community")
         else:  # 로그인이 되어있지 않다면
-            return redirect("/sign-in")
+            return redirect("user:sign-in")
 
     elif request.method == "POST":
         nickname = str(request.POST.get("nickname", None))
@@ -52,41 +52,33 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
                 Users.objects.create_user(email=email, username=nickname, nickname=nickname, password=password)
                 return render(request, "user/signin.html", {"msg": "greendoor 회원가입 완료 : )"})
     else:
-        return redirect("/")
+        return redirect("feed:community")
 
 
 def sign_in_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        username = request.POST.get("username", None)
+        email = request.POST.get("email", None)
         password = request.POST.get("password", None)
 
-        me = auth.authenticate(request, username=username, password=password)  # 사용자 불러오기
+        me = auth.authenticate(request, email=email, password=password)  # 사용자 불러오기
         if me is not None:  # 저장된 사용자의 패스워드와 입력받은 패스워드 비교
             auth.login(request, me)
-            return redirect("/")
+            return redirect("feed:community")  # 로그인 성공
         else:
-            return redirect("/sign-in")  # 로그인 실패
+            return redirect("user/signin.html")  # 로그인 실패
     elif request.method == "GET":
         user = request.user.is_authenticated  # 사용자가 로그인 되어 있는지 검사
         if user:  # 로그인이 되어 있다면
-            return redirect("/")
+            return redirect("feed:community")
         else:  # 로그인이 되어 있지 않다면
             return render(request, "user/signin.html")
     else:
-        return redirect("/")
+        return redirect("feed:community")
 
 
 def logout(request: HttpRequest) -> HttpResponse:
     auth.logout(request)  # 인증 되어있는 정보를 없애기
-    return redirect("/")
-
-
-# # =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
-# def accounts_login(request: HttpRequest) -> HttpResponse:
-#     if request.method == "GET":
-#         return render(request, "signin.html")  # TODO 템플릿 변경시 경로 변경하기1
-#     else:
-#         return redirect("/")
+    return redirect("feed:community")
 
 
 # =============== user profile update (text) ================ #
@@ -94,7 +86,7 @@ def logout(request: HttpRequest) -> HttpResponse:
 def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
     # 사용자 로그인 확인
     if not request.user.is_authenticated:
-        return redirect("user/signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+        return redirect("user:sign-in")
     # 다른 사용자 수정 불가
     if request.user.id == pk:
         if request.method == "POST":
@@ -105,7 +97,7 @@ def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
                 form.image = request.POST["address"]
                 form.image = request.POST["phonenumber"]
                 form.save()
-                return redirect("/")
+                return redirect("feed:community")
 
         elif request.method == "GET":
             form = CustomUserChangeForm(instance=request.user)
@@ -113,7 +105,7 @@ def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
         # 관련 templates 기존 정보를 넘겨 준다
         return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
     else:
-        return redirect("/")  # TODO 잘못된 접근 경고문 여부
+        return redirect("feed:community")
 
 
 # user profile update 페이지 -> /password_reset/ url 연결
@@ -124,7 +116,7 @@ def password(request: HttpRequest) -> HttpResponse:
 # =============== user profile update (image) ================ #
 def api_update_user_image(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
-        return redirect("/")  # TODO 템플릿 변경시 경로 변경하기3
+        return redirect("user:sign-in")
     if request.method == "POST":
         if "image" in request.FILES:
             # json data 변수에 저장
@@ -151,7 +143,7 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
 def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
     # 사용자 로그인 확인
     if not request.user.is_authenticated:
-        return redirect("/sign-in/")
+        return redirect("user:sign-in")
 
     # 다른 사용자 수정 불가
     if request.user.id == pk:
@@ -160,6 +152,6 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
             my_bookmark_list = get_my_bookmark_feed_list(pk)
             return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
         else:
-            return redirect("/")  # TODO 잘못된 접근 경고문 여부
+            return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
     else:
-        return redirect("/")  # TODO 잘못된 접근 경고문 여부
+        return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
