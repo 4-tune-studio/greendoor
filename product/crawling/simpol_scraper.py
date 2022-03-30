@@ -71,6 +71,7 @@ print(type(last_page))
 # -------------- 카테고리의 마지막 페이지 추출 (끝)-------------- #
 
 # -------------- 페이지 스크래핑 (시작)-------------- #
+
 # for page in range(1, last_page + 1):
 page_result = requests.get(f"{URL}&page=1", headers=HEADERS)
 # 인코딩 추측을 하지 않도록 None 지정 (UTF-8, EUC-KR 로 지정해도 된다)
@@ -88,7 +89,7 @@ IMAGE_URL = "https://www.simpol.co.kr/"
 for p in products:
     product = p.find("a")["href"]
     # title 정보 변수 저장
-    title = p.find("a").text.strip()
+    title = p.find("a").text.strip().replace("/", ",")
     # 상품 url로 requests
     product_result = requests.get(f"{PRODUCT_URL}{product}", headers=HEADERS)
     product_result.encoding = None
@@ -98,7 +99,7 @@ for p in products:
     # price 정보 변수에 저장
     price = int(soup.find("span", {"id": "idx_price"}).text.rstrip("원").replace(",", ""))
     # image 정보 병수에 저장
-    image = soup.find("img", {"class": "txc-image"})["src"]
+    image = soup.find("img", {"class": "txc-image"})["src"].split("?")[0]
 
     # info의 경우 줄바꿈, 공백 문제를 해결해야 함
     # info = soup.find("div", {"class": "insert_content"}).getText
@@ -108,6 +109,6 @@ for p in products:
     # print(info)
 
     # DB Product 테이블에 정보 저장
-    Product.objects.create(category_id=1, name=title, slug=title, image_tag=IMAGE_URL + image, price=price)
+    Product.objects.create(category_id=1, name=title, slug=title, image=IMAGE_URL + image, price=price)
 
 # -------------- 페이지 스크래핑 (끝)-------------- #
