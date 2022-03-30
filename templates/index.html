@@ -15,16 +15,17 @@
         </div>
         {% for feed in popular_feeds %}
         <div class="feed-img">
-              <div class="grid-container">
-                <article id="3685" class="location-listing">
-                  <a class="location-title" href="{% url 'feed:feed' feed.id %}">{{ feed.title }}</a>
-                  <div class="location-image">
-                    <a href="{% url 'feed:feed' feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
-                  </div>
-                </article>
+          <div class="grid-container">
+            <article id="3685" class="location-listing">
+              <a class="location-title" href="{% url 'feed:feed' feed.id %}">{{ feed.title }}</a>
+              <div class="location-image">
+                <a href="{% url 'feed:feed' feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
               </div>
-            {% endfor %}
+            </article>
+          </div>
         </div>
+        {% endfor %}
+    </div>
     {% endif %}
     <div class="new-feed">
         <div id="feed-category">
@@ -34,7 +35,7 @@
         <div class="feed-img">
           <div class="grid-container">
             <article id="3685" class="location-listing">
-              <a class="location-title" href={% url "feed:feed" feed.id %}">{{ feed.title }}</a>
+              <a class="location-title" href="{% url "feed:feed" feed.id %}">{{ feed.title }}</a>
               <div class="location-image">
                 <a href="{% url "feed:feed" feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
               </div>
