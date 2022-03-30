@@ -12,6 +12,7 @@ from .forms import AddProductForm
 @require_POST
 def add(request: HttpRequest, product_id: int) -> HttpResponse:
     print(type(product_id))
+
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
 
@@ -26,7 +27,7 @@ def add(request: HttpRequest, product_id: int) -> HttpResponse:
     return redirect("cart:detail")
 
 
-def remove(request: HttpRequest, product_id: int) -> HttpResponse:
+def remove(request: HttpRequest, product_id: str) -> HttpResponse:
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
