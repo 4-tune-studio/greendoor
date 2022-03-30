@@ -21,10 +21,10 @@
                     {% if user.id %}
                         <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
                     {% else %}
-                        <li><a href="{% url 'user:sign-up' %}">mypage</a></li>
+                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
                     {% endif %}
                 </ul>
-{#                <div class="m-nav-link">#}
+                <div class="m-nav-menu">
 {#                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>#}
 {#                    <a href="{% url '' %}"><img src="{% static 'img/order_white.png' %}"></a>#}
 {#                    <a href="{% url '' %}"><img src="{% static 'img/profile_white.png' %}"></a>#}
@@ -32,10 +32,14 @@
 {#                <div class="m-nav-menu">#}
 {#                    <li><a href="{% url '' %}">store</a></li>#}
 {#                    <li><a href="{% url '' %}">order</a></li>#}
-{#                    <li><a href="{% url '' %}">mypage</a></li>#}
-{#                </div>#}
+                    {% if user.id %}
+                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                    {% else %}
+                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
+                    {% endif %}
+                </div>
             </nav>
-{#            <a class="sign" href="{% url '' %}"><button>log in</button></a>#}
+            <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
         </div>
     </header>
     <!-- 피드 상단 이미지 -->
