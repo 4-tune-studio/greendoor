@@ -5,7 +5,6 @@ from survey.models import Answer, Survey
 # Register your models here.
 
 
-
 class SurveyAdmin(admin.ModelAdmin):
     list_display = ("question", "ans1", "ans2", "ans3", "ans4", "status")
 
