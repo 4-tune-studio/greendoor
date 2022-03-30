@@ -16,10 +16,12 @@
             <img class="logo" src="{% static 'img/textlogo_white.png' %}">
             <nav>
                 <ul class="nav-link">
+                    <li><a href="{% url 'feed:community' %}">community</a></li>
                     <li><a href="{% url 'product:product_all' %}">store</a></li>
-{#                    <li><a href="{% url 'cart:product_add' %}">order</a></li>#}
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                    {% else %}
+                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
                     {% endif %}
                 </ul>
                 {#                <div class="m-nav-link">#}
@@ -39,7 +41,7 @@
     <!-- 피드 상단 이미지 -->
     <div class="feed-header">
         <a href="{% url 'product:product_all' %}">
-         <img src="{% static 'img/storemain.png' %}"></a>
+            <img src="{% static 'img/storemain.png' %}"></a>
         <!-- <div class="feed-header-text">
             <h3>인기상품을 만나보세요</h3>
             <button><a href="">자세히보기</a></button>
@@ -77,15 +79,16 @@
                         <h3>식물</h3>
                         <figure class="feed-img">
 
-                                <img src="{{ product.image }}" width=100%/>
+                            <img src="{{ product.image }}" width=100%/>
 
                             <figcaption>
                                 <h3>{{ product.name }}</h3>
                                 <h4>{{ product.price }}</h4>
                                 <p>{{ product.description }}</p><i class="ion-ios-arrow-right"></i>
                             </figcaption>
-
-                            <a href="{{ product.get_absolute_url }}"></a>
+                            <ul class="nav-link">
+                                <a href="{{ product.get_absolute_url }}">내방에 놓기</a>
+                            </ul>
                         </figure>
                     </div>
 
@@ -93,15 +96,16 @@
                     <div id="product-interior">
                         <h3>인테리어</h3>
                         <figure class="feed-img">
-                                <img src="{{ product.image }}" width=100%/>
+                            <img src="{{ product.image }}" width=100%/>
 
                             <figcaption>
                                 <h3>{{ product.name }}</h3>
                                 <h4>{{ product.price }}</h4>
                                 <p>{{ product.description }}</p><i class="ion-ios-arrow-right"></i>
                             </figcaption>
-
-                            <a href="{{ product.get_absolute_url }}"></a>
+                            <ul class="nav-link">
+                                <a href="{{ product.get_absolute_url }}">내방에 놓기</a>
+                            </ul>
                         </figure>
                     </div>
                 {% endif %}
