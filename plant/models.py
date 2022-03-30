@@ -12,6 +12,7 @@ class Plant(BaseModel):
     plant_category_id = models.ForeignKey(
         PlantCategory, on_delete=models.CASCADE, related_name="plant", db_column="plant_category_id"
     )
+    main_name = botanical_name = models.CharField(max_length=100, null=True, blank=True)
     image = models.CharField(max_length=256, null=True, blank=True)
 
     botanical_name = models.CharField(max_length=100, null=True, blank=True)

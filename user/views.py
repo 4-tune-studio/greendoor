@@ -22,12 +22,14 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
             return redirect("/")
         else:  # 로그인이 되어있지 않다면
             return redirect("/sign-in")
+
     elif request.method == "POST":
         nickname = str(request.POST.get("nickname", None))
         email = request.POST.get("email", None)
         password = str(request.POST.get("password", None))
         password2 = request.POST.get("password2", None)
-
+        
+        # 회원가입 예외처리
         if email == "" or nickname == "" or password == "" or password2 == "":
             return render(request, "user/signin.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
         else:

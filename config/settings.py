@@ -43,7 +43,7 @@ DATABASES = MY_DATABASES
 #     SECRET_KEY = ${{ secrets.SECRET_KEY }}
 #     DATABASES = MY_DATABASES
 # else:
-#     print("성공")
+#     print("success")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,7 +81,7 @@ INSTALLED_APPS = [
 ]
 
 
-# 비번 리셋 필요 부분
+# password reset
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
@@ -159,7 +159,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),  # base_dir은 프로젝트 폴더
+    os.path.join(BASE_DIR, "static"),  # base_dir is project folder
 ]
 
 # Default primary key field type
@@ -171,7 +171,7 @@ AUTH_USER_MODEL = "user.Users"
 
 CART_ID = "cart item"
 
-# aws s3 세팅
+# aws s3 setting
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
@@ -180,22 +180,22 @@ AWS_S3_SIGNATURE_VERSION = "s3v4"
 AWS_ACCESS_KEY_ID = MY_SECRET_ACCESS_KEY["ACCESS_KEY"]
 AWS_SECRET_ACCESS_KEY = MY_SECRET["SECRET_KEY"]
 AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME["BUCKET_NAME"]
-AWS_DEFAULT_ACL = "public-read"  # 올린 파일을 누구나 읽을 수 있게 지정합니다!
+AWS_DEFAULT_ACL = "public-read"  # its make read anybody
 
 
-# =============== 비번 리셋 이메일 전송 설정 =============== #
+# =============== password reset email setting =============== #
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-# gmail 통신 포트
+# gmail connect port
 EMAIL_PORT = "587"
-# Email 호스트 서버
+# Email host server
 EMAIL_HOST = "smtp.gmail.com"
-# 발신할 이메일
+# use email
 EMAIL_HOST_USER = "greendoor2203@gmail.com"
-# 발신할 이메일 비번
+# use email password
 EMAIL_HOST_PASSWORD = EMAIL_SECRET_KEY["EMAIL_SECRET_KEY"]
-# TLS 보안 방법
+# TLS security method
 EMAIL_USE_TLS = True
-# 사이트 관련 자동 응답 받을 이메일 주소
+# site auto response setting
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
@@ -209,8 +209,8 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 
-# 아래는 새로 작성
-CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # 요청을 받아도 되는 리스트를 작성하는거에요!
+# cors setting
+CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # it make white list that can access
 CORS_ALLOW_CREDENTIALS = True
 
 IAMPORT_KEY = MY_IAMPORT_KEY
