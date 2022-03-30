@@ -4,8 +4,8 @@ from django.db.models import F, Prefetch, QuerySet
 from feed.models import Feed, FeedBookmark, FeedLike, Img
 
 
-def upload_feed_image(img_file: UploadedFile) -> Img:
-    return Img.objects.create(img=img_file)
+def upload_feed_image(img_file: UploadedFile) -> str:
+    return str(Img.objects.create(img=img_file).img.url.split("?")[0])
 
 
 def create_a_feed(user_id: int, title: str, image: str, content: str) -> Feed:

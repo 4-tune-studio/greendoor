@@ -1,10 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "detailbase.html" %}
+{% block extrahead %}
+    {% load static %}
+    {% block static %}
+    <link href="{% static 'css/mypage.css' %}" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <script defer src="{% static 'js/index.js' %}"></script>
+    {% endblock static %}
+    {% endblock %}
+    {% block content %}
 
-</body>
-</html>
+<!--content-->
+    <div class="content-container">
+        <div class="content-wrapper">
+            <div class="profile">
+                <img src="{{ user.image }}">
+                <h5>{{user.nickname}}님 안녕하세요!</h5>
+                <a href="{% url 'user:profile_edit' user.id %}"><button>프로필 변경</button></a>
+            </div>
+
+            <div class="userfeed">
+                <div class="usercreated">
+                    <h5>· 내가 작성한 게시물 ·</h5>
+                    {% for feed in feed_list %}
+                    <div class="feed-img">
+                        <figure class="feed-img">
+                          <img src="{{ feed.image }}"/>
+                          <figcaption>
+                            <h3>{{ feed.title }}</h3>
+                            <p>{{ feed.content }}</p><i class="ion-ios-arrow-right"></i>
+                          </figcaption>
+                          <a href="{% url 'feed:feed' feed.id %}"></a>
+                        </figure>
+                        {% endfor %}
+
+                        <figure class="feed-img">
+                          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
+                          <figcaption>
+                            <h3>Fleece Marigold</h3>
+                            <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
+                          </figcaption>
+                          <a href="{% url 'feed:community' %}"></a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="userscrap">
+                    <h5>· 내가 스크랩한 게시물 ·</h5>
+                    {% for bookmark in bookmark_list %}
+                    <div class="feed-img">
+                        <figure class="feed-img">
+                          <img src="{{ bookmark.image }}" alt="sample83" />
+                          <figcaption>
+                            <h3>{{ bookmark.title }}</h3>
+                            <p>{{ bookmark.content }}</p><i class="ion-ios-arrow-right"></i>
+                          </figcaption>
+                          <a href="{% url 'feed:feed' bookmark.id %}"></a>
+                        </figure>
+                        {% endfor %}
+                        <figure class="feed-img">
+                          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
+                          <figcaption>
+                            <h3>Fleece Marigold</h3>
+                            <p>Which is worse, that everyone has his price, or that the price is always so low.</p><i class="ion-ios-arrow-right"></i>
+                         </figcaption>
+                          <a href="{% url 'feed:community' %}"></a>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--footer-->
+    <footer>
+        <div class="footer">
+            <h4>Website created with Team 4-tune</h4>
+        </div>
+    </footer>
+{% endblock content %}

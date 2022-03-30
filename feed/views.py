@@ -25,7 +25,7 @@ from feed.services.feed_service import (
 )
 from feed.services.like_service import do_like, undo_like
 
-URL_LOGIN = "/login/"  # TODO login url 작업 완료 되면 수정
+URL_LOGIN = "/sign-up/"
 URL_S3 = "https://nmdbucket.s3.amazonaws.com/"
 
 
@@ -78,7 +78,7 @@ def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
         feed = get_a_feed(user_id, feed_id)
         comments = get_comment_list(feed.id, 0, 20)  # TODO 코멘트 몇개씩 보이게 할지 정해야함
 
-        return render(request, "feed_test_html/feed.html", {"feed": feed, "comments": comments})
+        return render(request, "feeddetail.html", {"feed": feed, "comments": comments})
 
     # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
     else:
@@ -113,8 +113,7 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
                 filename = f"file_{datetime.now().strftime('%Y%m%d%H%M%S')}.{ext}"
                 img_file.name = filename
                 # 이미지 업로드
-                img = upload_feed_image(img_file)
-                img_url = URL_S3 + img.img.name
+                img_url = upload_feed_image(img_file)  # ?를 기준으로 split한 앞쪽 url주소 반환
 
                 # 모든 예외처리를 통과하면
                 # 피드 저장 후 저장된 피드의 페이지로 이동
@@ -164,8 +163,7 @@ def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
                 filename = f"file_{datetime.now().strftime('%Y%m%d%H%M%S')}.{ext}"
                 img_file.name = filename
                 # 이미지 업로드
-                img = upload_feed_image(img_file)
-                img_url = URL_S3 + img.img.name
+                img_url = upload_feed_image(img_file)
 
                 # 모든 예외처리를 통과하면
                 # 피드 업데이트 후 저장된 피드의 페이지로 이동
