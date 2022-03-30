@@ -19,6 +19,8 @@ import django_stubs_ext
 from .my_settings import (
     EMAIL_SECRET_KEY,
     MY_DATABASES,
+    MY_IAMPORT_KEY,
+    MY_IAMPORT_SECRET,
     MY_SECRET,
     MY_SECRET_ACCESS_KEY,
     S3_BUCKET_NAME,
@@ -75,6 +77,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.kakao",
     "allauth.socialaccount.providers.naver",
     "corsheaders",
+    "survey",
 ]
 
 
@@ -209,3 +212,7 @@ LOGIN_REDIRECT_URL = "/"
 # 아래는 새로 작성
 CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # 요청을 받아도 되는 리스트를 작성하는거에요!
 CORS_ALLOW_CREDENTIALS = True
+
+IAMPORT_KEY = MY_IAMPORT_KEY
+IAMPORT_SECRET = MY_IAMPORT_SECRET
+
