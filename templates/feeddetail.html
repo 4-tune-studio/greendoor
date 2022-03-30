@@ -13,29 +13,29 @@
 <body>
 {% block content %}
 <!--헤더 + 네비게이션 바-->
-{#    <header>#}
-{#        <div class="header">#}
-{#            <img class="logo" src="{% static 'img/textlogo_white.png' %}">#}
-{#            <nav>#}
-{#                <ul class="nav-link">#}
-{#                    <li><a href="{% url '' %}">store</a></li>#}
-{#                    <li><a href="{% url '' %}">order</a></li>#}
-{#                    <li><a href="{% url '' %}">mypage</a></li>#}
-{#                </ul>#}
-{#                <div class="m-nav-link">#}
-{#                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>#}
-{#                    <a href="{% url '' %}"><img src="{% static 'img/order_white.png' %}"></a>#}
-{#                    <a href="{% url '' %}"><img src="{% static 'img/profile_white.png' %}"></a>#}
-{#                </div>#}
-{#                <div class="m-nav-menu">#}
-{#                    <li><a href="{% url '' %}">store</a></li>#}
-{#                    <li><a href="{% url '' %}">order</a></li>#}
-{#                    <li><a href="{% url '' %}">mypage</a></li>#}
-{#                </div>#}
-{#            </nav>#}
-{#            <a class="sign" href="{% url '' %}"><button>log in</button></a>#}
-{#        </div>#}
-{#    </header>#}
+    <header>
+        <div class="header">
+            <img class="logo" src="{% static 'img/textlogo_white.png' %}">
+            <nav>
+                <ul class="nav-link">
+                    <li><a href="{% url '' %}">store</a></li>
+                    <li><a href="{% url '' %}">order</a></li>
+                    <li><a href="{% url '' %}">mypage</a></li>
+                </ul>
+                <div class="m-nav-link">
+                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>
+                    <a href="{% url '' %}"><img src="{% static 'img/order_white.png' %}"></a>
+                    <a href="{% url '' %}"><img src="{% static 'img/profile_white.png' %}"></a>
+                </div>
+                <div class="m-nav-menu">
+                    <li><a href="{% url '' %}">store</a></li>
+                    <li><a href="{% url '' %}">order</a></li>
+                    <li><a href="{% url '' %}">mypage</a></li>
+                </div>
+            </nav>
+            <a class="sign" href="{% url '' %}"><button>log in</button></a>
+        </div>
+    </header>
 <!-- feed -->
     <div class="feed">
         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg">
@@ -43,6 +43,13 @@
         <button id="feed-title">{{ feed.title }}</button>
         <h5 id="date">{{ feed.date }}</h5>
         <h5 id="username">{{ user.nickname }}</h5>
+        <div class="feed-icon">
+        <ul class="m-footer-link">
+            <li><a href=""><i class="fi fi-rr-heart"></i></a></li>
+            <li><a href=""><i class="fi fi-rr-bookmark"></i></a></li>
+            <li><a href=""><i class="fi fi-rr-share"></i></a></li>
+        </ul>
+        </div>
         <div id="contents">
             <h5>게시물 작성 내용 노출</h5>
             <h5>게시물 작성 내용 노출</h5>

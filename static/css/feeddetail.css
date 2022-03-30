@@ -87,6 +87,12 @@
         border-radius: 10px;
     }
 
+
+    .feed-icon {
+        display: none;
+    }
+
+
     button {
         padding: 9px 25px;
         background-color: rgb(255, 136, 60);
