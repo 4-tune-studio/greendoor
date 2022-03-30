@@ -81,12 +81,12 @@ def logout(request: HttpRequest) -> HttpResponse:
     return redirect("/")
 
 
-# =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
-def accounts_login(request: HttpRequest) -> HttpResponse:
-    if request.method == "GET":
-        return render(request, "signin.html")  # TODO 템플릿 변경시 경로 변경하기1
-    else:
-        return redirect("/")
+# # =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
+# def accounts_login(request: HttpRequest) -> HttpResponse:
+#     if request.method == "GET":
+#         return render(request, "signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+#     else:
+#         return redirect("/")
 
 
 # =============== user profile update (text) ================ #
