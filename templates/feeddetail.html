@@ -7,8 +7,8 @@
     <link href="{% static 'css/feeddetail.css' %}" rel="stylesheet">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <script defer src="{% static 'js/index.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 {% block static %}{% endblock static %}
+
 </head>
 <body>
 {% block content %}
@@ -66,6 +66,13 @@
         <button id="feed-title">{{ feed.title }}</button>
         <h5 id="date">{{ feed.created_at|date:"y-m-d" }}</h5>
         <h5 id="username">{{ feed.user_id.nickname }}</h5>
+        <div class="feed-icon">
+            <ul class="m-footer-link">
+                <li><a href=""><i class="fi fi-rr-heart"></i></a></li>
+                <li><a href=""><i class="fi fi-rr-bookmark"></i></a></li>
+                <li><a href=""><i class="fi fi-rr-share"></i></a></li>
+            </ul>
+        </div>
         <div id="contents">
             <h5>조회수 : {{ feed.views }}</h5>
             <h5>{{ feed.like_count }}명이 좋아합니다</h5>
