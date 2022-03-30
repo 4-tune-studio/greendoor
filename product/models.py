@@ -57,9 +57,9 @@ class Product(BaseModel):
     # db_column 이 없으면 앞에 적힌 필드 값에 _id로 만들어주는것을 내가 알아서 설정하기 위함
 
     # 이 내용은 삭제 예정 3/26
-    # plant_id = models.ForeignKey(
-    #     Plant, on_delete=models.SET_NULL, related_name="products", db_column="plant_id", null=True
-    # )
+    plant_id = models.ForeignKey(
+        Plant, on_delete=models.SET_NULL, related_name="products", db_column="plant_id", null=True, blank=True
+    )
 
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True, unique=True, allow_unicode=True, default="")

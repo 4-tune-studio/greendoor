@@ -19,18 +19,18 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
         if user:  # 로그인이 되어있다면
             return redirect("/")
         else:  # 로그인이 되어있지 않다면
-            return render(request, "user/signup.html")
+            return render(request, "user/signin.html")
     elif request.method == "POST":
         username = str(request.POST.get("username", None))
         password = request.POST.get("password", None)
         password2 = request.POST.get("password2", None)
 
         if password != password2:
-            return render(request, "user/signup.html")
+            return render(request, "user/signin.html")
         else:
             exist_user = get_user_model().objects.filter(username=username)
             if exist_user:
-                return render(request, "user/signup.html")  # 사용자가 존재하기 때문에 사용자를 저장하지 않고 회원가입 페이지를 다시 띄움
+                return render(request, "user/signin.html")  # 사용자가 존재하기 때문에 사용자를 저장하지 않고 회원가입 페이지를 다시 띄움
             else:
                 Users.objects.create_user(username=username, password=password)
                 return redirect("/sign-in")  # 회원가입이 완료되었으므로 로그인 페이지로 이동
