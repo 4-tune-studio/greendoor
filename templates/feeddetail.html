@@ -18,22 +18,38 @@
             <img class="logo" src="{% static 'img/textlogo_white.png' %}">
             <nav>
                 <ul class="nav-link">
-                    <li><a href="{% url '' %}">store</a></li>
-                    <li><a href="{% url '' %}">order</a></li>
-                    <li><a href="{% url '' %}">mypage</a></li>
+                    <li><a href="{% url 'product:product_all' %}">store</a></li>
+                    <li><a href="{% url 'product:product_all' %}">order</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                    {% else %}
+                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
+                    {% endif %}
                 </ul>
                 <div class="m-nav-link">
-                    <a id="list" href="{% url '' %}"><img src="{% static 'img/list_white.png' %}"></a>
-                    <a href="{% url '' %}"><img src="{% static 'img/order_white.png' %}"></a>
-                    <a href="{% url '' %}"><img src="{% static 'img/profile_white.png' %}"></a>
+                    <a id="list" href="{% url 'product:product_all' %}"><img src="{% static 'img/list_white.png' %}"></a>
+                    <a href="{% url 'product:product_all' %}"><img src="{% static 'img/order_white.png' %}"></a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'user:user_my_page' user.id %}"><img src="{% static 'img/profile_white.png' %}"></a>
+                    {% else %}
+                        <a href="{% url 'user:sign-in' %}"><img src="{% static 'img/profile_white.png' %}"></a>
+                    {% endif %}
                 </div>
                 <div class="m-nav-menu">
-                    <li><a href="{% url '' %}">store</a></li>
-                    <li><a href="{% url '' %}">order</a></li>
-                    <li><a href="{% url '' %}">mypage</a></li>
+                    <li><a href="{% url 'product:product_all' %}">store</a></li>
+                    <li><a href="{% url 'product:product_all' %}">order</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+                    {% else %}
+                        <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
+                    {% endif %}
                 </div>
             </nav>
-            <a class="sign" href="{% url '' %}"><button>log in</button></a>
+            {% if user.is_authenticated %}
+                <a class="sign" href="{% url 'user:logout' %}"><button>log out</button></a>
+            {% else %}
+                <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
+            {% endif %}
         </div>
     </header>
 <!-- feed -->
@@ -48,20 +64,15 @@
         <img src="{{ feed.image }}">
         <!-- 게시물 관련 변수 확인 변경 필요 -->
         <button id="feed-title">{{ feed.title }}</button>
-<<<<<<< HEAD
-        <h5 id="date">{{ feed.date }}</h5>
-        <h5 id="username">{{ user.nickname }}</h5>
-        <div class="feed-icon">
-        <ul class="m-footer-link">
-            <li><a href=""><i class="fi fi-rr-heart"></i></a></li>
-            <li><a href=""><i class="fi fi-rr-bookmark"></i></a></li>
-            <li><a href=""><i class="fi fi-rr-share"></i></a></li>
-        </ul>
-        </div>
-=======
         <h5 id="date">{{ feed.created_at|date:"y-m-d" }}</h5>
         <h5 id="username">{{ feed.user_id.nickname }}</h5>
->>>>>>> 3c4f5af2d35a3c476dc56c9cd2e22255a1b6b514
+        <div class="feed-icon">
+            <ul class="m-footer-link">
+                <li><a href=""><i class="fi fi-rr-heart"></i></a></li>
+                <li><a href=""><i class="fi fi-rr-bookmark"></i></a></li>
+                <li><a href=""><i class="fi fi-rr-share"></i></a></li>
+            </ul>
+        </div>
         <div id="contents">
             <h5>조회수 : {{ feed.views }}</h5>
             <h5>{{ feed.like_count }}명이 좋아합니다</h5>
