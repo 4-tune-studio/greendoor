@@ -155,4 +155,3 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
             return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
     else:
         return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
-

@@ -36,7 +36,7 @@ DATABASES = MY_DATABASES
 DEBUG = True
 
 # ALLOWED_HOSTS: List[str] = []
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
