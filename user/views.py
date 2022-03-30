@@ -1,3 +1,5 @@
+import re
+
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse, JsonResponse
@@ -19,21 +21,36 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
         if user:  # 로그인이 되어있다면
             return redirect("/")
         else:  # 로그인이 되어있지 않다면
-            return render(request, "user/signup.html")
-    elif request.method == "POST":
-        username = str(request.POST.get("username", None))
-        password = request.POST.get("password", None)
-        password2 = request.POST.get("password2", None)
+            return redirect("/sign-in")
 
-        if password != password2:
-            return render(request, "user/signup.html")
+    elif request.method == "POST":
+        nickname = str(request.POST.get("nickname", None))
+        email = request.POST.get("email", None)
+        password = str(request.POST.get("password", None))
+        password2 = request.POST.get("password2", None)
+        
+        # 회원가입 예외처리
+        if email == "" or nickname == "" or password == "" or password2 == "":
+            return render(request, "user/signin.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
         else:
-            exist_user = get_user_model().objects.filter(username=username)
-            if exist_user:
-                return render(request, "user/signup.html")  # 사용자가 존재하기 때문에 사용자를 저장하지 않고 회원가입 페이지를 다시 띄움
+            if not (6 < len(password) < 21):
+                return render(request, "user/signin.html", {"error": "password 길이는 7~20자 입니다."})
+            elif re.search("[0-9]+", password) is None or re.search("[a-zA-Z]+", password) is None:
+                return render(request, "user/signin.html", {"error": "password 형식은 영문,숫자 포함 7~20자 입니다."})
+            elif password != password2:
+                return render(request, "user/signin.html", {"error": "password 확인 해 주세요!"})
+            if re.search("[0-9]+", nickname) is None or re.search("[a-zA-Z]+", nickname) is None:
+                return render(request, "user/signin.html", {"error": "nickname에 영문,숫자는 필수입니다."})
+
+            exist_user = get_user_model().objects.filter(nickname=nickname)
+            exist_email = get_user_model().objects.filter(email=email)
+            if exist_email:
+                return render(request, "user/signin.html", {"error": "이미 사용 중인 email입니다."})
+            elif exist_user:
+                return render(request, "user/signin.html", {"error": "이미 사용 중인 nickname입니다."})
             else:
-                Users.objects.create_user(username=username, password=password)
-                return redirect("/sign-in")  # 회원가입이 완료되었으므로 로그인 페이지로 이동
+                Users.objects.create_user(email=email, username=nickname, nickname=nickname, password=password)
+                return render(request, "user/signin.html", {"msg": "greendoor 회원가입 완료 : )"})
     else:
         return redirect("/")
 
@@ -64,12 +81,12 @@ def logout(request: HttpRequest) -> HttpResponse:
     return redirect("/")
 
 
-# =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
-def accounts_login(request: HttpRequest) -> HttpResponse:
-    if request.method == "GET":
-        return render(request, "signin.html")  # TODO 템플릿 변경시 경로 변경하기1
-    else:
-        return redirect("/")
+# # =============== 장고 인증 URL + 템플릿 연결 함수 ================ #
+# def accounts_login(request: HttpRequest) -> HttpResponse:
+#     if request.method == "GET":
+#         return render(request, "signin.html")  # TODO 템플릿 변경시 경로 변경하기1
+#     else:
+#         return redirect("/")
 
 
 # =============== user profile update (text) ================ #

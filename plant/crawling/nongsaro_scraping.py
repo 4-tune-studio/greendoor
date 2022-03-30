@@ -64,10 +64,16 @@ for i in range(1, 23):
     html_txt = requests.get(url).text
     soup = BeautifulSoup(html_txt, "html.parser")
 
+    # print(html_txt)
+
     for j in range(10):
         try:
             # 웹사이트의 검색페이지에서 식물별 상세페이지의 경로를 추출, 이곳에서 사용한 image도 같이 추출
             image = soup.select("img")[j]["src"]
+
+            main_name = soup.select(".nTitle")[j].text
+            print(main_name)
+
             tr = soup.select("td > a")[j]["onclick"]
             tr = tr.lstrip("fncDtl(")
             tr = tr.strip().rstrip("eslaf nruter ;)")
@@ -158,6 +164,7 @@ for i in range(1, 23):
 
             insect = content.select("tr > td")[60].text
             print(f"*********** {i} page {j + 1} 번째 conetent 시작 ***********")
+            print(main_name)
             print(image)
 
             print(botanical_name)
@@ -246,6 +253,7 @@ for i in range(1, 23):
                 id=id,
                 # updated_at=datetime.now(),
                 # created_at=datetime.now(),
+                main_name=main_name,
                 image=image,
                 botanical_name=botanical_name,
                 english_name=english_name,
