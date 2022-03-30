@@ -37,7 +37,7 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36"
 }
 
-'''
+"""
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #                   카테고리에서 상품 추출
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -117,7 +117,7 @@ for p in products:
     Product.objects.create(category_id=1, name=title, slug=title, image=IMAGE_URL + image, price=price)
 
 # -------------- 페이지 스크래핑 (끝)-------------- # 
-'''
+"""
 
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #                   WORD로 검색해서 추출
