@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Category Page{% endblock %}
 {% block content %}
-{#    <script type="text/javascript">#}
-{#        alert("진행상황확인1.");#}
-{#    </script>#}
     <div class="row">
         <div class="col-2">
             <div class="list-group">
@@ -23,9 +20,7 @@
                 {% for product in products %}
                     <div class="col-4">
                         <div class="card">
-{#                            <script type="text/javascript">#}
-{#                                alert("진행상황확인2.");#}
-{#                            </script>#}
+
 
                             <img class="card-img-top" src="{{ product.image.url }}" alt="Product Image">
                             <div class="card-body">
