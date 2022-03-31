@@ -18,7 +18,7 @@
     </div>
     <ul class="category">
         <li><a href="{% url 'product:product_all' %}">store</a></li>
-        <li><a href="{% url 'product:product_all' %}">order</a></li>
+        <li><a href="{% url 'feed:community' %}">community</a></li>
         {% if user.is_authenticated %}
             <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
         {% else %}
