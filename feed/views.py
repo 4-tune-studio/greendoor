@@ -26,7 +26,6 @@ from feed.services.feed_service import (
 from feed.services.like_service import do_like, undo_like
 
 URL_LOGIN = "/sign-up/"
-URL_S3 = "https://nmdbucket.s3.amazonaws.com/"
 
 
 def community_view(request: HttpRequest) -> HttpResponse:
@@ -91,7 +90,7 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
         return redirect(URL_LOGIN)
     # get 방식일 때
     if request.method == "GET":
-        return render(request, "feed_test_html/create_feed.html")
+        return render(request, "feedwrite.html")
     # post 방식일 때
     elif request.method == "POST":
         # title, content 정보 가져오기
@@ -99,7 +98,7 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
         content = request.POST.get("feed_content", "")
         # title 값이 공백이면
         if title == "":
-            return render(request, "feed_test_html/create_feed.html", {"error": "피드에 제목은 필수! :)"})
+            return render(request, "feedwrite.html", {"error": "피드에 제목은 필수! :)"})
 
         # request에 파일 정보가 있으면
         if "feed_img_file" in request.FILES:
@@ -122,11 +121,11 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
             # 허용되지 않은 확장자인 경우
             else:
                 return render(
-                    request, "feed_test_html/create_feed.html", {"error": "jpg, jpeg, gif, png 확장자를 사용해주세요 :)"}
+                    request, "feedwrite.html", {"error": "jpg, jpeg, gif, png 확장자를 사용해주세요 :)"}
                 )
         # request에 파일 정보가 없으면
         else:
-            return render(request, "feed_test_html/create_feed.html", {"error": "피드에 사진은 필수! :)"})
+            return render(request, "feedwrite.html", {"error": "피드에 사진은 필수! :)"})
     # 그 외 방식일 때
     else:
         return redirect("feed:community")
@@ -142,7 +141,7 @@ def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
     # GET 방식일 때
     if request.method == "GET":
         if user_id == feed.user_id.id:
-            return render(request, "feed_test_html/update_feed.html", {"feed": feed})
+            return render(request, "feedmodify.html", {"feed": feed})
         # 피드 작성자가 아닌 다른 유저가 유청할 때
         else:
             return redirect("feed:community")
@@ -173,7 +172,7 @@ def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
             else:
                 return render(
                     request,
-                    "feed_test_html/update_feed.html",
+                    "feedmodify.html",
                     {"feed": feed, "error": "jpg, jpeg, gif, png 확장자를 사용해주세요 :)"},
                 )
         # request에 파일 정보가 없으면 기존 이미지 사용
