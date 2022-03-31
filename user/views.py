@@ -65,7 +65,7 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
             auth.login(request, me)
             return redirect("feed:community")  # 로그인 성공
         else:
-            return redirect("sign.html")  # 로그인 실패
+            return redirect("user:sign-in")  # 로그인 실패
     elif request.method == "GET":
         user = request.user.is_authenticated  # 사용자가 로그인 되어 있는지 검사
         if user:  # 로그인이 되어 있다면
