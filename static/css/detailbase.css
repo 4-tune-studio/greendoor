@@ -4,7 +4,7 @@ body {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        background-image: url('../img/detailheader.png');
+        background-image: url('/static/img/bg.png');
         background-size: 100%;
         background-repeat: no-repeat;
         z-index: 1;
@@ -67,7 +67,7 @@ button:hover {
 
     body {
         box-sizing: border-box;
-        background-image: url('../img/detailheader.png');
+        background-image: url('/static/img/bg.png');
         background-size: 300%;
         background-repeat: no-repeat;
         margin: 0;

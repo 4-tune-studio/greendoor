@@ -4,25 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Greendoor{% endblock %}</title>
-    <link href="{% static 'css/detailbase.css' %}" rel="stylesheet">
+    <link href="/static/css/detailbase.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6bc056fb5e.js" crossorigin="anonymous"></script>
-    <script defer src="{% static 'js/base.js' %}"></script>
+    <script defer src="/static/js/index.js"></script>
 {% block static %}{% endblock static %}
 </head>
 <body>
-{% block content %}
+
 <!--헤더 + 네비게이션 바-->
 <nav class="navbar">
     <div class="logo">
-        <img src="{% static 'img/textlogo_white.png' %}">
+        <img src="/static/img/textlogo_white.png">
     </div>
     <ul class="category">
-        <li><a href="">community</a></li>
-        <li><a href="">store</a></li>
-        <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+        <li><a href="{% url 'product:product_all' %}">store</a></li>
+        <li><a href="{% url 'product:product_all' %}">order</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+        {% else %}
+            <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
+        {% endif %}
     </ul>
     <div class="sign">
-        <a class="sign" href=""><button>log out</button></a>
+    {% if user.is_authenticated %}
+        <a class="sign" href="{% url 'user:logout' %}"><button>log out</button></a>
+    {% else %}
+        <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
+    {% endif %}
     </div>
     <a href="#" class="navbar-toggle">
         <i class="fa-solid fa-bars"></i>
@@ -31,6 +39,7 @@
         <i class="fa-solid fa-right-from-bracket"></i>
     </a>
 </nav>
+{% block content %}
 {% endblock content %}
 </body>
 </html>

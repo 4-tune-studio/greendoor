@@ -31,26 +31,26 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
 
         # 회원가입 예외처리
         if email == "" or nickname == "" or password == "" or password2 == "":
-            return render(request, "user/signin.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
+            return render(request, "sign.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
         else:
             if not (6 < len(password) < 21):
-                return render(request, "user/signin.html", {"error": "password 길이는 7~20자 입니다."})
+                return render(request, "sign.html", {"error": "password 길이는 7~20자 입니다."})
             elif re.search("[0-9]+", password) is None or re.search("[a-zA-Z]+", password) is None:
-                return render(request, "user/signin.html", {"error": "password 형식은 영문,숫자 포함 7~20자 입니다."})
+                return render(request, "sign.html", {"error": "password 형식은 영문,숫자 포함 7~20자 입니다."})
             elif password != password2:
-                return render(request, "user/signin.html", {"error": "password 확인 해 주세요!"})
+                return render(request, "sign.html", {"error": "password 확인 해 주세요!"})
             if re.search("[0-9]+", nickname) is None or re.search("[a-zA-Z]+", nickname) is None:
-                return render(request, "user/signin.html", {"error": "nickname에 영문,숫자는 필수입니다."})
+                return render(request, "sign.html", {"error": "nickname에 영문,숫자는 필수입니다."})
 
             exist_user = get_user_model().objects.filter(nickname=nickname)
             exist_email = get_user_model().objects.filter(email=email)
             if exist_email:
-                return render(request, "user/signin.html", {"error": "이미 사용 중인 email입니다."})
+                return render(request, "sign.html", {"error": "이미 사용 중인 email입니다."})
             elif exist_user:
-                return render(request, "user/signin.html", {"error": "이미 사용 중인 nickname입니다."})
+                return render(request, "sign.html", {"error": "이미 사용 중인 nickname입니다."})
             else:
                 Users.objects.create_user(email=email, username=nickname, nickname=nickname, password=password)
-                return render(request, "user/signin.html", {"msg": "greendoor 회원가입 완료 : )"})
+                return render(request, "sign.html", {"msg": "greendoor 회원가입 완료 : )"})
     else:
         return redirect("feed:community")
 
@@ -65,13 +65,13 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
             auth.login(request, me)
             return redirect("feed:community")  # 로그인 성공
         else:
-            return redirect("user/signin.html")  # 로그인 실패
+            return redirect("sign.html")  # 로그인 실패
     elif request.method == "GET":
         user = request.user.is_authenticated  # 사용자가 로그인 되어 있는지 검사
         if user:  # 로그인이 되어 있다면
             return redirect("feed:community")
         else:  # 로그인이 되어 있지 않다면
-            return render(request, "user/signin.html")
+            return render(request, "sign.html")
     else:
         return redirect("feed:community")
 
