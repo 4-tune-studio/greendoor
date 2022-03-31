@@ -1,11 +1,28 @@
 {% extends "indexbase.html" %}
-{% block extrahead %}
-    {% endblock %}
-    {% block content %}
+{% load static %}
+
+{% block title %}Shop{% endblock %}
+{% block static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="/static/css/feedindex.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content %}
     <!-- 피드 상단 이미지 -->
     <div class="feed-header">
         <img src="{% static 'img/storemain.png' %}">
     </div>
+
+
+    <ul class="nav-link">
+        <li><a href="{% url 'feed:community' %}">community</a></li>
+        <li><a href="{% url 'product:product_all' %}">store</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+        {% else %}
+            <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
+        {% endif %}
+    </ul>
+
 
     <div class="row">
         <div class="col-2">
@@ -26,9 +43,7 @@
                 {% for product in products %}
                     <div class="col-4">
                         <div class="card">
-
-
-                            <img class="card-img-top" src="{{ product.image.url }}" alt="Product Image">
+                            <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <p class="card-text">{{ product.description }} <span class="badge badge-secondary">&#8361;{{ product.price }}</span>
