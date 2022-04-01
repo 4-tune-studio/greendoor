@@ -1,15 +1,16 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
 
+from config.models import BaseModel
+
 # Create your models here.
-from greendoor.models import BaseModel
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30)
-    image = models.CharField(max_length=256)
+    image = models.CharField(max_length=256)  # TODO 모델 변경 필요, 디폴트 이미지
     zipcode = models.IntegerField(blank=True, null=True)
     address = models.CharField(max_length=256, blank=True, null=True)
     phonenumber = models.CharField(max_length=11, blank=True, null=True)
@@ -28,3 +29,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
 class UsersFav(BaseModel):
 
     pass
+
+
+class UserImg(BaseModel):
+    img = models.ImageField(upload_to="user/%Y%m%d", max_length=255)

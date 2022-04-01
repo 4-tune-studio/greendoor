@@ -1,0 +1,231 @@
+{% extends "detailbase.html" %}
+{% load static %}
+    {% block title %}Feed{% endblock %}
+    {% block static %}
+    <link href="/static/css/feeddetail.css" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    {% endblock static %}
+
+<!-- feed -->
+{% block content %}
+    <div class="feed">
+        <img src="{{ feed.image }}">
+        <button id="feed-title">{{ feed.title }}</button>
+        <img id="userprofile" src="{{ feed.user_id.image }}"> <!-- 작성자 프로필사진-->
+        <h5 id="date">{{ feed.created_at|date:"y-m-d" }}</h5>
+        <h5 id="username">{{ feed.user_id.nickname }}</h5>
+    <!-- 좋아요, 북마크 조건문 시작 -->
+        <div class="feed-icon-default">
+            <a href="#heart-icon" onclick="like_api({{ feed.id }})">
+                {% if feed.my_likes %}
+                    {# 내가 좋아요한 피드면 #}
+                    <i class="fi fi-sr-heart" id="heart-icon"></i>
+                {% else %}
+                    {# 내가 좋아요 안한 피드면 #}
+                    <i class="fi fi-rr-heart" id="heart-icon"></i>
+                {% endif %}
+            </a>
+            <a href="#bookmark-icon" onclick="bookmark_api({{ feed.id }})">
+                {% if feed.my_bookmark %}
+                    {# 내가 북마크한 피드면 #}
+                    <i class="fi fi-sr-bookmark" id="bookmark-icon"></i>
+                {% else %}
+                    {# 내가 북마크 안한 피드면 #}
+                    <i class="fi fi-rr-bookmark" id="bookmark-icon"></i>
+                {% endif %}
+            </a>
+        </div>
+{#            <i class="fi fi-rr-heart" id="heart-icon"></i>#}
+{#            <i class="fi fi-rr-bookmark" id="bookmark-icon"></i>#}
+{#        <div class="feed-icon-filled">#}
+{#            <i class="fi fi-sr-heart"></i>#}
+{#            <i class="fi fi-sr-bookmark"></i>#}
+{#        </div>#}
+        {% if feed.user_id == user %}
+        <div class="feed-icon">
+            <a href="{% url "feed:update_feed" feed_id=feed.id %}"><button>수정</button></a>
+            <a href="{% url "feed:delete_feed" feed_id=feed.id %}"><button>삭제</button></a>
+        </div>
+        {% endif %}
+        <div id="contents">
+            <h5>조회수 : {{ feed.views }}</h5>
+            <h5 id="like_count">{{ feed.like_count }}명이 좋아합니다</h5>
+            <h5>내용 : {{ feed.content }}</h5>
+        </div>
+        <div class="comment">
+            <h3>댓글</h3>
+            <!-- 코멘트 반복문 시작 -->
+            <!-- for comment in feed.feed_comment.all 사용 가능-->
+            {% for comment in comments %}
+            <div class="commentview">
+                <img id="commentuserprofile" src="{{ comment.user_id.image }}">
+                <div class="commentuser">
+                    <h5 id="userid">{{ comment.user_id.nickname }}</h5>
+                    <h5> - {{ comment.created_at }}</h5>
+                    <input id="comment_{{ comment.id }}_input" type="text" value="{{ comment.content }} "
+                           readonly required size="100" maxlength="100">
+{#                    <h5 id="comment">comment</h5>#}
+                </div>
+            </div>
+            <div class="commenticon">
+                {% if comment.user_id == user %}
+                    <a href="#comment_{{ comment.id }}_input" id="comment_update_{{ comment.id }}"
+                       onclick="update_comment({{ comment.id }})">
+                        <button>수정</button>
+                    </a>
+                    <a href="#comment_{{ comment.id }}_input" id="comment_update_api_{{ comment.id }}"
+                       onclick="update_comment_api({{ comment.id }})" style="display: none">
+                        <button>전송</button>
+                    </a>
+                    <a href="{% url "feed:delete_comment" feed_id=feed.id comment_id=comment.id %}">
+                        <button>삭제</button>
+                    </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <!-- 코멘트 반복문 끝 -->
+            <div class="commentwrite">
+                <!-- 코멘트 input -->
+            <form action="{% url "feed:create_comment" feed_id=feed.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="comment_content" id="comment" required size="100" maxlength="100" >
+                <button type="submit">등록</button>
+            </form>
+            <!-- 코멘트 input 끝 -->
+            </div>
+        </div>
+    </div>
+
+<!--footer-->
+    <footer>
+        <div class="footer">
+            <h4>Website created with Team 4-tune</h4>
+        </div>
+        <div class="m-nav-link">
+            <a href="#heart-icon" onclick="like_api({{ feed.id }})">
+                {% if feed.my_likes %}
+                    {# 내가 좋아요한 피드면 #}
+                    <i class="fi fi-sr-heart" id="heart-icon"></i>
+                {% else %}
+                    {# 내가 좋아요 안한 피드면 #}
+                    <i class="fi fi-rr-heart" id="heart-icon"></i>
+                {% endif %}
+            </a>
+            <a href="#bookmark-icon" onclick="bookmark_api({{ feed.id }})">
+                {% if feed.my_bookmark %}
+                    {# 내가 북마크한 피드면 #}
+                    <i class="fi fi-sr-bookmark" id="bookmark-icon"></i>
+                {% else %}
+                    {# 내가 북마크 안한 피드면 #}
+                    <i class="fi fi-rr-bookmark" id="bookmark-icon"></i>
+                {% endif %}
+            </a>
+{#            <a href=""><i class="fi fi-sr-heart"></i></a>#}
+{#            <a href=""><i class="fi fi-rr-bookmark"></i></a>#}
+        </div>
+    </footer>
+        <script type="text/javascript">
+        //댓글 수정 가능 함수
+        function update_comment(id) {
+            const commentInput = document.querySelector(`#comment_${id}_input`);
+            const submitButton = document.querySelector(`#comment_update_api_${id}`);
+            const updateButton = document.querySelector(`#comment_update_${id}`);
+
+            updateButton.style.display = "none"; // 수정 버튼 숨기기
+            submitButton.style.display = "inline-block"; // 전송 버튼 표시
+            commentInput.readOnly = false; // 댓글 input 태그 수정 가능하게 변경
+        }
+
+                // 수정 댓글 전송 함수
+        function update_comment_api(id) {
+            const commentInput = document.querySelector(`#comment_${id}_input`);
+            const submitButton = document.querySelector(`#comment_update_api_${id}`);
+            const updateButton = document.querySelector(`#comment_update_${id}`);
+            const content = commentInput.value;
+            // ajax 비동기 통신
+            $.ajax({
+                type: "POST", // request 전달 방식 (POST, GET 등)
+                url: "{% url "feed:update_comment" %}", // api 요청 url
+                headers: {//헤더에 csrf 토큰 추가
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                data: {// json 형식으로 서버에 데이터 전달
+                    'comment_id': id,
+                    'content': content,
+                },
+                dataType: "json", // json 형식으로 데이터 주고 받기
+                success: function (response) { // 통신 성공했을 때 호출 함수
+                    //console.log(response.msg)
+                    updateButton.style.display = "inline-block"; // 수정 버튼 표시
+                    submitButton.style.display = "none"; // 전송 버튼 숨기기
+                    commentInput.readOnly = true; // 댓글 수정 못하게 막기
+                },
+                error: function () { // 통신 실패했을 때 호출 함수
+                    alert("댓글 수정 실패");
+                },
+            });
+        }
+
+        // 좋아요 함수
+        function like_api(id) {
+            // ajax 비동기 통신
+            $.ajax({
+                type: "POST", // request 전달 방식 (POST, GET 등)
+                url: "{% url "feed:api_like" %}", // api 요청 url
+                headers: {//헤더에 csrf 토큰 추가
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                data: {// json 형식으로 서버에 데이터 전달
+                    'feed_id': id,
+                },
+                dataType: "json", // json 형식으로 데이터 주고 받기
+                success: function (response) { // 통신 성공했을 때 호출 함수
+                    {#console.log(response.msg)#}
+                    {#console.log(response.like_count)#}
+                    if (response.msg === "좋아요") {
+                        // like 버튼의 클래스를 변경(채워져 있는 하트) / jquery 문법
+                        $('#heart-icon').attr("class", "fi fi-sr-heart")
+                    } else if (response.msg === "좋아요 취소") {
+                        // like 버튼의 클래스를 변경(비어있는 하트) / jquery 문법
+                        $('#heart-icon').attr("class", "fi fi-rr-heart")
+                    }
+                    // 좋아요 숫자를 서버에서 전달받은 숫자로 변경 / jquert 문법
+                    $("#like_count").text(`${response.like_count}명이 좋아합니다`);
+                },
+                error: function () { // 통신 실패했을 때 호출 함수
+                    alert("좋아요 실패");
+                },
+            });
+        }
+
+        // 북마크 함수
+        function bookmark_api(id) {
+            // ajax 비동기 통신
+            $.ajax({
+                type: "POST", // request 전달 방식 (POST, GET 등)
+                url: "{% url "feed:api_bookmark" %}", // api 요청 url
+                headers: {//헤더에 csrf 토큰 추가
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                data: {// json 형식으로 서버에 데이터 전달
+                    'feed_id': id,
+                },
+                dataType: "json", // json 형식으로 데이터 주고 받기
+                success: function (response) { // 통신 성공했을 때 호출 함수
+                    console.log(response.msg)
+                    if (response.msg === "북마크") {
+                        // 북마크 버튼의 클래스를 변경 / jquery 문법
+                        $('#bookmark-icon').attr("class", "fi fi-sr-bookmark")
+                    } else if (response.msg === "북마크 취소") {
+                        // 북마크 버튼의 클래스를 변경 / jquery 문법
+                        $('#bookmark-icon').attr("class", "fi fi-rr-bookmark")
+                    }
+                },
+                error: function () { // 통신 실패했을 때 호출 함수
+                    alert("북마크 실패");
+                },
+            });
+        }
+    </script>
+{% endblock content %}

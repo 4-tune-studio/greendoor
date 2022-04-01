@@ -1,23 +1,29 @@
-# from selenium import webdriver
-# from selenium.webdriver.common.keys import Keys
-# import time
-# import urllib.request
+# < 1. 장고 내부명령어로 생성된 앱이 아닐때 또는 패키지가 아닐때 앱에서 모델을 불러와서 DB에 접근할때 위치를 제대로 못찾을 때가 있음
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+
+import django
+
+django.setup()
+
+# 1. > 이럴때는 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")와 django.setup을 하고 실행하면 작동함
+# 해당 내용은 settings.py에도 있는 내용이지만 경로를 찾지 못하기에 직접 여기서 실행할 수 있게 함
+
+# time.sleep() 함수를 사용준비
 import time
 
+# pymysql을 이용해서 sql query문을 사용준비
 import pymysql
 import requests
+
+# bs4를 이용 html 문서 내용을 태그 기준으로 찾을 준비
 from bs4 import BeautifulSoup
 
-from greendoor.my_settings import MY_DATABASES
+from config.my_settings import MY_DATABASES
+from plant.models import *
 
-#####################################################################
-# bs4 사용법 요약
-
-# from bs4 import BeautifulSoup
-# html = """<html><head></head><body>test data</body></html> """
-# soup = BeautifulSoup(html, 'html.parser')
-# print(soup.select_one('body').text)
-#####################################################################
+# < 2. pymysql을 이용하여 DB에 접근, sql query문을 사용하는 부분
 db = pymysql.connect(
     host=MY_DATABASES["default"]["HOST"],
     port=3306,
@@ -27,30 +33,56 @@ db = pymysql.connect(
     charset="utf8mb4",
 )
 
+# db.cursor()로 위치커서를 잡아주고 execute()를 이용하여 sql query문을 보내줌
+# 실행후에는 .commit()하지 않으면 반영되지 않음.직접 cosole에서 할때도 commit해야하는 것과 같음
 cursor = db.cursor()
+cursor.execute("DELETE FROM plant_plant;")
+db.commit()
+time.sleep(2)
+# db.close() 하지 않으면 밑에서 orm이 작동하지 않음. db 접근이 중복으로 되어 생기는 문제로 생각됨.
+db.close()
+time.sleep(3)
+
+# 2. > sql query문을 이용하여 table의 내용을 비우고 시작
+
+# id = 0
 
 for i in range(1, 23):
+    #####################################################################
+    # bs4 사용법 요약
+
+    # from bs4 import BeautifulSoup
+    # html = """<html><head></head><body>test data</body></html> """
+    # soup = BeautifulSoup(html, 'html.parser')
+    # print(soup.select_one('body').text)
+    #####################################################################
+
     print(f"========================= {i}:page 시작 =========================")
     url = f"http://api.nongsaro.go.kr/sample/ajax/ajax_local_callback.jsp?garden/gardenList?apiKey=nongsaroSampleKey&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&serviceType=ajaxType"
+    # url = f"http://api.nongsaro.go.kr/service/ajax/ajax_local_callback.jsp?garden/gardenList?apiKey=20220310B12R88R0WTCQTCD4DYSJ7W&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&serviceType=ajaxType"
 
     html_txt = requests.get(url).text
-    # print("page test")
-    # print(json_txt)
-    # print("=============================================== end page test")
     soup = BeautifulSoup(html_txt, "html.parser")
-    # category_tr = soup.select('table.grid > tbody > tr > td')
-    # print("category_tr test")
-    # print(category_tr)
-    # print("=============================================== end page test")
+
+    # print(html_txt)
+
     for j in range(10):
         try:
+            # 웹사이트의 검색페이지에서 식물별 상세페이지의 경로를 추출, 이곳에서 사용한 image도 같이 추출
             image = soup.select("img")[j]["src"]
+
+            main_name = soup.select(".nTitle")[j].text
+            print(main_name)
+
             tr = soup.select("td > a")[j]["onclick"]
             tr = tr.lstrip("fncDtl(")
             tr = tr.strip().rstrip("eslaf nruter ;)")
             content_number = tr.replace("'", "")
 
+            # 위에서 알아낸 상세페이지의 경로를 이용하여 상세페이지 url을 통하여 밑의 정보 추출
             url = f"http://api.nongsaro.go.kr/sample/ajax/ajax_local_callback.jsp?garden/gardenDtl?apiKey=nongsaroSampleKey&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&cntntsNo={content_number}&serviceType=ajaxType"
+            # url = f"http://api.nongsaro.go.kr/service/ajax/ajax_local_callback.jsp?garden/gardenDtl?apiKey=20220310B12R88R0WTCQTCD4DYSJ7W&htmlArea=nongsaroApiLoadingAreaResult&pageNo={i}&cntntsNo={content_number}&serviceType=ajaxType"
+
             content_html = requests.get(url).text
 
             content = BeautifulSoup(content_html, "html.parser")
@@ -62,8 +94,17 @@ for i in range(1, 23):
             origin = content.select("tr > td")[4].text
             advise_info = content.select("tr > td")[5].text
             image_link = content.select("tr > td")[6].text
+
             height_info = content.select("tr > td")[7].text
+            if height_info == "":
+                height_info = 0
+            else:
+                pass
             width_info = content.select("tr > td")[8].text
+            if width_info == "":
+                width_info = 0
+            else:
+                pass
             leaftype_info = content.select("tr > td")[9].text
 
             smell_info = content.select("tr > td")[10].text
@@ -123,6 +164,7 @@ for i in range(1, 23):
 
             insect = content.select("tr > td")[60].text
             print(f"*********** {i} page {j + 1} 번째 conetent 시작 ***********")
+            print(main_name)
             print(image)
 
             print(botanical_name)
@@ -196,62 +238,70 @@ for i in range(1, 23):
         except:
             continue
         else:
-            cursor.execute(
-                f"INSERT INTO plant_plant VALUES('{id_num}',"
-                f"'{category_name}',"
-                f"'{img}',"
-                f"'{title}',"
-                f"'{price.strip()}',"
-                f"'{description}',"
-                f"'{score}',"
-                f"'{alcohol}',"
-                f"'{style_info}',"
-                f"'{aroma_info}',"
-                f"'{flavor_info}',"
-                f"'{finish_info}',"
-                f"'{smoothness_info}',"
-                f"'{enjoy_info}',"
-                f"'{pairing_info}',"
-                f"'{page}')"
+            id = (i - 1) * 10 + j + 1
+            # plant_category_id를 foreign key로 참조하기 때문에 해당 키를 이용하여 plant_category_id 설정
+            # 나머지 변수들도 Plant 클래속의 변수로 넣어주고 객체를 완성
+            try:
+                plant_category_id = PlantCategory.objects.get(category=type_name)
+            except:
+                plant_category_id = PlantCategory.objects.get(id=1)
+            else:
+                pass
+
+            pt = Plant(
+                plant_category_id=plant_category_id,
+                id=id,
+                # updated_at=datetime.now(),
+                # created_at=datetime.now(),
+                main_name=main_name,
+                image=image,
+                botanical_name=botanical_name,
+                english_name=english_name,
+                general_name=general_name,
+                type_name=type_name,
+                origin=origin,
+                advise_info=advise_info,
+                image_link=image_link,
+                height_info=int(height_info),
+                width_info=int(width_info),
+                leaftype_info=leaftype_info,
+                toxic_info=toxic_info,
+                breeding_info=breeding_info,
+                extraperiod_info=extraperiod_info,
+                grow_level=grow_level,
+                growth_speed=growth_speed,
+                growth_temp=growth_temp,
+                lowest_temp=lowest_temp,
+                humidity=humidity,
+                fertilizer_info=fertilizer_info,
+                soil_info=soil_info,
+                water_spring=water_spring,
+                water_summer=water_summer,
+                water_fall=water_fall,
+                water_winter=water_winter,
+                insect_info=insect_info,
+                extragrow_info=extragrow_info,
+                functional_info=functional_info,
+                care_need=care_need,
+                type=type,
+                growth_type=growth_type,
+                indoor_garden=indoor_garden,
+                ecology=ecology,
+                leaf_pattern=leaf_pattern,
+                leaf_color=leaf_color,
+                flower_season=flower_season,
+                flower_color=flower_color,
+                fluit_season=fluit_season,
+                fluit_color=fluit_color,
+                breeding_way=breeding_way,
+                lux=lux,
+                location=location,
             )
 
-            db.commit()
-
+            # pt.save() 통해 새 객체를 database에 insert
+            pt.save()
             print(f"==================================================================================")
             print(f"*********** {i} page {j + 1} 번째 conetent 끝 ***********")
             print("==================================================================================")
 
             time.sleep(1)
-
-            # print(f"{i}::::::::::{content_number}")
-
-# driver = webdriver.Chrome()
-# driver.get("http://api.nongsaro.go.kr/sample/ajax/garden/gardenList.html")
-#
-# SCROLL_PAUSE_TIME = 1
-# # Get scroll height
-# last_height = driver.execute_script("return document.body.scrollHeight")
-# while True:
-#     # Scroll down to bottom
-#     for i in range(2, 23):
-#         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-#         # Wait to load page
-#         time.sleep(SCROLL_PAUSE_TIME)
-#         # Calculate new scroll height and compare with last scroll height
-#         new_height = driver.execute_script("return document.body.scrollHeight")
-#         if new_height == last_height:
-#             print("진입" + str(i))
-#             try:
-#                 driver.find_element_by_css_selector(
-#                     "# nongsaroApiLoadingAreaResult > div > div > div.pagination > strong > a:nth-child(" + str(i) + ")").click()
-#                 test = driver.find_element_by_css_selector(
-#                     "# nongsaroApiLoadingAreaResult > div > div > div.pagination > strong > a:nth-child(" + str(i) + ")")
-#                 print(test)
-#             except:
-#                 break
-#         last_height = new_height
-#
-# # images = driver.find_elements_by_css_selector(".rg_i.Q4LuWd")
-# count = 1
-#
-# time.sleep(10)

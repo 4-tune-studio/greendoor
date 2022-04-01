@@ -25,9 +25,8 @@ jobs:
         run: |
           ${HOME}/.poetry/bin/poetry install
 
-      - name: Test python project
-        run: |
-          env
-          poetry run python manage.py test
-          
+#      - name: Test python project
+#        run: |
+#          env
+#          poetry run python manage.py test
           

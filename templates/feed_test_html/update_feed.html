@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href="{% url "feed:community" %}">커뮤니티 페이지로 이동</a> <br>
+    <form action="{% url "feed:update_feed" feed.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!--피드 이미지-->
+        <input type="file" name="feed_img_file" id="feed_img_file" accept="image/*"> <br>
+        <img style="width: 500px;" id="previewImage" src="{{ feed.image }}"> <br>
+        <!--피드 제목-->
+        <input type="text" name="feed_title" id="feed_title" value="{{ feed.title }}" required> <br>
+        <!--피드 내용-->
+        <input type="text" name="feed_content" id="feed_content" value="{{ feed.content }}"> <br>
+        <button type="submit">작성하기</button>
+    </form>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+<script type="text/javascript">
+/**
+ * 단일파일 업로드
+ */
+function readImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            const previewImage = document.getElementById('previewImage');
+            previewImage.src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+// 이벤트 리스너
+document.getElementById('feed_img_file').addEventListener('change', (e) => {
+    readImage(e.target);
+})
+</script>
+</body>
+</html>
