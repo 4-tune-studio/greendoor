@@ -49,5 +49,5 @@ types-pytz==2021.3.5
 types-PyYAML==6.0.4
 typing_extensions==4.1.1
 tzdata==2021.5
-urllib==31.26.8
+urllib3==1.26.8
 wheel==0.37.0
