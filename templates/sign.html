@@ -1,10 +1,13 @@
 {% extends "detailbase.html" %}
-{% block extrahead %}
-    {% load static %}
-    <link href="{% static 'css/sign.css' %}" rel="stylesheet">
-    <link href="http://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+{% load static %}
+{% load socialaccount %}
 
-    {% endblock %}
+    {% block title %}Login{% endblock %}
+    {% block static %}
+    <link href="/static/css/sign.css" rel="stylesheet">
+    <link href="http://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    {% endblock static %}
+
     {% block content %}
     <div class="container">
       <div class="overlay" id="overlay">
@@ -38,10 +41,11 @@
             </div>
           </div>
           <p class="small">or use your email account:</p>
-          <form id="sign-in-form" method="post", action="{% url "user:sign-in" %}">
-            <input type="email" placeholder="Email"/>
-            <input type="password" placeholder="Password"/>
-            <p class="forgot-password"><a href="{% url 'password_reset' %}">비밀번호를 잊으셨나요?</a></p>
+          <form id="sign-in-form" method="post" action="{% url "user:sign-in" %}">
+            {% csrf_token %}
+            <input type="email" placeholder="Email" name="email"/>
+            <input type="password" placeholder="Password" name="password"/>
+            <p class="forgot-password"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
             <button class="control-button in" type="submit">Sign In</button>
           </form>
         </div>
@@ -78,7 +82,6 @@
         </div>
       </div>
     </div>
-<script type="text/javascript" src="{% static 'js/signin.js' %}">
-</script>
 
+<script type="text/javascript" src="/static/js/signin.js"></script>
 {% endblock content %}

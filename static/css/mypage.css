@@ -5,7 +5,7 @@
 
     body {
         box-sizing: border-box;
-        background-image: url('../img/header.png');
+        background-image: url('/static/img/header.png');
         background-size: 300%;
         background-repeat: no-repeat;
         margin: 0;
@@ -239,7 +239,7 @@
 
     footer {
         box-sizing: border-box;
-        background-image: url('../img/footer.png');
+        background-image: url('/static/img/footer.png');
         background-size: 100%;
         background-repeat: no-repeat;
         margin: 0;
@@ -279,7 +279,7 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        background-image: url('../img/header.png');
+        background-image: url('/static/img/header.png');
         background-size: 100%;
         background-repeat: no-repeat;
         z-index: 1;
@@ -475,7 +475,7 @@
 
     footer {
         box-sizing: border-box;
-        background-image: url('../img/footer.png');
+        background-image: url('/static/img/footer.png');
         background-size: 100%;
         background-repeat: no-repeat;
         margin: 0;
