@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <p class="small">or use your email account:</p>
-                <form id="sign-in-form" method="post", action="{% url "user:sign-in" %}">
+                <form id="sign-in-form" method="post" action="{% url "user:sign-in" %}">
                     {% csrf_token %}
                     <input type="email" placeholder="Email" name="email"/>
                     <input type="password" placeholder="Password" name="password"/>

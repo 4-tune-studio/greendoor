@@ -28,14 +28,13 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
         # 카테고리가 있을수도 없을수도있으니 None으로 설정
         current_category = None
 
-    products
     ######################################################################################
     # templates의 구조에 따라서 다르게 쓸 수 있으나 앱기반으로 하여 이렇게 되어있다. 수정이 필요한 부분
     ######################################################################################
     return render(
         request,
-        # "product/list.html",
-        "storeindex.html",
+        "product/list.html",
+        # "storeindex.html",
         {
             "current_category": current_category,
             "categories": categories,

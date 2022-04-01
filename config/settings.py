@@ -31,7 +31,7 @@ django_stubs_ext.monkeypatch()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = MY_SECRET["SECRET_KEY"]
-DATABASES = MY_DATABASES
+
 
 DEBUG = True
 
@@ -41,6 +41,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    # "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -55,7 +56,6 @@ INSTALLED_APPS = [
     "info",
     "feed",
     "cart",
-    "storages",
     "crispy_forms",
     "allauth",
     "allauth.account",
@@ -64,8 +64,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.instagram",
     "allauth.socialaccount.providers.kakao",
     "allauth.socialaccount.providers.naver",
-    "corsheaders",
     "survey",
+    "storages",
 ]
 
 # password reset
@@ -79,7 +79,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
+    # "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -105,6 +105,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+DATABASES = MY_DATABASES
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -138,7 +139,7 @@ LANGUAGE_CODE = "ko-kr"
 TIME_ZONE = "Asia/Seoul"
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -149,10 +150,7 @@ STATICFILES_DIRS = [
     STATIC_DIR
 ]
 
-# STATIC_URL = "https://nmdbucket.s3.ap-northeast-2.amazonaws.com/"
-# # STATICFILES_DIRS = [
-# #     os.path.join(BASE_DIR, "static"),  # base_dir is project folder
-# # ]
+STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
 
 
 
@@ -169,16 +167,15 @@ CART_ID = "cart item"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-#KEY값 필요한 경우 https://integer-ji.tistory.com/180
-with open(os.path.join(BASE_DIR, 'secrets.json')) as f:
-    secrets = json.loads(f.read())
 
-AWS_S3_REGION_NAME = "ap-northeast-2"
-AWS_S3_SIGNATURE_VERSION = "s3v4"
 AWS_ACCESS_KEY_ID = MY_SECRET_ACCESS_KEY["ACCESS_KEY"]
 AWS_SECRET_ACCESS_KEY = MY_SECRET["SECRET_KEY"]
 AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME["BUCKET_NAME"]
-AWS_DEFAULT_ACL = None  # its make read anybody
+
+AWS_S3_REGION_NAME = "ap-northeast-2"
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+
+AWS_DEFAULT_ACL = 'public-read'  # its make read anybody
 
 # =============== password reset email setting =============== #
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -206,8 +203,27 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 
 # cors setting
-CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # it make white list that can access
-CORS_ALLOW_CREDENTIALS = True
-
+# CORS_ORIGIN_ALLOW_ALL = True # <- 모든 호스트 허용
+# CORS_ALLOW_CREDENTIALS = True
+# CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # it make white list that can access
+# CORS_ALLOW_METHODS = (
+#     'DELETE',
+#     'GET',
+#     'OPTIONS',
+#     'PATCH',
+#     'POST',
+#     'PUT',
+# )
+# CORS_ALLOW_HEADERS = (
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+# )
 IAMPORT_KEY = MY_IAMPORT_KEY
 IAMPORT_SECRET = MY_IAMPORT_SECRET

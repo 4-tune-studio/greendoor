@@ -37,7 +37,7 @@
 
     footer {
         box-sizing: border-box;
-        background-image: url('../img/footer.png');
+        background-image: url('/static/img/footer.png');
         background-size: 100%;
         background-repeat: no-repeat;
         margin: 0;
@@ -195,7 +195,7 @@
 
     footer {
         box-sizing: border-box;
-        background-image: url('../img/footer.png');
+        background-image: url('/static/img/footer.png');
         background-size: 100%;
         background-repeat: no-repeat;
         margin: 0;
