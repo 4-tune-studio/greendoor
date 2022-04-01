@@ -169,8 +169,9 @@ CART_ID = "cart item"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-# with open(os.path.join(BASE_DIR, 'config/conf/aws.json')) as f:
-#     secrets = json.loads(f.read())
+#KEY값 필요한 경우 https://integer-ji.tistory.com/180
+with open(os.path.join(BASE_DIR, 'secrets.json')) as f:
+    secrets = json.loads(f.read())
 
 AWS_S3_REGION_NAME = "ap-northeast-2"
 AWS_S3_SIGNATURE_VERSION = "s3v4"
