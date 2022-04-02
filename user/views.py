@@ -50,8 +50,8 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
             elif exist_user:
                 return render(request, "sign.html", {"error": "이미 사용 중인 nickname입니다."})
             else:
-                # Users.objects.create_user(email=email, username=nickname, nickname=nickname, password=password)
-                Users.objects.create_user(email=email, nickname=nickname, password=password)
+                Users.objects.create_user(email=email, username=nickname, nickname=nickname, password=password)
+                # Users.objects.create_user(email=email, nickname=nickname, password=password)
                 return render(request, "sign.html", {"msg": "greendoor 회원가입 완료 : )"})
     else:
         return redirect("feed:community")
