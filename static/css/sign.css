@@ -1,3 +1,4 @@
+
 /*desktop*/
 @media screen and (min-width:801px) {
   :root {
@@ -15,7 +16,6 @@
     margin: 0;
     font-family: 'Helvetica Neue', sans-serif;
     letter-spacing: 0.5px;
-    margin-top: 50px;
   }
 
   .header-logo {
@@ -261,10 +261,11 @@
   #sign-in-form input, #sign-up-form input {
     margin: 12px;
     font-size: 14px;
-    padding: 15px;
+    padding: 10px;
     width: 260px;
     font-weight: 300;
     border: none;
+    border-radius: 10px;
     background-color: #e4e4e494;
     font-family: 'Helvetica Neue', sans-serif;
     letter-spacing: 1.5px;
@@ -278,8 +279,12 @@
   .forgot-password {
     font-size: 12px;
     display: inline-block;
-    border-bottom: 2px solid #efebeb;
+
     padding-bottom: 3px;
+  }
+
+  .forgot-password a {
+    color: #4aba96;
   }
 
   .forgot-password:hover {

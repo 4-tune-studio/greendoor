@@ -8,7 +8,7 @@ from config.models import BaseModel
 
 class Users(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=30)
+    username = models.CharField(max_length=30, blank=True, null=True)
     nickname = models.CharField(max_length=30)
     image = models.CharField(max_length=256)  # TODO 모델 변경 필요, 디폴트 이미지
     zipcode = models.IntegerField(blank=True, null=True)
