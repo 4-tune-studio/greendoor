@@ -142,13 +142,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    STATIC_DIR
-]
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [STATIC_DIR]
 
-STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
-
+STATIC_ROOT = os.path.join(BASE_DIR, ".static_root")
 
 
 # Default primary key field type
@@ -171,7 +168,7 @@ AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME["BUCKET_NAME"]
 AWS_S3_REGION_NAME = "ap-northeast-2"
 AWS_S3_SIGNATURE_VERSION = "s3v4"
 
-AWS_DEFAULT_ACL = 'public-read'  # its make read anybody
+AWS_DEFAULT_ACL = "public-read"  # its make read anybody
 
 # =============== password reset email setting =============== #
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

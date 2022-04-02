@@ -151,8 +151,7 @@ STATIC_URL = "static/"
 #     STATIC_DIR
 # ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
 # Default primary key field type
@@ -175,7 +174,7 @@ AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME["BUCKET_NAME"]
 AWS_S3_REGION_NAME = "ap-northeast-2"
 AWS_S3_SIGNATURE_VERSION = "s3v4"
 
-AWS_DEFAULT_ACL = 'public-read'  # its make read anybody
+AWS_DEFAULT_ACL = "public-read"  # its make read anybody
 
 # =============== password reset email setting =============== #
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

@@ -11,7 +11,6 @@ from user.forms import CustomUserChangeForm
 from user.models import Users
 from user.services.userimg_service import update_user_image, update_user_image_url
 
-
 # Create your views here.
 
 
