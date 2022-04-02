@@ -9,6 +9,7 @@
     {% endblock static %}
 
     {% block content %}
+        <img src="../static/img/empty.png" width="150%">
     <div class="container">
       <div class="overlay" id="overlay">
         <div class="sign-in" id="sign-in">
@@ -45,7 +46,7 @@
             {% csrf_token %}
             <input type="email" placeholder="Email" name="email"/>
             <input type="password" placeholder="Password" name="password"/>
-            <p class="forgot-password"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+            <p class="forgot-password"><a class="forgot-password" href="{% url 'password_reset' %}">비밀번호를 잊으셨나요?</a></p>
             <button class="control-button in" type="submit">Sign In</button>
           </form>
         </div>
