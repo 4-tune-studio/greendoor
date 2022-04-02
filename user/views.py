@@ -15,7 +15,6 @@ from user.services.userimg_service import update_user_image, update_user_image_u
 
 
 def sign_up_view(request: HttpRequest) -> HttpResponse:
-
     if request.method == "GET":
         user = request.user.is_authenticated  # 로그인 된 사용자가 요청하는지 검사
         if user:  # 로그인이 되어있다면
@@ -33,14 +32,16 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
         if email == "" or nickname == "" or password == "" or password2 == "":
             return render(request, "sign.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
         else:
-            if not (6 < len(password) < 21):
+            if not (1 < len(nickname) < 21):
+                return render(request, "sign.html", {"error": "nickname 길이는 2~20자 입니다."})
+            elif not (6 < len(password) < 21):
                 return render(request, "sign.html", {"error": "password 길이는 7~20자 입니다."})
             elif re.search("[0-9]+", password) is None or re.search("[a-zA-Z]+", password) is None:
                 return render(request, "sign.html", {"error": "password 형식은 영문,숫자 포함 7~20자 입니다."})
             elif password != password2:
                 return render(request, "sign.html", {"error": "password 확인 해 주세요!"})
-            if re.search("[0-9]+", nickname) is None or re.search("[a-zA-Z]+", nickname) is None:
-                return render(request, "sign.html", {"error": "nickname에 영문,숫자는 필수입니다."})
+            # if re.search("[0-9]+", nickname) is None or re.search("[a-zA-Z]+", nickname) is None:
+            #     return render(request, "sign.html", {"error": "nickname에 영문,숫자는 필수입니다."})
 
             exist_user = get_user_model().objects.filter(nickname=nickname)
             exist_email = get_user_model().objects.filter(email=email)
@@ -49,7 +50,8 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
             elif exist_user:
                 return render(request, "sign.html", {"error": "이미 사용 중인 nickname입니다."})
             else:
-                Users.objects.create_user(email=email, username=nickname, nickname=nickname, password=password)
+                # Users.objects.create_user(email=email, username=nickname, nickname=nickname, password=password)
+                Users.objects.create_user(email=email, nickname=nickname, password=password)
                 return render(request, "sign.html", {"msg": "greendoor 회원가입 완료 : )"})
     else:
         return redirect("feed:community")

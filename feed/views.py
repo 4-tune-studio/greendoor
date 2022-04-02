@@ -120,9 +120,7 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
                 return redirect("feed:feed", feed.id)
             # 허용되지 않은 확장자인 경우
             else:
-                return render(
-                    request, "feedwrite.html", {"error": "jpg, jpeg, gif, png 확장자를 사용해주세요 :)"}
-                )
+                return render(request, "feedwrite.html", {"error": "jpg, jpeg, gif, png 확장자를 사용해주세요 :)"})
         # request에 파일 정보가 없으면
         else:
             return render(request, "feedwrite.html", {"error": "피드에 사진은 필수! :)"})
