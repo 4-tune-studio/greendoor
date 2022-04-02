@@ -1,8 +1,8 @@
 
 
 /* desktop */
-
-body {
+@media screen and (min-width: 769px) {
+    body {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -12,55 +12,59 @@ body {
         z-index: 1;
     }
 
-a {
-    text-decoration: none;
-    color: white;
-}
+    a {
+        text-decoration: none;
+        color: white;
+    }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 25px;
-}
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+    }
 
-.logo img {
-    width: 20%;
-}
+    .logo img {
+        width: 20%;
+    }
 
-.category {
-    display: flex;
-    list-style: none; padding-left: 0;
-}
-.category li {
-    padding: 8px 15px;
-}
-.category a:hover {
-    color: #f5cf39;
-}
+    .category {
+        display: flex;
+        list-style: none;
+        padding-left: 0;
+    }
 
-button {
-    padding: 7px 20px;
-    background-color: rgb(255, 136, 60);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    color: #edf0f1;
-    font-size: 18px;
-}
-button:hover {
-    background-color: #fd6801;
-}
+    .category li {
+        padding: 8px 15px;
+    }
 
-.navbar-toggle, .navbar-logout {
-    display: none;
-    position: absolute;
-    right: 32px;
-    font-size: 20px;
-    color: white;
-}
+    .category a:hover {
+        color: #f5cf39;
+    }
 
+    button {
+        padding: 7px 20px;
+        background-color: rgb(255, 136, 60);
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease 0s;
+        color: #edf0f1;
+        font-size: 18px;
+    }
+
+    button:hover {
+        background-color: #fd6801;
+    }
+
+    .navbar-toggle, .navbar-logout {
+        display: none;
+        position: absolute;
+        right: 32px;
+        font-size: 20px;
+        color: white;
+    }
+}
 
 
 /*mobile*/
@@ -84,6 +88,7 @@ button:hover {
 
     .logo img {
         margin-top: 6px;
+        width: 20%;
     }
 
     .category {

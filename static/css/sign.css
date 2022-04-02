@@ -1,13 +1,13 @@
 
 /*desktop*/
-@media screen and (min-width:801px) {
+@media screen and (min-width:769px) {
   :root {
     --form-height: 550px;
     --form-width: 900px;
     /*  Sea Green */
-    --left-color: #4aba96;
+    --left-color: #62cea6;
     /*  Light Blue  */
-    --right-color: #4aba96;
+    --right-color: #62cea6;
   }
 
   body, html {
@@ -43,7 +43,7 @@
     margin: auto;
     box-shadow: 2px 5px 20px rgba(180, 180, 180, 0.4);
     border-radius: 10px;
-    border: 1px solid #e0e0e0;
+    /*border: 1px solid #e0e0e0;*/
     background-color: #ffffff;
   }
 
@@ -236,14 +236,17 @@
   }
 
   .social-media-buttons .icon {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #dadada;
+
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px 7px;
+  }
+
+  .icon img {
+    width: 40px;
+    height: 40px;
   }
 
   .small {
@@ -416,7 +419,7 @@
 /* mobile */
 /* mobile */
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:768px) {
 
   :root{
     --form-height:550px;
