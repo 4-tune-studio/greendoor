@@ -14,7 +14,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 25px;
+    padding: 25px 25px;
 }
 
 .logo img {
@@ -34,8 +34,8 @@ body {
     border-radius: 20px;
 }
 
-.row {
-    margin: 0 150px;
+.all-product {
+    margin: 0 250px;
 }
 
 
