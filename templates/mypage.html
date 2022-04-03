@@ -12,18 +12,14 @@
         <div class="content-wrapper">
             <div class="profile">
                 <img src="{{ user.image }}" alt="image">
-{#                <img src="/static/img/profile.jpg" alt="image">#}
-            </div>
-        </div>
-        <div class="content-wrapper">
-            <div class="profile">
                 <h5>{{ user.nickname }}님 안녕하세요!</h5>
+                <h3>프로필 사진 및 배송지 변경은 아래버튼을 클릭해주세요.</h3>
                 <a href="{% url 'user:profile_edit' user.id %}">
-                    <button id="profileedit">프로필 변경</button>
+                    <button id="profileedit">수정</button>
                 </a>
             </div>
         </div>
-
+    </div>
         <div class="userfeed">
             <div class="popular-feed">
                 <div id="feed-category">
