@@ -10,7 +10,7 @@ class Feed(BaseModel):
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="feed", db_column="user_id")
     title = models.CharField(max_length=100)
     image = models.CharField(max_length=256)
-    content = models.CharField(max_length=500, blank=True, null=True)
+    content = models.CharField(max_length=1000, blank=True, null=True)
     like_count = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
 
