@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
 from user.models import UsersFav
-from .models import Question
 
+from .models import Question
 
 URL_LOGIN = "user:sign-in"
 URL_COMMUNITY = "feed:community"
@@ -10,6 +10,7 @@ URL_SURVEY = "feed:community"
 
 
 # Create your views here.
+
 
 def survey(request):
     if not request.user.is_authenticated:
@@ -35,4 +36,3 @@ def survey(request):
         }
 
         return render(request, "survey/survey.html", context=context)
-
