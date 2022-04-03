@@ -29,6 +29,7 @@ URL_LOGIN = "user:sign-in"
 URL_COMMUNITY = "feed:community"
 URL_FEED = "feed:feed"
 
+
 def community_view(request: HttpRequest) -> HttpResponse:
     # 요청하는 방식이 get 방식인지 확인
     if request.method == "GET":
