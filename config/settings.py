@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.naver",
     "survey",
     "storages",
+    "search_app",
 ]
 
 # password reset
