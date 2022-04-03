@@ -16,6 +16,22 @@
 <!--            <button><a href="">자세히보기</a></button>-->
 <!--        </div>-->
     </div>
+    <div class="search-bar">
+        <div id="cover">
+        <form action="/search/" method="post">
+            <div class="tb"></div>
+            <div class="td"><input class="search-input" type="text" name="search" placeholder="검색어를 입력하세요."
+                                   required="required"></div>
+            <div class="td" id="s-cover">
+                <button type="submit" name="submit">
+                    <div id="s-circle"></div>
+                    <span></span>
+                </button>
+            </div>
+        </form>
+        </div>
+    </div>
+
     {% if popular_feeds %}
         <div class="popular-feed">
             <div id="feed-category">

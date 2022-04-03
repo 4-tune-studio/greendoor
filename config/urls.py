@@ -47,7 +47,7 @@ urlpatterns = [
     path("survey/", include("survey.urls")),
     path("order/", include("order.urls")),
     path("product/", include("product.urls")),
-    path("google/", include("allauth.urls")),
+    path("accounts/", include("allauth.urls")),
     path(
         "password_reset/",
         auth_views.PasswordResetView.as_view(template_name="password/password_reset.html"),
