@@ -12,4 +12,14 @@ from django.contrib.auth.forms import UserChangeForm
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
-        fields = ["zipcode", "address", "phonenumber"]
+        fields = ["nickname", "zipcode", "address", "phonenumber"]
+
+    def __init__(self, *args, **kwargs):
+        # *args : 복수의 인자를 받고자 할 때, *뒤 변수명을 적으면 된다
+        # **kwargs : 여러 키워드 파라미터를 받을 수 있다(ex- x=10 과 같은!)
+        super().__init__(*args, **kwargs)
+        # super()을 이용해 부모클래스의 내용을 가지고 올 수 있다.=> 오버라이딩 즉 Blogapp 내용에 접근
+        self.fields['nickname'].label = "이름(배송 받으실 분)"
+        self.fields['zipcode'].label = "우편 번호"
+        self.fields['address'].label = "배송 주소"
+        self.fields['phonenumber'].label = "전화 번호"

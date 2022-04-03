@@ -1,6 +1,6 @@
 /* mobile */
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:768px) {
 
 
     body {
@@ -75,10 +75,10 @@
     .feed-header { display: flex; justify-content: center; }
 
     button {
-        padding: 9px 25px;
+        padding: 20px 50px;
         background-color: rgb(255, 136, 60);
         border: none;
-        border-radius: 50px;
+        border-radius: 20px;
         cursor: pointer;
         transition: all 0.3s ease 0s;
         color: #edf0f1;
@@ -117,126 +117,6 @@
 
 
 
-    @import url(https://fonts.googleapis.com/css?family=Raleway:300,700);
-    @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
-    figure.feed-img {
-      font-family: 'Raleway', Arial, sans-serif;
-      position: relative;
-      overflow: hidden;
-      margin: 10px;
-      min-width: 150px;
-      max-width: 300px;
-      height: 120%;
-      width: 100%;
-      color: #fd6801;
-      text-align: left;
-      font-size: 16px;
-      /*background-color: rgba(255, 255, 255, 0.5);*/
-      border-radius: 10px;
-    }
-    figure.feed-img * {
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      -webkit-transition: all 0.35s ease;
-      transition: all 0.35s ease;
-      border-radius: 10px;
-    }
-    figure.feed-img img {
-      max-width: 100%;
-      backface-visibility: hidden;
-      vertical-align: top;
-      border-radius: 10px;
-    }
-    figure.feed-img:after,
-    figure.feed-img figcaption {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
-    figure.feed-img:after {
-      content: '';
-      background-color: rgba(255, 255, 255, 0.5);
-      -webkit-transition: all 0.35s ease;
-      transition: all 0.35s ease;
-      opacity: 0;
-      border-radius: 10px;
-    }
-    figure.feed-img figcaption {
-      z-index: 1;
-      padding: 40px;
-    }
-    figure.feed-img h3,
-    figure.feed-img .links {
-      width: 100%;
-      margin: 5px 0;
-      padding: 0;
-    }
-    figure.feed-img h3 {
-      line-height: 1.1em;
-      font-weight: 700;
-      font-size: 1.5em;
-      text-transform: uppercase;
-      opacity: 0;
-    }
-    figure.feed-img p {
-      font-size: 0.8em;
-      font-weight: 300;
-      letter-spacing: 1px;
-      opacity: 0;
-      top: 50%;
-      -webkit-transform: translateY(40px);
-      transform: translateY(40px);
-    }
-    figure.feed-img i {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      padding: 20px 25px;
-      font-size: 34px;
-      opacity: 0;
-      -webkit-transform: translateX(-10px);
-      transform: translateX(-10px);
-    }
-    figure.feed-img a {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 1;
-    }
-    figure.feed-img:hover img,
-    figure.feed-img.hover img {
-      zoom: 1;
-      filter: alpha(opacity=50);
-      -webkit-opacity: 0.5;
-      opacity: 0.5;
-    }
-    figure.feed-img:hover:after,
-    figure.feed-img.hover:after {
-      opacity: 1;
-      position: absolute;
-      top: 10px;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-    }
-    figure.feed-img:hover h3,
-    figure.feed-img.hover h3,
-    figure.feed-img:hover p,
-    figure.feed-img.hover p,
-    figure.feed-img:hover i,
-    figure.feed-img.hover i {
-      -webkit-transform: translate(0px, 0px);
-      transform: translate(0px, 0px);
-      opacity: 1;
-    }
-
-
-
-
     footer {
         box-sizing: border-box;
         background-image: url('/static/img/footer.png');
@@ -271,52 +151,12 @@
 
 
 /* desktop */
-@media screen and (min-width:801px) {
+@media screen and (min-width:769px) {
 
     @import url('http://fonts.googleapis.com/css?family=Monserrat:500');
 
-    body {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        background-image: url('/static/img/header.png');
-        background-size: 100%;
-        background-repeat: no-repeat;
-        z-index: 1;
-    }
-
-    li, a, button {
-        font-family: "Montserrat", sans-serif;
-        font-weight: 500;
-        font-size: 16px;
-        color: #edf0f1;
-        text-decoration: none;
-    }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 30px 10%;
-        z-index: 10;
-    }
-
-    .logo { cursor: pointer; width: 120px; }
-
-    .m-nav-menu {
-        display: none;
-    }
-
-    .m-nav-link { display: none; }
-    .nav-link { list-style: none; }
-    .nav-link li { display: inline-block; padding: 0 20px; }
-    .nav-link li a { transition: all 0.3s ease 0s; }
-    .nav-link li a:hover { color: #ffd433; }
-
-    .feed-header { display: flex; justify-content: center; }
-
     button {
-        padding: 9px 25px;
+        padding: 7px 20px;
         background-color: rgb(255, 136, 60);
         border: none;
         border-radius: 50px;
@@ -327,17 +167,32 @@
         background-color: rgb(253, 104, 1);
     }
 
+    #profileedit {
+        font-size: 14px;
+    }
+
+    .content-wrapper {
+        border: #a6a6a6 1px solid;
+        background-color: white;
+        width: 800px;
+        border-radius: 20px;
+        padding: 30px 30px;
+    }
 
     .profile {
-        margin: 100px;
+        margin: 50px;
         display: flex;
         align-items: center;
         flex-direction: column;
     }
 
     .profile img {
-        width: 100px;
+        margin-top: 20px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
+        object-fit: cover;
+        overflow: hidden;
     }
 
     .userfeed {
@@ -353,125 +208,99 @@
         flex-direction: row;
     }
 
+    #scrollTopPc {
+      display: flex;
+      position: fixed;
+      bottom: 64px; /* 윗쪽 끝에서부터의 거리 */
+      right: 35px; /* 오른쪽 끝에서부터의 거리 */
+      cursor: pointer;
+      z-index: 99;
+    }
+
+    #scrollTopMob {
+        display: none;
+    }
+
+    h3 {
+        color: #4d4d4d;
+        font-size: 14px;
+    }
 
 
+    .grid-container img {
+      width: 100%; /* need to overwrite inline dimensions */
+      height: auto;
+    }
+    h2 {
+      margin-bottom: .5em;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-gap: 1em;
+    }
 
-    @import url(https://fonts.googleapis.com/css?family=Raleway:300,700);
-    @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
-    figure.feed-img {
-      font-family: 'Raleway', Arial, sans-serif;
+
+    /* hover styles */
+    .location-listing {
       position: relative;
+    }
+
+    .location-image {
+      line-height: 0;
       overflow: hidden;
-      margin: 10px;
-      min-width: 150px;
-      max-width: 300px;
-      height: 120%;
-      width: 100%;
-      color: #fd6801;
-      text-align: left;
-      font-size: 16px;
-      /*background-color: rgba(255, 255, 255, 0.5);*/
-      border-radius: 10px;
     }
-    figure.feed-img * {
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      -webkit-transition: all 0.35s ease;
-      transition: all 0.35s ease;
-      border-radius: 10px;
+
+    .location-image img {
+      filter: blur(0px);
+      transition: filter 0.3s ease-in;
+      transform: scale(1.1);
+      border-radius: 20px;
     }
-    figure.feed-img img {
-      max-width: 100%;
-      backface-visibility: hidden;
-      vertical-align: top;
-      border-radius: 10px;
-    }
-    figure.feed-img:after,
-    figure.feed-img figcaption {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
-    figure.feed-img:after {
-      content: '';
-      background-color: rgba(255, 255, 255, 0.5);
-      -webkit-transition: all 0.35s ease;
-      transition: all 0.35s ease;
-      opacity: 0;
-      border-radius: 10px;
-    }
-    figure.feed-img figcaption {
-      z-index: 1;
-      padding: 40px;
-    }
-    figure.feed-img h3,
-    figure.feed-img .links {
-      width: 100%;
-      margin: 5px 0;
-      padding: 0;
-    }
-    figure.feed-img h3 {
-      line-height: 1.1em;
-      font-weight: 700;
+
+    .location-title {
       font-size: 1.5em;
-      text-transform: uppercase;
-      opacity: 0;
-    }
-    figure.feed-img p {
-      font-size: 0.8em;
-      font-weight: 300;
-      letter-spacing: 1px;
-      opacity: 0;
-      top: 50%;
-      -webkit-transform: translateY(40px);
-      transform: translateY(40px);
-    }
-    figure.feed-img i {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      padding: 20px 25px;
-      font-size: 34px;
-      opacity: 0;
-      -webkit-transform: translateX(-10px);
-      transform: translateX(-10px);
-    }
-    figure.feed-img a {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      font-weight: bold;
+      text-decoration: none;
       z-index: 1;
-    }
-    figure.feed-img:hover img,
-    figure.feed-img.hover img {
-      zoom: 1;
-      filter: alpha(opacity=50);
-      -webkit-opacity: 0.5;
-      opacity: 0.5;
-    }
-    figure.feed-img:hover:after,
-    figure.feed-img.hover:after {
-      opacity: 1;
       position: absolute;
-      top: 10px;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity .5s;
+      background: rgba(90,0,10,0.4);
+      color: white;
+
+      /* position the text in t’ middle*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    figure.feed-img:hover h3,
-    figure.feed-img.hover h3,
-    figure.feed-img:hover p,
-    figure.feed-img.hover p,
-    figure.feed-img:hover i,
-    figure.feed-img.hover i {
-      -webkit-transform: translate(0px, 0px);
-      transform: translate(0px, 0px);
+
+    .location-listing:hover .location-title {
       opacity: 1;
     }
+
+    .location-listing:hover .location-image img {
+      filter: blur(2px);
+      border-radius: 20px;
+    }
+
+
+    /* for touch screen devices */
+    @media (hover: none) {
+      .location-title {
+        opacity: 1;
+      }
+      .location-image img {
+        filter: blur(2px);
+        border-radius: 20px;
+      }
+    }
+
+
 
     footer {
         box-sizing: border-box;
@@ -496,4 +325,8 @@
     }
 
 
+
 }
+
+
+
