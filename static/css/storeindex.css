@@ -1,0 +1,86 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/img/bg.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+}
+
+.logo img {
+    width: 20%;
+}
+
+.category a{
+    color: white;
+    text-decoration: none;
+}
+
+.category a:hover{
+    color: #fdd84c;
+}
+
+.sign button {
+    border-radius: 20px;
+}
+
+.row {
+    margin: 0 150px;
+}
+
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #ff883c;
+    border-color: #ff883c;
+}
+
+a {
+    color: #fd6801;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+
+.alert-info {
+    color: #37b67d;
+    background-color: #d4f3e1;
+    border-color: #d4f3e1;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #45a874;
+    border-color: #45a874;
+}
+
+.card {
+    margin-bottom: 50px;
+}
+
+.card img {
+    width: border-box;
+    height: 300px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.badge-secondary {
+    color: #fff;
+    background-color: #53c78a;
+}
+
+h5 {
+    font-size: 12px;
+}

@@ -1,6 +1,5 @@
 {% extends 'indexbase.html' %}
 {% load static %}
-
 {% block title %}Community{% endblock %}
 {% block static %}
     <link href="/static/css/feedwrite.css" rel="stylesheet" type="text/css">
@@ -44,4 +43,4 @@ document.getElementById('feed_img_file').addEventListener('change', (e) => {
     readImage(e.target);
 })
 </script>
-{% endblock content %}
+{% endblock %}
