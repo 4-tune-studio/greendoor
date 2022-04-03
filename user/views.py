@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from config.utils import allowed_file, get_file_extension
 from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
 from user.forms import CustomUserChangeForm
-from user.models import Users
+from user.models import UserImg, Users
 from user.services.userimg_service import update_user_image, update_user_image_url
 
 # Create your views here.

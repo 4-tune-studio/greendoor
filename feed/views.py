@@ -25,7 +25,7 @@ from feed.services.feed_service import (
 )
 from feed.services.like_service import do_like, undo_like
 
-URL_LOGIN = "/sign-up/"
+URL_LOGIN = "/user/sign-in/"
 
 
 def community_view(request: HttpRequest) -> HttpResponse:
