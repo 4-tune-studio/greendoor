@@ -200,7 +200,7 @@
         border-radius: 50%;
         object-fit: cover;
         overflow: hidden;
-        border: 10px solid transparent;
+        border: 8px solid transparent;
         background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(to right, #aae3c6, #37a16e, #65d3ffaa);
         background-origin: border-box;
         background-clip: content-box, border-box;
@@ -233,7 +233,7 @@
     }
 
     h3 {
-        color: #4d4d4d;
+        color: #646464;
         font-size: 14px;
     }
 
