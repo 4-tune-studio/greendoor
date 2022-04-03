@@ -9,11 +9,6 @@ from product.models import Category, Product
 
 # request는 장고 뷰가 던져질때 자연스럽게 들어오는 request 객체를 이용
 def product_in_category(request: HttpRequest, category_slug=None) -> HttpResponse:
-    # 카테고리가 있을수도 없을수도있으니 None으로 설정
-    current_category = None
-    # Category 전체를 불러올것
-    categories = Category.objects.all()
-
     # 제품을 보여줄 수 있는 것만 불러오기
     products = Product.objects.filter(available_display=True)
     # Category 전체를 불러올것
