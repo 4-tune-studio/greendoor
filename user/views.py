@@ -45,13 +45,13 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
                 return render(request, "sign.html", {"error": "nickname 길이는 3~20자 입니다."})
             elif re.search("[가-힣]+", nickname) is None:
                 if re.match("([A-Za-z0-9]{3,20})", nickname) is not None:
-                    if re.search("[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]+", nickname) is not None:
+                    if re.search("[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`'…》]+", nickname) is not None:
                         return render(request, "sign.html", {"error": "nickname 영문 형식은 영문, 숫자 포함만 가능합니다."})
                 else:
                     return render(request, "sign.html", {"error": "nickname 영문 형식은 영문, 숫자 포함만 가능합니다."})
             elif re.search("[A-Za-z0-9]+", nickname) is None:
                 if re.match("([가-힣]{3,20})", nickname) is not None:
-                    if re.search("[A-Za-z0-9-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]+", nickname) is not None:
+                    if re.search("[A-Za-z0-9-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`'…》]+", nickname) is not None:
                         return render(request, "sign.html", {"error": "nickname 한글 형식은 오직 한글만 가능합니다."})
                 else:
                     return render(request, "sign.html", {"error": "nickname 한글 형식은 오직 한글만 가능합니다."})
