@@ -10,9 +10,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30, blank=True, null=True)
     nickname = models.CharField(max_length=30)
-    image = models.CharField(
-        max_length=256, default="https://greendoorhope.s3.amazonaws.com/img/profile.jpg"
-    )  # TODO 모델 변경 필요, 디폴트 이미지
+    image = models.CharField(max_length=256, default="https://greendoorhope.s3.amazonaws.com/img/profile.jpg")
     zipcode = models.IntegerField(blank=True, null=True)
     address = models.CharField(max_length=256, blank=True, null=True)
     phonenumber = models.CharField(max_length=11, blank=True, null=True)

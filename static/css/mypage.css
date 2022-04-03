@@ -168,9 +168,23 @@
     }
 
     #profileedit {
-        font-size: 14px;
+        font-size: 12px;
+        margin-top: 20px;
     }
 
+
+    .content-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+    }
+    .content-wrapper {
+        border: #58bd87 3px solid;
+        background-color: white;
+        width: 800px;
+        border-radius: 20px;
+        padding: 30px 30px;
+    }
 
     .profile {
         margin: 50px;
@@ -186,6 +200,10 @@
         border-radius: 50%;
         object-fit: cover;
         overflow: hidden;
+        border: 10px solid transparent;
+        background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(to right, #aae3c6, #37a16e, #65d3ffaa);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
     }
 
     .userfeed {
@@ -318,4 +336,8 @@
     }
 
 
+
 }
+
+
+

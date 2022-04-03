@@ -81,4 +81,6 @@ class Plant(BaseModel):
     lux = models.CharField(max_length=100, null=True, blank=True)
     location = models.CharField(max_length=256, null=True, blank=True)
 
+    # size 대 중 소 입력 필드 추가
+    size = models.CharField(max_length=1, default="")
     # insect = models.CharField(max_length=100, null=True, blank=True)
