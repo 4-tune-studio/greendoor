@@ -239,8 +239,11 @@
 
 
     .grid-container img {
-      width: 100%; /* need to overwrite inline dimensions */
-      height: auto;
+      width: 200px; /* need to overwrite inline dimensions */
+      height: 200px;
+        object-fit: cover;
+        overflow: hidden;
+      border-radius: 20px;
     }
     h2 {
       margin-bottom: .5em;
@@ -259,6 +262,9 @@
 
     .location-image {
       line-height: 0;
+      width: 200px; /* need to overwrite inline dimensions */
+      height: 200px;
+      object-fit: cover;
       overflow: hidden;
     }
 
@@ -267,10 +273,14 @@
       transition: filter 0.3s ease-in;
       transform: scale(1.1);
       border-radius: 20px;
+      width: 200px; /* need to overwrite inline dimensions */
+      height: 200px;
+      object-fit: cover;
+      overflow: hidden;
     }
 
     .location-title {
-      font-size: 1.5em;
+      font-size: 1em;
       font-weight: bold;
       text-decoration: none;
       z-index: 1;
@@ -281,7 +291,7 @@
       left: 0;
       opacity: 0;
       transition: opacity .5s;
-      background: rgba(90,0,10,0.4);
+      background: rgb(136, 180, 158);
       color: white;
 
       /* position the text in t’ middle*/

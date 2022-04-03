@@ -1,13 +1,9 @@
 from django.contrib import admin
 
-from survey.models import Answer, Survey
+from .models import Choice, Level, Question
 
 # Register your models here.
 
-
-class SurveyAdmin(admin.ModelAdmin):
-    list_display = ("question", "ans1", "ans2", "ans3", "ans4", "status")
-
-
-admin.site.register(Survey, SurveyAdmin)
-admin.site.register(Answer)
+admin.site.register(Level)
+admin.site.register(Question)
+admin.site.register(Choice)
