@@ -51,7 +51,7 @@
         <div id="contents">
             <h5>조회수 : {{ feed.views }}</h5>
             <h5 id="like_count">{{ feed.like_count }}명이 좋아합니다</h5>
-            <h5>내용 : {{ feed.content }}</h5>
+            <textarea name="feed_content" rows="20" cols="50" maxlength="1000" readonly>{{ feed.content }}</textarea>
         </div>
         <div class="comment">
             <h3>댓글</h3>
