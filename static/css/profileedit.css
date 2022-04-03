@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     margin-top: 50px;
+    margin-bottom: 120px;
 }
 .card {
     width: 50vw;
@@ -10,6 +11,13 @@
     border-radius: 30px;
     background-color: white;
     padding: 50px 80px;
+}
+
+
+.card.mb-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile {
@@ -24,7 +32,10 @@
     border-radius: 50%;
     object-fit: cover;
     overflow: hidden;
-    border: #58c790 5px solid;
+    border: 10px solid transparent;
+    background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(to right, #aae3c6, #37a16e, #65d3ffaa);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
 }
 .file-edit-icon {
     margin-top: 20px;
@@ -74,7 +85,8 @@
 
 
 .password a {
-    color: #4aba96;
+    background-color: #4aba96;
+    color: white;
     font-weight: bold;
 }
 

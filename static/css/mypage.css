@@ -179,7 +179,7 @@
         margin-top: 100px;
     }
     .content-wrapper {
-        border: #a6a6a6 1px solid;
+        border: #58bd87 3px solid;
         background-color: white;
         width: 800px;
         border-radius: 20px;
@@ -200,7 +200,10 @@
         border-radius: 50%;
         object-fit: cover;
         overflow: hidden;
-        border: #4aba96 5px solid;
+        border: 10px solid transparent;
+        background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(to right, #aae3c6, #37a16e, #65d3ffaa);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
     }
 
     .userfeed {
