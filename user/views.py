@@ -32,7 +32,7 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
         if email == "" or nickname == "" or password == "" or password2 == "":
             return render(request, "sign.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
         else:
-            # password 유효성 검사 길이, 영문 + 숫자 조합 여부, password == password2 일치 여부
+            # password 유효성 검사: 비번 길이, 영문 + 숫자 조합 여부, password == password2 일치 여부
             if not (6 < len(password) < 21):
                 return render(request, "sign.html", {"error": "password 길이는 7~20자 입니다."})
             elif re.search("[0-9]+", password) is None or re.search("[a-zA-Z]+", password) is None:
@@ -40,10 +40,23 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
             elif password != password2:
                 return render(request, "sign.html", {"error": "password 확인 해 주세요!"})
 
-            # nickname 유효성 검사 한글은 한글만, 영문은 소문자로 + 숫자
-            # if re.search("[0-9]+", nickname) is None or re.search("[a-zA-Z]+", nickname) is None:
-            #     return render(request, "sign.html", {"error": "nickname에 영문,숫자는 필수입니다."})
+            # nickname 유효성 검사: nickname 길이, 한글은 한글만, 영문은 영문 + 숫자
+            if not (3 < len(nickname) < 21):
+                return render(request, "sign.html", {"error": "nickname 길이는 3~20자 입니다."})
+            elif re.search("[가-힣]+", nickname) is None:
+                if re.match("([A-Za-z0-9]{3,20})", nickname) is not None:
+                    if re.search("[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`'…》]+", nickname) is not None:
+                        return render(request, "sign.html", {"error": "nickname 영문 형식은 영문, 숫자 포함만 가능합니다."})
+                else:
+                    return render(request, "sign.html", {"error": "nickname 영문 형식은 영문, 숫자 포함만 가능합니다."})
+            elif re.search("[A-Za-z0-9]+", nickname) is None:
+                if re.match("([가-힣]{3,20})", nickname) is not None:
+                    if re.search("[A-Za-z0-9-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`'…》]+", nickname) is not None:
+                        return render(request, "sign.html", {"error": "nickname 한글 형식은 오직 한글만 가능합니다."})
+                else:
+                    return render(request, "sign.html", {"error": "nickname 한글 형식은 오직 한글만 가능합니다."})
 
+            # username, email 중복 방지
             exist_user = get_user_model().objects.filter(username=nickname)
             exist_email = get_user_model().objects.filter(email=email)
             if exist_email:
@@ -91,6 +104,7 @@ def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
         return redirect("user:sign-in")
     # 다른 사용자 수정 불가
     if request.user.id == pk:
+        # 변경 내용 저장
         if request.method == "POST":
             # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
             form = CustomUserChangeForm(request.POST, instance=request.user)
@@ -101,11 +115,10 @@ def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
                 form.phonenumber = request.POST["phonenumber"]
                 form.save()
                 return redirect("user:user_my_page", pk=pk)
-
+        # 관련 templates 기존 정보를 넘겨 준다
         elif request.method == "GET":
             form = CustomUserChangeForm(instance=request.user)
         context = {"form": form}
-        # 관련 templates 기존 정보를 넘겨 준다
         return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
     else:
         return redirect("feed:community")
