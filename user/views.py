@@ -1,5 +1,3 @@
-import re
-
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse, JsonResponse
@@ -8,7 +6,11 @@ from django.shortcuts import redirect, render
 from config.utils import allowed_file, get_file_extension
 from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
 from user.forms import CustomUserChangeForm
-from user.models import UserImg, Users
+from user.models import Users
+from user.services.signup_service import (
+    sign_up_nickname_validation,
+    sign_up_password_validation,
+)
 from user.services.userimg_service import update_user_image, update_user_image_url
 
 # Create your views here.
@@ -33,28 +35,14 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
             return render(request, "sign.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
         else:
             # password 유효성 검사: 비번 길이, 영문 + 숫자 조합 여부, password == password2 일치 여부
-            if not (6 < len(password) < 21):
-                return render(request, "sign.html", {"error": "password 길이는 7~20자 입니다."})
-            elif re.search("[0-9]+", password) is None or re.search("[a-zA-Z]+", password) is None:
-                return render(request, "sign.html", {"error": "password 형식은 영문,숫자 포함 7~20자 입니다."})
-            elif password != password2:
-                return render(request, "sign.html", {"error": "password 확인 해 주세요!"})
+            password_result = sign_up_password_validation(password, password2)
+            if password_result is not None:
+                return render(request, "sign.html", {"error": password_result})
 
-            # nickname 유효성 검사: nickname 길이, 한글은 한글만, 영문은 영문 + 숫자
-            if not (3 < len(nickname) < 21):
-                return render(request, "sign.html", {"error": "nickname 길이는 3~20자 입니다."})
-            elif re.search("[가-힣]+", nickname) is None:
-                if re.match("([A-Za-z0-9]{3,20})", nickname) is not None:
-                    if re.search("[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`'…》]+", nickname) is not None:
-                        return render(request, "sign.html", {"error": "nickname 영문 형식은 영문, 숫자 포함만 가능합니다."})
-                else:
-                    return render(request, "sign.html", {"error": "nickname 영문 형식은 영문, 숫자 포함만 가능합니다."})
-            elif re.search("[A-Za-z0-9]+", nickname) is None:
-                if re.match("([가-힣]{3,20})", nickname) is not None:
-                    if re.search("[A-Za-z0-9-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`'…》]+", nickname) is not None:
-                        return render(request, "sign.html", {"error": "nickname 한글 형식은 오직 한글만 가능합니다."})
-                else:
-                    return render(request, "sign.html", {"error": "nickname 한글 형식은 오직 한글만 가능합니다."})
+            # nickname 유효성 검사: nickname 길이, 한글은 한글만, 영문은 영문 or 영문 + 숫자
+            nickname_result = sign_up_nickname_validation(nickname)
+            if nickname_result is not None:
+                return render(request, "sign.html", {"error": nickname_result})
 
             # username, email 중복 방지
             exist_user = get_user_model().objects.filter(username=nickname)
@@ -97,7 +85,6 @@ def logout(request: HttpRequest) -> HttpResponse:
 
 
 # =============== user profile update (text) ================ #
-# user 주소, 번호 update
 def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
     # 사용자 로그인 확인
     if not request.user.is_authenticated:
