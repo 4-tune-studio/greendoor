@@ -14,7 +14,7 @@
         <button id="feed-title">{{ feed.title }}</button>
         <img id="userprofile" src="{{ feed.user_id.image }}"> <!-- 작성자 프로필사진-->
         <h5 id="date">{{ feed.created_at|date:"y-m-d" }}</h5>
-        <h5 id="username">{{ feed.user_id.nickname }}</h5>
+        <h5 id="username">{{ feed.user_id.username }}</h5>
     <!-- 좋아요, 북마크 조건문 시작 -->
         <div class="feed-icon-default">
             <a href="#heart-icon" onclick="like_api({{ feed.id }})">
@@ -61,7 +61,7 @@
             <div class="commentview">
                 <img id="commentuserprofile" src="{{ comment.user_id.image }}">
                 <div class="commentuser">
-                    <h5 id="userid">{{ comment.user_id.nickname }}</h5>
+                    <h5 id="userid">{{ comment.user_id.username }}</h5>
                     <h5> - {{ comment.created_at }}</h5>
                     <input id="comment_{{ comment.id }}_input" type="text" value="{{ comment.content }} "
                            readonly required size="100" maxlength="100">
