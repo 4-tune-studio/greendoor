@@ -68,4 +68,5 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name="password/password_reset_complete.html"),
         name="password_reset_complete",
     ),
+    path('search/', include('search_app.urls')),
 ]

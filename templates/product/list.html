@@ -13,21 +13,48 @@
     </div>
 
 
-{#    <ul class="nav-link">#}
-{#        <li><a href="{% url 'feed:community' %}">community</a></li>#}
-{#        <li><a href="{% url 'product:product_all' %}">store</a></li>#}
-{#        {% if user.is_authenticated %}#}
-{#            <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>#}
-{#        {% else %}#}
-{#            <li><a href="{% url 'user:sign-in' %}">mypage</a></li>#}
-{#        {% endif %}#}
-{#    </ul>#}
+    {#    <ul class="nav-link">#}
+    {#        <li><a href="{% url 'feed:community' %}">community</a></li>#}
+    {#        <li><a href="{% url 'product:product_all' %}">store</a></li>#}
+    {#        {% if user.is_authenticated %}#}
+    {#            <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>#}
+    {#        {% else %}#}
+    {#            <li><a href="{% url 'user:sign-in' %}">mypage</a></li>#}
+    {#        {% endif %}#}
+    {#    </ul>#}
 
+    {#    상점 검색 수정중   #}
+    <form class="form-inline" action="{% url 'search:product_searchResult' %}" method="get">
+        <input class="form-control mr-sm-2" type="search" placeholder="검색" name="kw">
+
+    </form>
+
+    {% if search_products %}
+        <div class="alert alert-info" role="alert">
+            "{{ query }}"으로 검색한 상품
+        </div>
+        <div class="row">
+            {% for search_product in search_products %}
+                <div class="col-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ search_product.image }}" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ search_product.name }}</h5>
+                            <p class="card-text">{{ search_product.description }} <span
+                                    class="badge badge-secondary">&#8361;{{ search_product.price }}</span>
+                            </p>
+                            <a href="{{ search_product.get_absolute_url }}" class="btn btn-primary">View Detail</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div class="row">
         <div class="col-2">
             <div class="list-group">
-                <a href="/" class="list-group-item {% if not current_category %}active{% endif %}">All</a>
+                <a href="/product" class="list-group-item {% if not current_category %}active{% endif %}">All</a>
                 {% for c in categories %}
                     <a href="{{ c.get_absolute_url }}"
                        class="list-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{ c.name }}</a>

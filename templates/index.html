@@ -1,36 +1,57 @@
 {% extends 'indexbase.html' %}
 {% load static %}
 
-    {% block title %}Community{% endblock %}
-    {% block static %}
-      <link href="/static/css/feedindex.css" rel="stylesheet" type="text/css">
-    {% endblock %}
+{% block title %}Community{% endblock %}
+{% block static %}
+    <link href="/static/css/feedindex.css" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block content %}
     <!-- 피드 상단 이미지 -->
     <div class="feed-header">
         <img src="/static/img/main.png">
-<!--        <div class="feed-header-text">-->
-<!--            <h3>플랜테리어</h3>-->
-<!--            <h3>어떻게 활용하면</h3>-->
-<!--            <h3>좋을까</h3>-->
-<!--            <button><a href="">자세히보기</a></button>-->
-<!--        </div>-->
+        <!--        <div class="feed-header-text">-->
+        <!--            <h3>플랜테리어</h3>-->
+        <!--            <h3>어떻게 활용하면</h3>-->
+        <!--            <h3>좋을까</h3>-->
+        <!--            <button><a href="">자세히보기</a></button>-->
+        <!--        </div>-->
     </div>
     <div class="search-bar">
         <div id="cover">
-        <form action="/search/" method="post">
-            <div class="tb"></div>
-            <div class="td"><input class="search-input" type="text" name="search" placeholder="검색어를 입력하세요."
-                                   required="required"></div>
-            <div class="td" id="s-cover">
-                <button type="submit" name="submit">
-                    <div id="s-circle"></div>
-                    <span></span>
-                </button>
-            </div>
-        </form>
+            <form action="{% url 'search:feed_searchResult' %}" method="get">
+                <div class="tb"></div>
+                <div class="td"><input class="search-input" type="text" name="kw" placeholder="검색어를 입력하세요."
+                                       required="required"></div>
+                <div class="td" id="s-cover">
+                    <button type="submit">
+                        <div id="s-circle"></div>
+                        <span></span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+
+    {% if search_feeds %}
+        <div class="popular-feed">
+            <div id="feed-category">
+                <h3>· "{{ query }}"으로 검색한 피드 ·</h3>
+            </div>
+            <div class="feed-img">
+                <div class="grid-container">
+                    {% for search_feed in search_feeds %}
+                        <article id="3685" class="location-listing">
+                            <a class="location-title" href="{% url 'feed:feed' search_feed.id %}">{{ search_feed.title }}</a>
+                            <div class="location-image">
+                                <a href="{% url 'feed:feed' search_feed.id %}"><img width="200" height="200"
+                                                                             src="{{ search_feed.image }}"></a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     {% if popular_feeds %}
         <div class="popular-feed">
@@ -38,16 +59,17 @@
                 <h3>· 인기피드 ·</h3>
             </div>
             <div class="feed-img">
-                  <div class="grid-container">
-                      {% for feed in popular_feeds %}
+                <div class="grid-container">
+                    {% for feed in popular_feeds %}
                         <article id="3685" class="location-listing">
-                          <a class="location-title" href="{% url 'feed:feed' feed.id %}">{{ feed.title }}</a>
-                          <div class="location-image">
-                            <a href="{% url 'feed:feed' feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
-                          </div>
+                            <a class="location-title" href="{% url 'feed:feed' feed.id %}">{{ feed.title }}</a>
+                            <div class="location-image">
+                                <a href="{% url 'feed:feed' feed.id %}"><img width="200" height="200"
+                                                                             src="{{ feed.image }}"></a>
+                            </div>
                         </article>
-                      {% endfor %}
-                  </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     {% endif %}
@@ -56,16 +78,17 @@
             <h3>· 최신피드 ·</h3>
         </div>
         <div class="feed-img">
-              <div class="grid-container">
-                  {% for feed in all_feed %}
+            <div class="grid-container">
+                {% for feed in all_feed %}
                     <article id="3685" class="location-listing">
-                      <a class="location-title" href="{% url "feed:feed" feed.id %}">{{ feed.title }}</a>
-                      <div class="location-image">
-                        <a href="{% url "feed:feed" feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
-                      </div>
+                        <a class="location-title" href="{% url "feed:feed" feed.id %}">{{ feed.title }}</a>
+                        <div class="location-image">
+                            <a href="{% url "feed:feed" feed.id %}"><img width="200" height="200"
+                                                                         src="{{ feed.image }}"></a>
+                        </div>
                     </article>
-                  {% endfor %}
-              </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <!-- PC 글쓰기 버튼 -->
