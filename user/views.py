@@ -95,11 +95,12 @@ def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
             # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
             form = CustomUserChangeForm(request.POST, instance=request.user)
             if form.is_valid():
-                form.bio = request.POST["zipcode"]
-                form.image = request.POST["address"]
-                form.image = request.POST["phonenumber"]
+                form.nickname = request.POST["nickname"]
+                form.zipcode = request.POST["zipcode"]
+                form.address = request.POST["address"]
+                form.phonenumber = request.POST["phonenumber"]
                 form.save()
-                return redirect("feed:community")
+                return redirect("user:user_my_page", pk=pk)
 
         elif request.method == "GET":
             form = CustomUserChangeForm(instance=request.user)
