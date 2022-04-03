@@ -25,7 +25,9 @@ from feed.services.feed_service import (
 )
 from feed.services.like_service import do_like, undo_like
 
-URL_LOGIN = "/user/sign-in/"
+URL_LOGIN = "user:sign-in"
+URL_COMMUNITY = "feed:community"
+URL_FEED = "feed:feed"
 
 
 def community_view(request: HttpRequest) -> HttpResponse:
@@ -56,7 +58,7 @@ def community_view(request: HttpRequest) -> HttpResponse:
 
     # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
     else:
-        return redirect("feed:community")
+        return redirect(URL_COMMUNITY)
 
 
 # 피드를 보여주는 함수
@@ -81,7 +83,7 @@ def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
 
     # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
     else:
-        return redirect("feed:community")
+        return redirect(URL_COMMUNITY)
 
 
 # 피드 작성 페이지 뷰, api
@@ -117,7 +119,7 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
                 # 모든 예외처리를 통과하면
                 # 피드 저장 후 저장된 피드의 페이지로 이동
                 feed = create_a_feed(user_id=user.id, title=title, image=img_url, content=content)
-                return redirect("feed:feed", feed.id)
+                return redirect(URL_FEED, feed.id)
             # 허용되지 않은 확장자인 경우
             else:
                 return render(request, "feedwrite.html", {"error": "jpg, jpeg, gif, png 확장자를 사용해주세요 :)"})
@@ -126,7 +128,7 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
             return render(request, "feedwrite.html", {"error": "피드에 사진은 필수! :)"})
     # 그 외 방식일 때
     else:
-        return redirect("feed:community")
+        return redirect(URL_COMMUNITY)
 
 
 # 피드 업데이트 함수
@@ -142,7 +144,7 @@ def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
             return render(request, "feedmodify.html", {"feed": feed})
         # 피드 작성자가 아닌 다른 유저가 유청할 때
         else:
-            return redirect("feed:community")
+            return redirect(URL_COMMUNITY)
 
     # POST 방식일 때
     elif request.method == "POST":
@@ -165,7 +167,7 @@ def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
                 # 모든 예외처리를 통과하면
                 # 피드 업데이트 후 저장된 피드의 페이지로 이동
                 update_a_feed(user_id=user_id, feed_id=feed_id, title=title, image=img_url, content=content)
-                return redirect("feed:feed", feed_id)
+                return redirect(URL_FEED, feed_id)
             # 허용되지 않은 확장자인 경우
             else:
                 return render(
@@ -177,11 +179,11 @@ def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
         else:
             # 피드 업데이트 후 저장된 피드의 페이지로 이동
             update_a_feed(user_id=user_id, feed_id=feed_id, title=title, image=feed.image, content=content)
-            return redirect("feed:feed", feed_id)
+            return redirect(URL_FEED, feed_id)
 
     # POST와 GET 이외의 요청일 때
     else:
-        return redirect("feed:community")
+        return redirect(URL_COMMUNITY)
 
 
 # 피드 삭제 api
@@ -191,7 +193,7 @@ def api_delete_feed(request: HttpRequest, feed_id: int) -> HttpResponse:
     user_id = request.user.id
     # 피드 삭제 서비스 함수 실행
     delete_a_feed(feed_id=feed_id, user_id=user_id)
-    return redirect("feed:community")
+    return redirect(URL_COMMUNITY)
 
 
 # 좋아요 api
@@ -229,10 +231,12 @@ def api_bookmark(request: HttpRequest) -> HttpResponse:
         return redirect(URL_LOGIN)
 
     # 사용자 정보 가져오기
-    user = request.user
-    feed_id = int(request.POST["feed_id"])
+    try:
+        user = request.user
+        feed_id = int(request.POST["feed_id"])
+    except Exception as e:
+        print(e)
     feed = get_a_feed(user_id=user.id, feed_id=feed_id)
-
     # 북마크를 한 상태이면 북마크 취소
     if feed.my_bookmark:
         undo_bookmark(user_id=user.id, feed_id=feed_id)
@@ -259,7 +263,7 @@ def api_create_comment(request: HttpRequest, feed_id: int) -> HttpResponse:
     content = request.POST.get("comment_content", "")
     # 댓글 생성 서비스 함수 실행
     create_a_comment(user_id=user.id, feed_id=feed_id, content=content)
-    return redirect("feed:feed", feed_id)
+    return redirect(URL_FEED, feed_id)
 
 
 # 댓글 수정
@@ -286,4 +290,4 @@ def api_delete_comment(request: HttpRequest, feed_id: int, comment_id: int) -> H
     user_id = request.user.id
     # 댓글 삭제 서비스 함수 실행
     delete_a_comment(comment_id=comment_id, user_id=user_id)
-    return redirect("feed:feed", feed_id)
+    return redirect(URL_FEED, feed_id)
