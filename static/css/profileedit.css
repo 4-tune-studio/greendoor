@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     margin-top: 50px;
+    margin-bottom: 120px;
 }
 .card {
     width: 50vw;
@@ -10,6 +11,14 @@
     border-radius: 30px;
     background-color: white;
     padding: 50px 80px;
+}
+
+
+.card.mb-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .profile {
@@ -24,18 +33,24 @@
     border-radius: 50%;
     object-fit: cover;
     overflow: hidden;
-    border: #58c790 5px solid;
+    border: 8px solid transparent;
+    background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(to right, #aae3c6, #37a16e, #65d3ffaa);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-sizing: border-box;
 }
 .file-edit-icon {
     margin-top: 20px;
 }
 .card-title {
     color: #fd6801;
+    text-align: left;
 }
 
-
-.file-edit-icon {
+#adress h4{
+    text-align: left;
     display: flex;
+    justify-content: left;
 }
 
 .btn.btn-primary {
@@ -55,9 +70,10 @@
 
 }
 .form-group input {
-    padding: 10px 0 0 0;
+    padding: 5px 3px;
     border: #a8a8a8 1px solid;
     border-radius: 5px;
+    align-items: center;
 
 }
 
@@ -74,8 +90,13 @@
 
 
 .password a {
-    color: #4aba96;
+    background-color: #ff883c;
+    color: white;
     font-weight: bold;
+}
+
+#id_nickname {
+    width: 47%;
 }
 
 
