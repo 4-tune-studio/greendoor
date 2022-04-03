@@ -27,8 +27,10 @@ class Users(AbstractBaseUser, PermissionsMixin):
 
 
 class UsersFav(BaseModel):
-
-    pass
+    user_id = models.OneToOneField(Users, on_delete=models.CASCADE, related_name="fav", db_column="user_id")
+    result1 = models.CharField(max_length=100)
+    result2 = models.CharField(max_length=100)
+    result3 = models.CharField(max_length=100)
 
 
 class UserImg(BaseModel):

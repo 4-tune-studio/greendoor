@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <form action="/result/" method='post'>
+{% extends "detailbase.html" %}
+{% load static %}
+{% block title %}Survey{% endblock %}
+
+{% block content %}
+    <form action="{% url "survey:survey" %}" method='post'>
     {% csrf_token %}
         {% for question in questions  %}
             <h3>{{ question.number }}번 {{ question.content }} </h3>
             {% for choice in question.choice_set.all %}
                 <div>
-                    <input type="radio" name="question={{ question.number }}"
-                           id="choice-{{ choice.pk }}" value="{{ choice.level.pk }}">
+                    <input type="radio" name="survey={{ question.number }}"
+                           id="choice-{{ choice.pk }}" value="{{ choice.value }}">
                     <label for="choice-{{ choice.pk }}">{{ forloop.counter }}.{{ choice.content }}</label>
                 </div>
             {% endfor %}
-
         {% endfor %}
         <input type="submit" value="제출하기">
     </form>
-</body>
-</html>
+{% endblock content %}
