@@ -1,5 +1,5 @@
-from typing import Any
 import re
+from typing import Any
 
 
 # password 유효성 검사: 비번 길이, 영문 + 숫자 조합 여부, password == password2 일치 여부
