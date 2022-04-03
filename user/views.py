@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from config.utils import allowed_file, get_file_extension
 from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
 from user.forms import CustomUserChangeForm
-from user.models import Users
+from user.models import Users, UsersFav
 from user.services.signup_service import (
     sign_up_nickname_validation,
     sign_up_password_validation,
@@ -66,7 +66,12 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
         me = auth.authenticate(request, email=email, password=password)  # 사용자 불러오기
         if me is not None:  # 저장된 사용자의 패스워드와 입력받은 패스워드 비교
             auth.login(request, me)
-            return redirect("feed:community")  # 로그인 성공
+            fav = UsersFav.objects.filter(user_id=me)
+            print(fav)
+            if len(fav) == 0:
+                return redirect("survey:survey")
+            else:
+                return redirect("feed:community")  # 로그인 성공
         else:
             return redirect("user:sign-in")  # 로그인 실패
     elif request.method == "GET":
