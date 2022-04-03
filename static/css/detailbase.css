@@ -6,7 +6,7 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        background-image: url('/static/img/bg.png');
+        background-image: url('/static/img/header.png');
         background-size: 100%;
         background-repeat: no-repeat;
         z-index: 1;

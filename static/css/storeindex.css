@@ -34,6 +34,10 @@ body {
     border-radius: 20px;
 }
 
+.seach-bar form {
+    margin-bottom: 100px;
+}
+
 .all-product {
     margin: 0 250px;
 }
@@ -84,3 +88,5 @@ a {
 h5 {
     font-size: 12px;
 }
+
+
