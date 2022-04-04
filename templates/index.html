@@ -4,6 +4,7 @@
 {% block title %}Community{% endblock %}
 {% block static %}
     <link href="/static/css/feedindex.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/6bc056fb5e.js" crossorigin="anonymous"></script>
 {% endblock %}
 {% block content %}
     <!-- 피드 상단 이미지 -->
@@ -11,20 +12,11 @@
         <a href="{% url 'info:info' %}"><img src="/static/img/main.png"></a>
     </div>
 
-    <div class="search-bar">
-        <div id="cover">
-            <form action="{% url 'search:feed_searchResult' %}" method="get">
-                <div class="tb"></div>
-                <div class="td"><input class="search-input" type="text" name="kw" placeholder="검색어를 입력하세요."
-                                       required="required"></div>
-                <div class="td" id="s-cover">
-                    <button type="submit">
-                        <div id="s-circle"></div>
-                        <span></span>
-                    </button>
-                </div>
-            </form>
-        </div>
+
+    <div class="main">
+        <form class="search" action="{% url 'search:feed_searchResult' %}" method="get">
+          <input class="searchTerm" placeholder="검색어를 입력하세요." type="text" name="kw" required="required"><input class="searchButton" type="submit" />
+        </form>
     </div>
     <div class="search-img">
         <div class="search-feed-img">

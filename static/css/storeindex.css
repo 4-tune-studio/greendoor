@@ -149,3 +149,53 @@ h5 {
 }
 
 
+.main {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+@import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+.search {
+  width: 300px;
+  position: relative;
+}
+.search:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-family: 'FontAwesome';
+  content: '\f002';
+  background: #48c789;
+  text-align: center;
+  color: #fff;
+  border-radius: 20px;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+}
+
+.searchTerm {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  border: 3px solid #48c789;
+  padding: 10px;
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
+}
+
+.searchButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  cursor: pointer;
+}
+

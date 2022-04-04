@@ -13,11 +13,25 @@
     </div>
 
 {#        상점 검색 수정중#}
-    <div class="search-bar">
-        <form class="form-inline" action="{% url 'search:product_searchResult' %}" method="get">
-            <input class="form-control mr-sm-2" type="search" placeholder="검색" name="kw">
 
+{#    <div class="main">#}
+{#        <form class="search" action="{% url 'search:product_searchResult' %}" method="get">#}
+{#          <input class="searchTerm" placeholder="검색어를 입력하세요." type="text" name="kw" required="required"><input class="searchButton" type="submit" />#}
+{#        </form>#}
+{#    </div>#}
+{#    <div class="search-img">#}
+{#        <div class="search-feed-img">#}
+{#            {% for search_feed in search_feeds %}#}
+{#            <a href="{% url 'feed:feed' search_feed.id %}"><img src="{{ search_feed.image }}"></a>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+    <div class="search-bar">
+    <div class="main">
+        <form class="search" action="{% url 'search:product_searchResult' %}" method="get">
+          <input class="searchTerm" placeholder="검색어를 입력하세요." type="text" name="kw" required="required"><input class="searchButton" type="submit" />
         </form>
+    </div>
         <div class="search-bar-wrapper">
         {% if search_products %}
             <div class="alert alert-info" role="alert">
