@@ -170,6 +170,11 @@
         height: 40px;
         margin-right: 10px;
     }
+    #like {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
 
     .contents {
         display: flex;
