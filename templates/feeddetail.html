@@ -27,10 +27,10 @@
             <a href="javascript:void(0);" onclick="like_api({{ feed.id }})">
                 {% if feed.my_likes %}
                     {# 내가 좋아요한 피드면 #}
-                    <img id="scrap" src="/static/img/heart_filled.png">
+                    <img id="like" src="/static/img/heart_filled.png">
                 {% else %}
                     {# 내가 좋아요 안한 피드면 #}
-                    <img id="scrap" src="/static/img/heart_default.png">
+                    <img id="like" src="/static/img/heart_default.png">
                 {% endif %}
             </a>
             <a href="javascript:void(0);" onclick="bookmark_api({{ feed.id }})">
@@ -43,12 +43,7 @@
                 {% endif %}
             </a>
         </div>
-{#            <i class="fi fi-rr-heart" id="heart-icon"></i>#}
-{#            <i class="fi fi-rr-bookmark" id="bookmark-icon"></i>#}
-{#        <div class="feed-icon-filled">#}
-{#            <i class="fi fi-sr-heart"></i>#}
-{#            <i class="fi fi-sr-bookmark"></i>#}
-{#        </div>#}
+
         {% if feed.user_id == user %}
         <div class="feed-icon">
             <a href="{% url "feed:update_feed" feed_id=feed.id %}"><button>수정</button></a>
