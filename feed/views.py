@@ -51,7 +51,7 @@ def community_view(request: HttpRequest) -> HttpResponse:
 
         # 첫 페이지라면
         if offset == 0:
-            popular_feeds = get_popular_feed_list(user_id, offset, 20)
+            popular_feeds = get_popular_feed_list(user_id, offset, 6)
             return render(request, "index.html", {"all_feed": all_feed, "popular_feeds": popular_feeds})
 
         return render(request, "index.html", {"all_feed": all_feed})
