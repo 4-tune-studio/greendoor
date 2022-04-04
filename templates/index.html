@@ -9,12 +9,7 @@
     <!-- 피드 상단 이미지 -->
     <div class="feed-header">
         <a href="{% url 'info:info' %}"><img src="/static/img/main.png"></a>
-        <!--        <div class="feed-header-text">-->
-        <!--            <h3>플랜테리어</h3>-->
-        <!--            <h3>어떻게 활용하면</h3>-->
-        <!--            <h3>좋을까</h3>-->
-        <!--            <button><a href="">자세히보기</a></button>-->
-        <!--        </div>-->
+
 {#    </div>#}
 {#    <div class="search-bar">#}
 {#        <div id="cover">#}
@@ -105,7 +100,7 @@
         </div>
     </div>
     <div class="search-img">
-        <div class="feed-img">
+        <div class="search-feed-img">
             {% for search_feed in search_feeds %}
             <a href="{% url 'feed:feed' search_feed.id %}"><img src="{{ search_feed.image }}"></a>
             {% endfor %}
@@ -113,16 +108,16 @@
     </div>
 
     <div class="feed-container">
+    <h3>인기 피드</h3>
         <div class="popular-feed">
-            <h3>인기피드</h3>
             <div class="feed-img">
                 {% for feed in popular_feeds %}
                 <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
                 {% endfor %}
             </div>
         </div>
+    <h3>최신 피드</h3>
         <div class="new-feed">
-            <h3>최신피드</h3>
             <div class="feed-img">
                 {% for feed in all_feed %}
                 <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
