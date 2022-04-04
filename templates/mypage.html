@@ -11,7 +11,7 @@
         <div class="content-wrapper">
             <div class="profile">
                 <img src="{{ user.image }}" alt="image">
-                <h5>{{ user.nickname }}님 안녕하세요!</h5>
+                <h5>{{ user.username }}님 안녕하세요!</h5>
                 <h3>프로필 사진 및 배송지 변경은 아래버튼을 클릭해주세요.</h3>
                 <a href="{% url 'user:profile_edit' user.id %}">
                     <button id="profileedit">수정</button>
