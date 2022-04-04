@@ -1,0 +1,35 @@
+
+
+body{
+    margin-left: 100px;
+}
+
+.signup {
+    width: 800px;
+    border: white 1px solid;
+    background-color: white;
+    border-radius: 30px;
+    margin-top: 30px;
+
+}
+
+h1 {
+    color: #ff883c;
+    margin-top: 200px;
+}
+
+p {
+    color: #24c587;
+    font-weight: bold;
+}
+
+input {
+    margin-bottom: 20px;
+    border: #d7d7d7 2px solid;
+    border-radius: 20px;
+    padding: 5px 5px;
+}
+
+button {
+    color: white;
+}
