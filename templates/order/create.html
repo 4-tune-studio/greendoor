@@ -54,8 +54,8 @@ order_complete_url = "{% url 'order:order_complete' %}";
 </div>
 
 <script>
-    alert("확인")
-    {#document.getElementsByClassName( 'order-form' ).setAttribute( 'input', '11' )#}
+    {#alert("확인")#}
+
     document.getElementById("id_user_name").setAttribute("value", "{{ user.username }}")
     document.getElementById("id_email").setAttribute("value", "{{ user.email }}")
     document.getElementById("id_address").setAttribute("value", "{{ user.address }}")
