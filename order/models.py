@@ -106,7 +106,7 @@ class OrderTransaction(models.Model):
         ordering = ["-created"]
 
 
-def order_payment_validation(sender, instance, created_at, *args, **kwargs):
+def order_payment_validation(sender, instance, created, *args, **kwargs):
     if instance.transaction_id:
         import_transaction = OrderTransaction.objects.get_transaction(merchant_order_id=instance.merchant_order_id)
 

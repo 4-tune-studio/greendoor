@@ -95,7 +95,7 @@ function AjaxStoreTransaction(e, order_id, amount, type) {
         } else if (jqXHR.status == 403) {
             alert("로그인 해주세요.");
         } else {
-            alert("문제가 발생했습니다. 다시 시도해주세요.");
+            alert("문제가 발생했습니다. 다시 시도해주세요1.");
         }
     });
     return merchant_id;
@@ -127,7 +127,7 @@ function ImpTransaction(e, order_id, merchant_id, imp_id, amount) {
         } else if (jqXHR.status == 403) {
             alert("로그인 해주세요.");
         } else {
-            alert("문제가 발생했습니다. 다시 시도해주세요.");
+            alert("문제가 발생했습니다. 다시 시도해주세요2.");
         }
     });
 }
