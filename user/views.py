@@ -68,7 +68,6 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
         if me is not None:  # 저장된 사용자의 패스워드와 입력받은 패스워드 비교
             auth.login(request, me)
             fav = UsersFav.objects.filter(user_id=me)
-            print(fav)
             if len(fav) == 0:
                 return redirect("survey:survey")
             else:
