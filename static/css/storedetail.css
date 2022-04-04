@@ -1,0 +1,74 @@
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 25px;
+}
+
+.logo img {
+    width: 20%;
+}
+
+.category a{
+    color: white;
+    text-decoration: none;
+}
+
+.category a:hover{
+    color: #fdd84c;
+}
+
+.sign button {
+    border-radius: 20px;
+}
+
+.row {
+    width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    border: #4aba96 3px solid;
+    border-radius: 30px;
+    padding: 50px 30px;
+    background-color: white;
+    margin-top: 100px;
+}
+
+.display-6 {
+    font-size: 20px;
+    font-weight: bolder;
+    color: #6c6c6c;
+    margin-top: 50px;
+}
+
+.badge.badge-secondary {
+    color: white;
+    background-color: #4aba96;
+    margin: 20px 0;
+}
+
+.col p {
+    color: #939393;
+    font-weight: bold;
+}
+
+.col label {
+    color: #939393;
+    font-weight: bold;
+}
+
+#id_quantity {
+    border: #969696 1px solid;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.btn.btn-primary.btn-sm {
+    background-color: #ff883c;
+    border: #ff883c 1px solid;
+}
+
+.img_tag {
+    display: flex;
+    align-items: center;
+}
