@@ -1,6 +1,7 @@
 from django.contrib import admin
-from info.models import Info
 from embed_video.admin import AdminVideoMixin
+
+from info.models import Info
 
 
 # Register your models here.

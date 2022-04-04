@@ -8,4 +8,3 @@ from info.models import Info
 def info_view(request: HttpRequest) -> HttpResponse:
     infos = Info.objects.all()
     return render(request, "info/info.html", {"infos": infos})
-
