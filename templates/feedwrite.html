@@ -6,26 +6,33 @@
 {% endblock static %}
 
 {% block content %}
-    <a href="{% url "feed:community" %}">커뮤니티 페이지로 이동</a> <br>
-    <form action="{% url "feed:create_feed" %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div>
-            <!--피드 이미지-->
-            <input type="file" name="feed_img_file" id="feed_img_file" accept="image/*" required> <br>
-            <img id="previewImage" src=""> <br>
-            <!--피드 제목-->
-            <input type="text" name="feed_title" id="feed_title" size="50" maxlength="100" required> <br>
-            <!--피드 내용-->
-            <textarea name="feed_content" id="feed_content" rows="20" cols="50" maxlength="1000"></textarea>
+    <div class="write-container">
+    <h2>게시글 작성</h2>
+        <div class="write-form">
+{#            <a href="{% url "feed:community" %}">커뮤니티 페이지로 이동</a> <br>#}
+            <form action="{% url "feed:create_feed" %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    <!--피드 이미지-->
+                    <h5>사진 선택</h5>
+                    <input type="file" name="feed_img_file" id="feed_img_file" accept="image/*" required> <br>
+                    <img id="previewImage" src=""> <br>
+                    <!--피드 제목-->
+                    <h5>제목</h5>
+                    <input type="text" name="feed_title" id="feed_title" size="50" maxlength="100" required> <br>
+                    <!--피드 내용-->
+                    <h5>내용</h5>
+                    <textarea name="feed_content" id="feed_content" rows="20" cols="50" maxlength="1000"></textarea>
+                </div>
+                <button type="submit">작성하기</button>
+            </form>
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
         </div>
-        <button type="submit">작성하기</button>
-    </form>
-    {% if error %}
-        <div class="alert alert-danger" role="alert">
-            {{ error }}
-        </div>
-    {% endif %}
-
+    </div>
     <script defer type="text/javascript">
         /**
          * 단일파일 업로드
@@ -52,22 +59,4 @@
         })
         document.getElementById('feed_commit').addEventListener('click', clickCommitBtn);
     </script>
-    {#    <div class="write-contatiner">#}
-    {#        <div class="write-wrapper">#}
-    {#            <h1>글쓰기</h1>#}
-    {#            <div class="input-group mb-3">#}
-    {#              <span class="input-group-text" id="inputGroup-sizing-default">제목</span><br>#}
-    {#              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">#}
-    {#            </div>#}
-    {#            <div class="input-content">#}
-    {#                <span class="input-group-text" id="inputGroup-sizing-default">내용</span><br>#}
-    {#                <textarea id="content"></textarea>#}
-    {#            </div>#}
-    {#            <div class="input-group mb-3">#}
-    {#              <input type="file" class="form-control" id="inputGroupFile02">#}
-    {#            </div>#}
-    {#            <a class="write" href=""><button>글쓰기</button></a>#}
-    {#        </div>#}
-    {##}
-    {#    </div>#}
 {% endblock content %}
