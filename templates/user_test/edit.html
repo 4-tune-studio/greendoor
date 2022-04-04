@@ -80,7 +80,7 @@
                 this.enabled = false
                 reader.onload = (function (e) {
                     console.log(e)
-                    $("#preview").html(['<img class="thumb" style="width: 100%; height: 100%; object-fit: cover" src="', e.target.result, '" title="', escape(e.name), '"/>'].join(''))
+                    $("#preview").html(['<img class="thumb" style="width: 150px; height: 150px; object-fit: cover" src="', e.target.result, '" title="', escape(e.name), '"/>'].join(''))
                 });
                 reader.readAsDataURL(input.files[0]);
                 $("#user-image").hide();
