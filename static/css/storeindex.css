@@ -27,6 +27,12 @@
     width: 800px;
 }
 
+.search-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+}
+
 .form-inline {
     display: flex;
     justify-content: center;
