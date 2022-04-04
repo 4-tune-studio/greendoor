@@ -4,14 +4,51 @@ body {
 
 .write-container {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
     margin-top: 100px;
+    align-items: center;
+    flex-direction: column;
 }
 
 .write-form {
     width: 800px;
     border: #4aba96 3px solid;
+    border-radius: 30px;
     padding: 30px 50px;
     background-color: white;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 200px;
+}
+
+h2 {
+    color: #4aba96;
+    text-align: center;
+}
+
+#feed_title input {
+    border: #a8a8a8 2px solid;
+    border-radius: 10px;
+    width: 80%;
+}
+
+#previewImage {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    overflow: hidden;
+}
+textarea {
+    border: #a8a8a8 2px solid;
+    border-radius: 10px;
+}
+
+h5 {
+    color: #6c6c6c;
+}
+
+button {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    margin: 30px 0;
 }

@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "survey",
     "storages",
     "search_app",
+    "embed_video",
 ]
 
 # password reset
