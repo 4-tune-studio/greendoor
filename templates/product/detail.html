@@ -68,12 +68,27 @@
                 </form>
                 <h5><span class="badge badge-secondary">Description</span>{{ product.description|linebreaks }}</h5>
             </div>
-            {% if product.image_tag %}
-                {#                <div class="col-4">#}
+            {#            {% if product.image_tag %}#}
+            {##}
+            {#                {{ product.image_tag }}#}
+            {##}
+            {#            {% endif %}#}
+            <div id="image_tag">
                 {{ product.image_tag }}
-                {#                </div>#}
-            {% endif %}
+
+            </div>
+
+
         </div>
     </div>
 
 {% endblock content %}
+
+{% block js %}
+    <script>
+        const dd = document.querySelector("#image_tag");
+        console.log(dd)
+        dd.innerHTML = {{ product.image_tag }}
+
+    </script>
+{% endblock %}

@@ -42,12 +42,8 @@ order_complete_url = "{% url 'order:order_complete' %}";
 
         <!-- form에 class 추가 -->
         <form action="" method="post" class="order-form">
-{#            {{form.as_p}}#}
-            {{form.user_name}}
-            {{form.email}}
-            {{form.address}}
-            {{form.postal_code}}
-            {{form.city}}
+            {{form.as_p}}
+{#            {{ form }}#}
             {% csrf_token %}
             <!-- hidden field 추가-->
             <input type="hidden" name="pre_order_id" value="0">
