@@ -3,7 +3,6 @@
     {% block title %}Feed{% endblock %}
     {% block static %}
     <link href="/static/css/feeddetail.css" rel="stylesheet">
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <script type="text/javascript">
         var updateCommentURL = "{% url "feed:update_comment" %}"
         var likeApiURL = "{% url "feed:api_like" %}"
@@ -28,19 +27,19 @@
             <a href="javascript:void(0);" onclick="like_api({{ feed.id }})">
                 {% if feed.my_likes %}
                     {# 내가 좋아요한 피드면 #}
-                    <i class="fi fi-sr-heart" id="heart-icon"></i>
+                    <img id="scrap" src="/static/img/heart_filled.png">
                 {% else %}
                     {# 내가 좋아요 안한 피드면 #}
-                    <i class="fi fi-rr-heart" id="heart-icon"></i>
+                    <img id="scrap" src="/static/img/heart_default.png">
                 {% endif %}
             </a>
             <a href="javascript:void(0);" onclick="bookmark_api({{ feed.id }})">
                 {% if feed.my_bookmark %}
                     {# 내가 북마크한 피드면 #}
-                    <i class="fi fi-sr-bookmark" id="bookmark-icon"></i>
+                    <img id="scrap" src="/static/img/bookmark_filled.png">
                 {% else %}
                     {# 내가 북마크 안한 피드면 #}
-                    <i class="fi fi-rr-bookmark" id="bookmark-icon"></i>
+                    <img id="scrap" src="/static/img/bookmark_default.png">
                 {% endif %}
             </a>
         </div>
