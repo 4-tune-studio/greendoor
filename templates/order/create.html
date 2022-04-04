@@ -1,7 +1,11 @@
-{% extends 'base.html' %}
+{% extends "indexbase.html" %}
 
 {% block title %}
 Checkout
+{% endblock %}
+{% block static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="/static/css/order.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block script %}
@@ -21,7 +25,8 @@ order_complete_url = "{% url 'order:order_complete' %}";
 {% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="order-container">
+    <div class="row">
     <div class="col">
         <div class="alert alert-info" role="alert">Your Order</div>
         <ul class="list-group">
@@ -31,12 +36,6 @@ order_complete_url = "{% url 'order:order_complete' %}";
                 <span>{{item.total_price}}</span>
             </li>
         {% endfor %}
-{#        {% if cart.coupon %}#}
-{#            <li class="list-group-item">#}
-{#                "{{ cart.coupon.code }}" ({{ cart.coupon.amount }} off)#}
-{#                <span>- ${{ cart.get_total_discount|floatformat:"2" }}</span>#}
-{#            </li>#}
-{#        {% endif %}#}
         </ul>
         <div class="alert alert-success" role="alert">Total : {{cart.get_total_price|floatformat:"2"}}</div>
 
@@ -52,7 +51,7 @@ order_complete_url = "{% url 'order:order_complete' %}";
         </form>
     </div>
 </div>
-
+</div>
 <script>
     alert("확인")
     {#document.getElementsByClassName( 'order-form' ).setAttribute( 'input', '11' )#}
