@@ -44,10 +44,11 @@ def product_detail(request: HttpRequest, id, product_slug=None) -> HttpResponse:
     return render(request, "product/detail.html", {"product": product, "add_to_cart": add_to_cart})
 
 
-@receiver(user_signed_up)
-def user_signed_up_(**kwargs) -> None:
-    user = kwargs["user"]
-    extra_data = user.socialaccount_set.filter(provider="kakao")[0].extra_data
+# @receiver(user_signed_up)
+# def user_signed_up_(**kwargs) -> None:
+#     user = kwargs["user"]
+#     extra_data = user.socialaccount_set.filter(provider="kakao")[0].extra_data
+#
+#     user.username = extra_data["name"]
+#     user.save()
 
-    user.username = extra_data["name"]
-    user.save()

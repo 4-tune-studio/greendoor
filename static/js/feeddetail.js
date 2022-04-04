@@ -54,11 +54,11 @@
                 dataType: "json", // json 형식으로 데이터 주고 받기
                 success: function (response) { // 통신 성공했을 때 호출 함수
                     if (response.msg === "좋아요") {
-                        // like 버튼의 클래스를 변경(채워져 있는 하트) / jquery 문법
-                        $('#heart-icon').attr("class", "fi fi-sr-heart")
+                        // like img 태그의 src를 변경(채워져 있는 하트) / jquery 문법
+                        $('#like').attr("src", "/static/img/heart_filled.png")
                     } else if (response.msg === "좋아요 취소") {
-                        // like 버튼의 클래스를 변경(비어있는 하트) / jquery 문법
-                        $('#heart-icon').attr("class", "fi fi-rr-heart")
+                        // like img 태그의 src를 변경(비어있는 하트) / jquery 문법
+                        $('#like').attr("src", "/static/img/heart_default.png")
                     }
                     // 좋아요 숫자를 서버에서 전달받은 숫자로 변경 / jquert 문법
                     $("#like_count").text(`${response.like_count}명이 좋아합니다`);
@@ -84,11 +84,11 @@
                 dataType: "json", // json 형식으로 데이터 주고 받기
                 success: function (response) { // 통신 성공했을 때 호출 함수
                     if (response.msg === "북마크") {
-                        // 북마크 버튼의 클래스를 변경 / jquery 문법
-                        $('#bookmark-icon').attr("class", "fi fi-sr-bookmark")
+                        // 북마크 img 태그의 src를 변경 / jquery 문법
+                        $('#scrap').attr("src", "/static/img/bookmark_filled.png")
                     } else if (response.msg === "북마크 취소") {
                         // 북마크 버튼의 클래스를 변경 / jquery 문법
-                        $('#bookmark-icon').attr("class", "fi fi-rr-bookmark")
+                        $('#scrap').attr("src", "/static/img/bookmark_default.png")
                     }
                 },
                 error: function () { // 통신 실패했을 때 호출 함수
