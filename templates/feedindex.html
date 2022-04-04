@@ -9,48 +9,48 @@
     <div class="feed-header">
         <a href="{% url 'info:info' %}"><img src="/static/img/main.png"></a>
     </div>
-{##}
-{#    <div class="search-bar">#}
-{#        <div id="cover">#}
-{#            <form action="{% url 'search:feed_searchResult' %}" method="get">#}
-{#                <div class="tb"></div>#}
-{#                <div class="td"><input class="search-input" type="text" name="kw" placeholder="검색어를 입력하세요."#}
-{#                                       required="required"></div>#}
-{#                <div class="td" id="s-cover">#}
-{#                    <button type="submit">#}
-{#                        <div id="s-circle"></div>#}
-{#                        <span></span>#}
-{#                    </button>#}
-{#                </div>#}
-{#            </form>#}
-{#        </div>#}
-{#    </div>#}
-{#    <div class="search-img">#}
-{#        <div class="feed-img">#}
-{#            {% for search_feed in search_feeds %}#}
-{#            <a href="{% url 'feed:feed' search_feed.id %}"><img src="{{ search_feed.image }}"></a>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </div>#}
-{##}
-{#    <div class="feed-container">#}
-{#        <div class="popular-feed">#}
-{#            <h3>인기피드</h3>#}
-{#            <div class="feed-img">#}
-{#                {% for feed in popular_feeds %}#}
-{#                <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="new-feed">#}
-{#            <h3>최신피드</h3>#}
-{#            <div class="feed-img">#}
-{#                {% for feed in all_feed %}#}
-{#                <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+
+    <div class="search-bar">
+        <div id="cover">
+            <form action="{% url 'search:feed_searchResult' %}" method="get">
+                <div class="tb"></div>
+                <div class="td"><input class="search-input" type="text" name="kw" placeholder="검색어를 입력하세요."
+                                       required="required"></div>
+                <div class="td" id="s-cover">
+                    <button type="submit">
+                        <div id="s-circle"></div>
+                        <span></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="search-img">
+        <div class="feed-img">
+            {% for search_feed in search_feeds %}
+            <a href="{% url 'feed:feed' search_feed.id %}"><img src="{{ search_feed.image }}"></a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="feed-container">
+        <div class="popular-feed">
+            <h3>인기피드</h3>
+            <div class="feed-img">
+                {% for feed in popular_feeds %}
+                <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="new-feed">
+            <h3>최신피드</h3>
+            <div class="feed-img">
+                {% for feed in all_feed %}
+                <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
         <!-- PC 글쓰기 버튼 -->
     <div onclick="" id="scrollTopPc">
