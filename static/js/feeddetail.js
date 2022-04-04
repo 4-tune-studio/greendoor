@@ -18,9 +18,9 @@
             // ajax 비동기 통신
             $.ajax({
                 type: "POST", // request 전달 방식 (POST, GET 등)
-                url: "{% url "feed:update_comment" %}", // api 요청 url
+                url: updateCommentURL, // api 요청 url
                 headers: {//헤더에 csrf 토큰 추가
-                    'X-CSRFToken': '{{ csrf_token }}'
+                    'X-CSRFToken': csrf
                 },
                 data: {// json 형식으로 서버에 데이터 전달
                     'comment_id': id,
@@ -44,17 +44,15 @@
             // ajax 비동기 통신
             $.ajax({
                 type: "POST", // request 전달 방식 (POST, GET 등)
-                url: "{% url "feed:api_like" %}", // api 요청 url
+                url: likeApiURL, // api 요청 url
                 headers: {//헤더에 csrf 토큰 추가
-                    'X-CSRFToken': '{{ csrf_token }}'
+                    'X-CSRFToken': csrf
                 },
                 data: {// json 형식으로 서버에 데이터 전달
                     'feed_id': id,
                 },
                 dataType: "json", // json 형식으로 데이터 주고 받기
                 success: function (response) { // 통신 성공했을 때 호출 함수
-                    {#console.log(response.msg)#}
-                    {#console.log(response.like_count)#}
                     if (response.msg === "좋아요") {
                         // like 버튼의 클래스를 변경(채워져 있는 하트) / jquery 문법
                         $('#heart-icon').attr("class", "fi fi-sr-heart")
@@ -76,16 +74,15 @@
             // ajax 비동기 통신
             $.ajax({
                 type: "POST", // request 전달 방식 (POST, GET 등)
-                url: "{% url "feed:api_bookmark" %}", // api 요청 url
+                url: bookmarkApiURL, // api 요청 url
                 headers: {//헤더에 csrf 토큰 추가
-                    'X-CSRFToken': '{{ csrf_token }}'
+                    'X-CSRFToken': csrf
                 },
                 data: {// json 형식으로 서버에 데이터 전달
                     'feed_id': id,
                 },
                 dataType: "json", // json 형식으로 데이터 주고 받기
                 success: function (response) { // 통신 성공했을 때 호출 함수
-                    {#console.log(response.msg)#}
                     if (response.msg === "북마크") {
                         // 북마크 버튼의 클래스를 변경 / jquery 문법
                         $('#bookmark-icon').attr("class", "fi fi-sr-bookmark")
