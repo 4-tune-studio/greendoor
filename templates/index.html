@@ -88,6 +88,78 @@
             </div>
         </div>
     </div>
+{#    <div class="search-bar">#}
+{#        <div id="cover">#}
+{#            <form action="{% url 'search:feed_searchResult' %}" method="get">#}
+{#                <div class="tb"></div>#}
+{#                <div class="td"><input class="search-input" type="text" name="kw" placeholder="검색어를 입력하세요."#}
+{#                                       required="required"></div>#}
+{#                <div class="td" id="s-cover">#}
+{#                    <button type="submit">#}
+{#                        <div id="s-circle"></div>#}
+{#                        <span></span>#}
+{#                    </button>#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    {% if search_feeds %}#}
+{#        <div class="popular-feed">#}
+{#            <div id="feed-category">#}
+{#                <h3>· "{{ query }}"으로 검색한 피드 ·</h3>#}
+{#            </div>#}
+{#            <div class="feed-img">#}
+{#                <div class="grid-container">#}
+{#                    {% for search_feed in search_feeds %}#}
+{#                        <article id="3685" class="location-listing">#}
+{#                            <a class="location-title" href="{% url 'feed:feed' search_feed.id %}">{{ search_feed.title }}</a>#}
+{#                            <div class="location-image">#}
+{#                                <a href="{% url 'feed:feed' search_feed.id %}"><img id="feed-image" src="{{ search_feed.image }}"></a>#}
+{#                            </div>#}
+{#                        </article>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endif %}#}
+{##}
+{#    {% if popular_feeds %}#}
+{#        <div id="feed-category">#}
+{#            <h3>· 인기피드 ·</h3>#}
+{#        </div>#}
+{#        <div class="popular-feed">#}
+{#            <div class="feed-img">#}
+{#                <div class="grid-container">#}
+{#                    {% for feed in popular_feeds %}#}
+{#                        <article id="3685" class="location-listing">#}
+{#                            <a class="location-title" href="{% url 'feed:feed' feed.id %}">{{ feed.title }}</a>#}
+{#                            <div class="location-image">#}
+{#                                <a href="{% url 'feed:feed' feed.id %}"><img id="feed-img" src="{{ feed.image }}"></a>#}
+{#                            </div>#}
+{#                        </article>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#    <div id="feed-category">#}
+{#        <h3>· 최신피드 ·</h3>#}
+{#    </div>#}
+{#    <div class="new-feed">#}
+{#        <div class="feed-img">#}
+{#            <div class="grid-container">#}
+{#                {% for feed in all_feed %}#}
+{#                    <article id="3685" class="location-listing">#}
+{#                        <a class="location-title" href="{% url "feed:feed" feed.id %}">{{ feed.title }}</a>#}
+{#                        <div class="location-image">#}
+{#                            <a href="{% url "feed:feed" feed.id %}"><img id="feed-img" src="{{ feed.image }}"></a>#}
+{#                        </div>#}
+{#                    </article>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
     <!-- PC 글쓰기 버튼 -->
     <div onclick="" id="scrollTopPc">
         <a href="{% url 'feed:create_feed' %}"><img src="/static/img/write.png" width="50px" height="50px"></a>

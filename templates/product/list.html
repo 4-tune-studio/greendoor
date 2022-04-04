@@ -12,17 +12,6 @@
         <img src="/static/img/storemain.png">
     </div>
 
-
-    {#    <ul class="nav-link">#}
-    {#        <li><a href="{% url 'feed:community' %}">community</a></li>#}
-    {#        <li><a href="{% url 'product:product_all' %}">store</a></li>#}
-    {#        {% if user.is_authenticated %}#}
-    {#            <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>#}
-    {#        {% else %}#}
-    {#            <li><a href="{% url 'user:sign-in' %}">mypage</a></li>#}
-    {#        {% endif %}#}
-    {#    </ul>#}
-
 {#        상점 검색 수정중#}
     <div class="search-bar">
         <form class="form-inline" action="{% url 'search:product_searchResult' %}" method="get">
