@@ -4,11 +4,8 @@
 
 @media screen and (max-width:800px) {
 
-    .feed-header { display: flex; justify-content: center; }
-    /*.feed-header-text { margin-top: 200px; margin-left: -70px; margin-right: 100px; }*/
-    /*.feed-header-text h3 { color: #efebeb; margin-top: 0; }*/
-    /*.feed-header button { margin-top: 20px; }*/
-    /*.feed-header a { font-weight: 800; color: #edf0f1; text-decoration: none; }*/
+    .feed-header {
+        display: flex; justify-content: center; }
 
     button {
         padding: 9px 25px;
@@ -71,7 +68,10 @@
 
     @import url('http://fonts.googleapis.com/css?family=Monserrat:500');
 
-
+.feed-header {
+    display: flex;
+    justify-content: center;
+}
 .popular-feed, .new-feed {
     display: flex;
     justify-content: center;
