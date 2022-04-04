@@ -24,14 +24,12 @@
     border-radius: 20px;
 }
 .seach-bar {
-    width: 800px;
+
+    display: flex;
+    justify-content: center;
 }
 
-.search-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    flex-direction: column;
-}
+
 
 .form-inline {
     display: flex;
@@ -49,21 +47,22 @@
 }
 
 .search-bar-wrapper {
-    width: 1000px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
 .search-row {
-
-    margin: 0 50px 100px 100px;
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 1000px;
 }
 
 .row {
     display: flex;
     margin: 0 100px;
 }
+
 
 
 
@@ -93,8 +92,15 @@ a {
     border-color: #45a874;
 }
 
+.col-4 {
+    padding: 0;
+}
 .card {
     margin-bottom: 50px;
+    width: 300px;
+    height: auto;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 
@@ -102,7 +108,8 @@ a {
     width: border-box;
     height: 300px;
     object-fit: cover;
-    overflow: hidden;
+
+
 }
 
 .badge-secondary {
