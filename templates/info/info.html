@@ -1,0 +1,24 @@
+{% extends 'indexbase.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block title %}Planterior{% endblock %}
+
+{% block static %}
+{% endblock static %}
+
+{% block content %}
+    {% for info in infos %}
+        <div>
+            <div>
+                <p>{{ info.title }}</p>
+                <p>{{ info.content }}</p>
+                <div>
+                    {% video info.video as youtube %}
+                        <iframe class="embed-responsive-item" src="{{ youtube.url }}" frameborder="0" allowfullscreen></iframe>
+                    {% endvideo %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}
