@@ -18,7 +18,7 @@ headers = {
 
 WORD = "플랜테리어"
 URL = f"https://www.ssg.com/search.ssg?target=all&query={WORD}&count=100&display=img&page="
-last_pages = 2
+last_pages = 70
 
 product_url_head = "https://www.ssg.com"
 
@@ -60,28 +60,40 @@ for page in range(last_pages):
             detail_result = requests.get(f"{detail}", headers=headers)
             detail_soup = BeautifulSoup(detail_result.text, "html.parser")
             img_tag = detail_soup.find_all("img")
+
+            # print(img_list)
+
+            img_tag = str(img_tag).strip("[]")
+            img_tag = img_tag.replace(",", "")
+            # print(img_tag)
+            # print(str(img_tag).strip('[]'))
+
+            main_image = f"https:{main_image}"
+
+            product_category_id = Category.objects.get(id=2)
+            slug = title
+
+            Product.objects.create(
+                category=product_category_id, name=title, price=price, image=main_image, image_tag=img_tag, slug=slug
+            )
+
         except AttributeError:
             img_tag = None
-        # print(img_list)
+            print(f"{i} 값이없음 fail")
+            sleep(3)
+            pass
 
-        img_tag = str(img_tag).strip("[]")
-        img_tag = img_tag.replace(",", "")
-        # print(img_tag)
-        # print(str(img_tag).strip('[]'))
+        except:
+            print(f"{i} 알수없는 오류 fail")
+            sleep(3)
+            pass
 
-        main_image = f"https:{main_image}"
+        else:
 
-        product_category_id = Category.objects.get(id=2)
-        slug = title
-
-        Product.objects.create(
-            category=product_category_id, name=title, price=price, image=main_image, image_tag=img_tag, slug=slug
-        )
-
-        info = {"title": title, "price": price, "main_image": main_image, "img_tag": img_tag}
-        infos.append(info)
-        i += 1
-        print(f"{i} clear")
-        sleep(3)
+            info = {"title": title, "price": price, "main_image": main_image, "img_tag": img_tag}
+            infos.append(info)
+            i += 1
+            print(f"{i} clear")
+            sleep(3)
 
 print(infos)

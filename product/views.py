@@ -49,6 +49,5 @@ def user_signed_up_(**kwargs) -> None:
     user = kwargs["user"]
     extra_data = user.socialaccount_set.filter(provider="kakao")[0].extra_data
 
-    user.last_name = extra_data["name"][0:4]
-    user.first_name = extra_data["name"][4:]
+    user.username = extra_data["name"]
     user.save()

@@ -74,8 +74,9 @@
             {##}
             {#            {% endif %}#}
             <div id="image_tag">
-                {{ product.image_tag }}
-
+                <br>
+                <br>
+                {{ product.image_tag|safe }}
             </div>
 
 
@@ -83,12 +84,3 @@
     </div>
 
 {% endblock content %}
-
-{% block js %}
-    <script>
-        const dd = document.querySelector("#image_tag");
-        console.log(dd)
-        dd.innerHTML = {{ product.image_tag }}
-
-    </script>
-{% endblock %}
