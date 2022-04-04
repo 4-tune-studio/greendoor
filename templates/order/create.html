@@ -43,7 +43,7 @@ order_complete_url = "{% url 'order:order_complete' %}";
         <!-- form에 class 추가 -->
         <form action="" method="post" class="order-form">
             {{form.as_p}}
-{#            {{ form }}#}
+{#            {{ form.as_table }}#}
             {% csrf_token %}
             <!-- hidden field 추가-->
             <input type="hidden" name="pre_order_id" value="0">
@@ -55,6 +55,10 @@ order_complete_url = "{% url 'order:order_complete' %}";
 
 <script>
     alert("확인")
-
+    {#document.getElementsByClassName( 'order-form' ).setAttribute( 'input', '11' )#}
+    document.getElementById("id_user_name").setAttribute("value", "{{ user.username }}")
+    document.getElementById("id_email").setAttribute("value", "{{ user.email }}")
+    document.getElementById("id_address").setAttribute("value", "{{ user.address }}")
+    document.getElementById("id_postal_code").setAttribute("value", "{{ user.zipcode }}")
 </script>
 {% endblock %}
