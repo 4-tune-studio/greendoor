@@ -172,11 +172,15 @@
         margin-top: 20px;
     }
 
+    #feed-category {
+        margin-top: 100px;
+    }
 
     .content-container {
         display: flex;
         justify-content: center;
         margin-top: 100px;
+
     }
     .content-wrapper {
         border: #58bd87 3px solid;
@@ -184,6 +188,7 @@
         width: 800px;
         border-radius: 20px;
         padding: 30px 30px;
+
     }
 
     .profile {
@@ -210,8 +215,7 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        margin-left: 400px;
-        margin-bottom: 200px;
+        margin: 0 200px 200px 200px;
     }
 
     .feed-img {
