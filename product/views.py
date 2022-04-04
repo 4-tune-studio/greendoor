@@ -51,4 +51,3 @@ def product_detail(request: HttpRequest, id, product_slug=None) -> HttpResponse:
 #
 #     user.username = extra_data["name"]
 #     user.save()
-
