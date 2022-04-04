@@ -1,75 +1,4 @@
 
-.grid-container img {
-  width: 100%; /* need to overwrite inline dimensions */
-  height: auto;
-}
-h2 {
-  margin-bottom: .5em;
-}
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 1em;
-}
-
-
-/* hover styles */
-.location-listing {
-  position: relative;
-}
-
-.location-image {
-  line-height: 0;
-}
-
-.location-image img {
-  filter: blur(0px);
-  transition: filter 0.3s ease-in;
-  transform: scale(1.1);
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  overflow: hidden;
-}
-
-.location-title {
-  font-size: 1em;
-  font-weight: bold;
-  text-decoration: none;
-  z-index: 1;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: opacity .5s;
-  background: rgba(172, 217, 191, 0.7);
-  color: white;
-  text-align: center;
-
-
-  /* position the text in t’ middle*/
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.location-listing:hover .location-title {
-  opacity: 1;
-}
-
-
-
-/* for touch screen devices */
-@media (hover: none) {
-  .location-title {
-    opacity: 1;
-  }
-  .location-image img {
-    filter: blur(2px);
-    border-radius: 20px;
-  }
-}
-
 
 /* mobile */
 
@@ -142,33 +71,6 @@ h2 {
 
     @import url('http://fonts.googleapis.com/css?family=Monserrat:500');
 
-    .feed-header { display: flex; justify-content: center; }
-    .feed-header img { margin-top: -30px }
-
-    .feed-header-text { margin-top: 100px; }
-    .feed-header-text h3 { color: #efebeb; margin-top: 0; }
-    .feed-header button { margin-top: 50px; }
-
-    .popular-feed {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        flex-direction: column;
-        margin-top: 50px;
-    }
-
-    .new-feed {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        flex-direction: column;
-        margin-top: 50px;
-    }
-
-    #feed-image {
-        margin-bottom: 20px;
-    }
-
-    .popular-feed h3 { color: #fd6801; }
-    .new-feed h3 { color: #fd6801; }
 
     #scrollTopPc {
       display: flex;
