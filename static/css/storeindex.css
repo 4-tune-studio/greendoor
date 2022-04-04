@@ -23,6 +23,12 @@
 .sign button {
     border-radius: 20px;
 }
+
+.feed-header {
+    display: flex;
+    justify-content: center;
+}
+
 .seach-bar {
 
     display: flex;
@@ -94,6 +100,7 @@ a {
 
 .col-4 {
     padding: 0;
+    width: 1000px;
 }
 .card {
     margin-bottom: 50px;
