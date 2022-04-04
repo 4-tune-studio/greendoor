@@ -1,0 +1,51 @@
+
+
+.survey-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.survey-wrapper {
+    width: 800px;
+    border: #4aba96 3px solid;
+    background-color: white;
+    border-radius: 30px;
+    padding : 10px 0;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+#survey-title {
+    color: #078c4d;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+}
+
+#submit {
+    border: #fd6801 1px solid;
+    border-radius: 10px;
+    background-color: #fd6801;
+    padding: 5px 10px;
+    color: white;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.survey-form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+input {
+    margin: 5px 0 20px 0;
+    color: #4d4d4d;
+}
+
+#question {
+    color: #319f7b;
+}
