@@ -7,10 +7,11 @@ class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ["user_name", "email", "address", "postal_code", "city"]
-        fields[0].label = "이름(배송 받으실 분)"
-        fields[1].label = "email"
-        fields[2].label = "배송 주소"
-        fields[3].label = "우편 번호"
 
-        fields[4].label = "빠른 배송을 위해 도시를 입력해주세요"
-        # fields = ["first_name", "last_name", "email", "address", "postal_code", "city"]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["user_name"].label = "이름(배송 받으실 분)"
+        self.fields["email"].label = "우편 번호"
+        self.fields["address"].label = "배송 주소"
+        self.fields["postal_code"].label = "전화 번호"
