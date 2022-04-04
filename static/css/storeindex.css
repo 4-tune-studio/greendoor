@@ -78,7 +78,6 @@
     background-color: #ff883c;
     border-color: #ff883c;
 }
-
 a {
     color: #fd6801;
     text-decoration: none;
@@ -94,9 +93,30 @@ a {
 
 .btn-primary {
     color: #fff;
-    background-color: #45a874;
-    border-color: #45a874;
+    background-color: #55c58a;
+    border-color: #55c58a;
 }
+.btn-primary:hover {
+    color: #fff;
+    background-color: #2da86a;
+    border-color: #2da86a;
+}
+a:hover {
+    color: #2da86a;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: #fff;
+    background-color: #2da86a;
+    border-color: #2da86a;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0.2rem rgba(243, 199, 172, 0.66);
+}
+
+
+
 
 .col-4 {
     padding: 0;
