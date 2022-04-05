@@ -97,8 +97,11 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
 def product_detail(request: HttpRequest, id, product_slug=None) -> HttpResponse:
     product = get_object_or_404(Product, id=id, slug=product_slug)
     add_to_cart = AddProductForm(initial={"quantity": 1})
-    return render(request, "product/detail.html", {"product": product, "add_to_cart": add_to_cart})
+    # print(product.plant_id.type_name)
+    # plant_info = get_object_or_404(Plant, id = int(product.plant_id))
 
+    return render(request, "product/detail.html",
+                  {"product": product, "add_to_cart": add_to_cart})
 
 # @receiver(user_signed_up)
 # def user_signed_up_(**kwargs) -> None:
