@@ -10,6 +10,7 @@ from plant.models import Plant
 from product.models import Category, Product
 from user.models import UsersFav
 
+
 # request는 장고 뷰가 던져질때 자연스럽게 들어오는 request 객체를 이용
 def product_in_category(request: HttpRequest, category_slug=None) -> HttpResponse:
     # 제품을 보여줄 수 있는 것만 불러오기
@@ -52,7 +53,7 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
 
         # sug_product 갯수가 4개 미만이면 default 정보로 전환
         if len(sug_product) < 4:
-            id_list = [307,246,75,243,127,357,242,415,455,100]
+            id_list = [307, 246, 75, 243, 127, 357, 242, 415, 455, 100]
             default_product_list = []
             for id in id_list:
                 default_product = Product.objects.get(id=id)
@@ -67,7 +68,6 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
         # print(sug_product)
     # 추천 식물 상품 끝
     #####################################################################
-
 
     # get object or 는 말그대로 오브젝트를 가져오려고 시도해보고 없으면 404 에러를 나타내어 준다.
     # 밑의 내용은 category_slug를 Category 테이블의 slug에서 찾아보고 없다면 404가 뜨게된다
