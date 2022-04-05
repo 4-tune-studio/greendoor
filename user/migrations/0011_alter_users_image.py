@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0010_alter_users_email'),
+        ("user", "0010_alter_users_email"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='users',
-            name='image',
-            field=models.CharField(default='https://greendoorhope.s3.amazonaws.com/img/profile_default.png', max_length=256),
+            model_name="users",
+            name="image",
+            field=models.CharField(
+                default="https://greendoorhope.s3.amazonaws.com/img/profile_default.png", max_length=256
+            ),
         ),
     ]

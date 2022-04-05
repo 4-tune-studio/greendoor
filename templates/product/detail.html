@@ -33,12 +33,17 @@
                 <br>
                 <br>
                 <br>
-                <img src="https://greendoorhope.s3.ap-northeast-2.amazonaws.com/img/profile_default.png" width=100%/>
-                <br>
-                <br>
                 <div style="text-align: center">
-                    {{ product.image_tag|safe }}
+                    <img src="https://greendoorhope.s3.ap-northeast-2.amazonaws.com/img/profile_default.png"
+                         width=100%/>
                 </div>
+                <br>
+                <br>
+                {% if product.image_tag %}
+                    <div style="text-align: center">
+                        {{ product.image_tag|safe }}
+                    </div>
+                {% endif %}
             </div>
 
 
