@@ -5,6 +5,13 @@
     <link href="/static/css/storedetail.css" rel="stylesheet">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <style>
+
+        .bgbr {
+            margin-left: 10px;
+        }
+
+    </style>
 {% endblock static %}
 
 {% block content %}
@@ -37,16 +44,204 @@
                     <img src="https://greendoorhope.s3.ap-northeast-2.amazonaws.com/img/profile_default.png"
                          width=100%/>
                 </div>
-                <br>
-                <br>
                 {% if product.image_tag %}
+                    <br>
+                    <br>
                     <div style="text-align: center">
                         {{ product.image_tag|safe }}
                     </div>
                 {% endif %}
+
+                {% if product.plant_id %}
+                    <br>
+                    <br>
+                    <p><span
+                            style="border-radius: 15px 15px 15px 0; border: 3px solid #FFAD5B; padding: 0.5em 0.6em; color: #FF8000;">식물 정보</span>
+                    </p>
+                    <br>
+                    <table id="oMenuInsertTable" class="grid topLine" border="1" cellspacing="0" cellpadding="0"
+                           name="menuInsertTable">
+                        <colgroup>
+                            <col width="15%">
+                            <col width="*">
+                        </colgroup>
+                        <tbody>
+
+                        <tr>
+                            <th class="bgbr">식물학명</th>
+                            <td>{{ product.plant_id.botanical_name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">식물영명</th>
+                            <td>{{ product.plant_id.english_name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">유통명</th>
+                            <td>{{ product.plant_id.general_name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">과명</th>
+                            <td>{{ product.plant_id.type_name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">원산지 정보</th>
+                            <td>{{ product.plant_id.origin }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">조언 정보</th>
+                            <td>{{ product.plant_id.advise_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">이미지 평가 링크 경로</th>
+                            <td>{{ product.plant_id.image_link }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">성장 높이 정보</th>
+                            <td>{{ product.plant_id.height_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">성장 넓이 정보</th>
+                            <td>{{ product.plant_id.width_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">잎 형태 정보</th>
+                            <td>{{ product.plant_id.leaftype_info }}</td>
+                        </tr>
+                        {#                        <tr>#}
+                        {#                            <th class="bgbr">냄새</th>#}
+                        {#                            <td>{{ product.plant_id.}}</td>#}
+                        {#                        </tr>#}
+                        <tr>
+                            <th class="bgbr">독성 정보</th>
+                            <td>{{ product.plant_id.toxic_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">번식 시기 정보</th>
+                            <td>{{ product.plant_id.breeding_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">기타 시기 정보</th>
+                            <td>{{ product.plant_id.extraperiod_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">관리수준</th>
+                            <td>{{ product.plant_id.grow_level }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">생장속도</th>
+                            <td>{{ product.plant_id.growth_speed }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">생육 온도</th>
+                            <td>{{ product.plant_id.growth_temp }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">겨울 최저 온도</th>
+                            <td>{{ product.plant_id.lowest_temp }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">습도</th>
+                            <td>{{ product.plant_id.humidity }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">비료 정보</th>
+                            <td>{{ product.plant_id.fertilizer_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">토양 정보</th>
+                            <td>{{ product.plant_id.soil_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">물주기 봄</th>
+                            <td>{{ product.plant_id.water_spring }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">물주기 여름</th>
+                            <td>{{ product.plant_id.water_summer }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">물주기 가을</th>
+                            <td>{{ product.plant_id.water_fall }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">물주기 겨울</th>
+                            <td>{{ product.plant_id.water_winter }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">병충해 관리 정보</th>
+                            <td>{{ product.plant_id.insect_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">특별관리 정보</th>
+                            <td>{{ product.plant_id.extragrow_info }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">기능성 정보</th>
+                            <td>{{ product.plant_id.functional_info }}</td>
+                        </tr>
+
+                        <tr>
+                            <th class="bgbr">관리요구도</th>
+                            <td>{{ product.plant_id.care_need }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">분류</th>
+                            <td>{{ product.plant_id.type }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">생육형태</th>
+                            <td>{{ product.plant_id.growth_type }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">실내정원구성</th>
+                            <td>{{ product.plant_id.indoor_garden }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">생태</th>
+                            <td>{{ product.plant_id.ecology }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">잎무늬</th>
+                            <td>{{ product.plant_id.leaf_pattern }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">잎색</th>
+                            <td>{{ product.plant_id.leaf_color }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">발화계절</th>
+                            <td>{{ product.plant_id.flower_season }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">꽃색</th>
+                            <td>{{ product.plant_id.flower_color }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">과일 계절</th>
+                            <td>{{ product.plant_id.fluit_season }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">과일색</th>
+                            <td>{{ product.plant_id.fluit_color }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">번식방법</th>
+                            <td>{{ product.plant_id.breeding_way }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">광요구도</th>
+                            <td>{{ product.plant_id.lux }}</td>
+                        </tr>
+                        <tr>
+                            <th class="bgbr">배치장소</th>
+                            <td>{{ product.plant_id.location }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                {% endif %}
             </div>
-
-
         </div>
     </div>
 
