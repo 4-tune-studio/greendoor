@@ -215,11 +215,23 @@ h5 {
 }
 
 .recommend-row .row {
-    margin: 0 50px;
+    margin-left: 180px;
 }
 
 .recommend-row .col .alert-info {
-    color: #fd6801;
-    background-color: #fff0d2;
-    border-color: #fff0d2;
+    color: #ffffff;
+    background-color: #5fd79c;
+    border-color: #48c789;
+}
+
+.recommend-row .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+
+}
+
+.recommend-row .card {
+    border: rgba(159, 217, 198, 0.62) 1px solid;
 }
