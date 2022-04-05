@@ -199,3 +199,39 @@ h5 {
   cursor: pointer;
 }
 
+
+
+
+
+.recommend-row-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recommend-row {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.recommend-row .row {
+    margin-left: 180px;
+}
+
+.recommend-row .col .alert-info {
+    color: #ffffff;
+    background-color: #5fd79c;
+    border-color: #48c789;
+}
+
+.recommend-row .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+
+}
+
+.recommend-row .card {
+    border: rgba(159, 217, 198, 0.62) 1px solid;
+}

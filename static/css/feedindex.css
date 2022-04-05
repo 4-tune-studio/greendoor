@@ -1,72 +1,10 @@
 
 
-/* mobile */
-
-@media screen and (max-width:800px) {
-
-    .feed-header {
-        display: flex; justify-content: center; }
-
-    button {
-        padding: 9px 25px;
-        background-color: rgb(255, 136, 60);
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: all 0.3s ease 0s;
-    }
-
-    button:hover { background-color: rgb(253, 104, 1); }
-
-
-    .popular-feed {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 50px;
-        flex-wrap: nowrap;
-    }
-
-    .feed-img {
-        display: flex;
-        flex-direction: row;
-        margin: 0 50px;
-        float: left;
-    }
-
-
-    .new-feed {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 80px;
-        flex-wrap: nowrap;
-        margin-bottom: 150px;
-    }
-
-    .popular-feed h3 { color: #fd6801; }
-    .new-feed h3 { color: #fd6801; }
-
-
-    #scrollTopMob {
-      display: flex;
-      position: fixed;
-      bottom: 64px; /* 아랫쪽 끝에서부터의 거리 */
-      right: 25px; /* 오른쪽 끝에서부터의 거리 */
-      z-index: 99;
-    }
-
-    #scrollTopPc {
-        display: none;
-    }
-
-}
-
 
 
 /* desktop */
 
-    @import url('http://fonts.googleapis.com/css?family=Monserrat:500');
+@import url('http://fonts.googleapis.com/css?family=Monserrat:500');
 
 .feed-header {
     display: flex;
@@ -104,7 +42,10 @@
      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
      /*margin-right: 15px;*/
      margin-bottom: 20px;
+
  }
+
+
 
 h3 {
     color: #fd6801;

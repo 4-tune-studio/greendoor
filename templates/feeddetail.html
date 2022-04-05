@@ -30,7 +30,7 @@
                     <img id="like" src="/static/img/heart_filled.png">
                 {% else %}
                     {# 내가 좋아요 안한 피드면 #}
-                    <img id="like" src="/static/img/heart_default.png">
+                    <img id="like" src="/static/img/heart.png">
                 {% endif %}
             </a>
             <a href="javascript:void(0);" onclick="bookmark_api({{ feed.id }})">
@@ -39,7 +39,7 @@
                     <img id="scrap" src="/static/img/bookmark_filled.png">
                 {% else %}
                     {# 내가 북마크 안한 피드면 #}
-                    <img id="scrap" src="/static/img/bookmark_default.png">
+                    <img id="scrap" src="/static/img/bookmark.png">
                 {% endif %}
             </a>
         </div>

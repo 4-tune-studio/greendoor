@@ -1,16 +1,22 @@
-{% extends 'base.html' %}
-
+{% extends 'indexbase.html' %}
+{% load static %}
 {% block title %}
-Order Complete
+    Order Complete
 {% endblock %}
-
+{% block static %}
+    <link href="/static/css/order.css" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block content %}
-<div class="row">
-    <div class="col">
-        <div class="alert alert-success" role="alert">Thank you!<br/>
-            Your order has been successfully completed.<br/>
-        Your order number is <strong>{{order.id}}</strong></div>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-success" role="alert">플랜테리어를 이용해 주셔서 감사합니다!<br/>
+                당신의 주문에 대한 테스트 결제가 완료되었습니다~!!<br/>
+                테스트 주문 번호는 <strong>{{ order.id }}</strong> 입니다.
+            </div>
+            <a class="sign" href="/">
+                <button class="btn btn-primary">홈으로 돌아가기</button>
+            </a>
+        </div>
 
     </div>
-</div>
 {% endblock %}

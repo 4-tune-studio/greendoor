@@ -1,77 +1,6 @@
 
-/* mobile */
-
-@media screen and (max-width:800px) {
-
-
-    .feed {
-        margin-top: 200px;
-        display: flex;
-        flex-direction: column;
-        margin-right: 30px;
-        margin-left: 30px;
-    }
-
-    .feed img {
-        border-radius: 10px;
-    }
-
-    button {
-        padding: 9px 25px;
-        background-color: rgb(255, 136, 60);
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: all 0.3s ease 0s;
-        color: #edf0f1;
-        font-size: 18px;
-    }
-
-    #date, #username {
-        text-align: right;
-    }
-
-    #username {
-        margin-top: -20px;
-    }
-
-    footer {
-        box-sizing: border-box;
-        background-image: url('/static/img/footer.png');
-        background-size: 100%;
-        background-repeat: no-repeat;
-        margin: 0;
-        padding: 0;
-
-    }
-
-    .m-nav-link {
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-    }
-    .m-nav-link img {
-        margin-top: 15px;
-        margin-right: 10px;
-        padding: 0 10px;
-        width: 30px;
-        opacity: 0.9;
-        filter: alpha(opacity=90);
-    }
-
-    .contents {
-        margin-left: 50px;
-    }
-
-    .footer {
-        display: none;
-    }
-
-}
-
 
 /* desktop */
-@media screen and (min-width:801px) {
 
     @import url('http://fonts.googleapis.com/css?family=Monserrat:500');
 
@@ -316,4 +245,3 @@
         color: #edf0f1;
     }
 
-}
