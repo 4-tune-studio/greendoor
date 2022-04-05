@@ -76,7 +76,7 @@
         <div class="recommend-row">
         <div class="col">
             <div class="alert alert-info" role="alert" style="text-align: center; margin-top: 100px">
-                {% if current_category %}{{ current_category.name }}{% else %}추천 상품{% endif %}
+                {% if current_category %}{{ current_category.name }}{% else %}{{ user.nickname }}님 추천 상품{% endif %}
             </div>
             <div class="row" style="width: 1000px;">
                 {% for product in sug_product %}

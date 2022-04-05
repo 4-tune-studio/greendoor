@@ -217,3 +217,9 @@ h5 {
 .recommend-row .row {
     margin: 0 50px;
 }
+
+.recommend-row .col .alert-info {
+    color: #fd6801;
+    background-color: #fff0d2;
+    border-color: #fff0d2;
+}
