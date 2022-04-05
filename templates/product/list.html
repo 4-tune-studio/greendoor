@@ -72,31 +72,33 @@
     </div>
 
     <!--추천 상품-->
-    <div class="recommend-row-wrapper">
-        <div class="recommend-row">
-        <div class="col">
-            <div class="alert alert-info" role="alert" style="text-align: center; margin-top: 100px">
-                {% if current_category %}{{ current_category.name }}{% else %}{{ user.nickname }}님 추천 상품{% endif %}
-            </div>
-            <div class="row" style="width: 1000px;">
-                {% for product in sug_product %}
-                    <div class="col-4">
-                        <div class="card" style="width: 270px; ">
-                            <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ product.name }}</h5>
-                                <p class="card-text">{{ product.description }} <span
-                                        class="badge badge-secondary">&#8361;{{ product.price }}</span>
-                                </p>
-                                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Detail</a>
-                            </div>
-                        </div>
+    {% if sug_product %}
+        <div class="recommend-row-wrapper">
+            <div class="recommend-row">
+                <div class="col">
+                    <div class="alert alert-info" role="alert" style="text-align: center; margin-top: 100px">
+                        {{ user.nickname }}님 추천 상품
                     </div>
-                {% endfor %}
+                    <div class="row" style="width: 1000px;">
+                        {% for product in sug_product %}
+                            <div class="col-4">
+                                <div class="card" style="width: 270px; ">
+                                    <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ product.name }}</h5>
+                                        <p class="card-text">{{ product.description }} <span
+                                                class="badge badge-secondary">&#8361;{{ product.price }}</span>
+                                        </p>
+                                        <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Detail</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
+    {% endif %}
     <!--추천 상품 끝-->
 
     <div class="row">

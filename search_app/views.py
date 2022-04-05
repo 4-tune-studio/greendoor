@@ -109,7 +109,7 @@ def product_searchResult(request, category_slug=None):
                     sug_product.append(product)
 
         # sug_product 갯수가 4개 미만이면 default 정보로 전환
-        if len(sug_product) < 4:
+        if len(sug_product) < 3:
             id_list = [307, 587, 75, 584, 467, 357, 583, 186, 234, 440]
             default_product_list = []
             for id in id_list:
@@ -121,7 +121,7 @@ def product_searchResult(request, category_slug=None):
         random.shuffle(sug_product)
         # 셔플된 sug_product 에서 앞 4개만 변수에 저장
         # 사용자가 없는 경우 none 값을 넣기에 따로 변수에 담아서 클라이언트에 전달
-        sug_product = sug_product[:4]
+        sug_product = sug_product[:3]
         # print(sug_product)
     # 추천 식물 상품 끝
     #####################################################################
