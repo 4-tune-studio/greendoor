@@ -58,7 +58,7 @@
                         $('#like').attr("src", "/static/img/heart_filled.png")
                     } else if (response.msg === "좋아요 취소") {
                         // like img 태그의 src를 변경(비어있는 하트) / jquery 문법
-                        $('#like').attr("src", "/static/img/heart_default.png")
+                        $('#like').attr("src", "/static/img/heart.png")
                     }
                     // 좋아요 숫자를 서버에서 전달받은 숫자로 변경 / jquert 문법
                     $("#like_count").text(`${response.like_count}명이 좋아합니다`);
@@ -88,7 +88,7 @@
                         $('#scrap').attr("src", "/static/img/bookmark_filled.png")
                     } else if (response.msg === "북마크 취소") {
                         // 북마크 버튼의 클래스를 변경 / jquery 문법
-                        $('#scrap').attr("src", "/static/img/bookmark_default.png")
+                        $('#scrap').attr("src", "/static/img/bookmark.png")
                     }
                 },
                 error: function () { // 통신 실패했을 때 호출 함수

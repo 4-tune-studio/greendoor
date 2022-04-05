@@ -26,7 +26,7 @@
         <div class="search-img">
             <div class="search-feed-img">
                 {% for search_feed in search_feeds %}
-                    <a href="{% url 'feed:feed' search_feed.id %}"><img src="{{ search_feed.image }}"></a>
+                    <a href="{% url 'feed:feed' search_feed.id %}"><img class="image" src="{{ search_feed.image }}"></a>
                 {% endfor %}
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="popular-feed">
             <div class="feed-img">
                 {% for feed in popular_feeds %}
-                    <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
+                    <a href="{% url 'feed:feed' feed.id %}"><img class="image" src="{{ feed.image }}"></a>
                 {% endfor %}
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="new-feed">
             <div class="feed-img">
                 {% for feed in all_feed %}
-                    <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
+                    <a href="{% url 'feed:feed' feed.id %}"><img class="image" src="{{ feed.image }}"></a>
                 {% endfor %}
             </div>
         </div>
