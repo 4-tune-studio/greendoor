@@ -1,7 +1,7 @@
 
 
 /* desktop */
-@media screen and (min-width:769px) {
+
     body {
         box-sizing: border-box;
         margin: 0;
@@ -64,54 +64,5 @@
         font-size: 20px;
         color: white;
     }
-}
 
 
-/*mobile*/
-
-@media screen and (max-width: 768px) {
-
-    body {
-        box-sizing: border-box;
-        background-image: url('/static/img/bg.png');
-        background-size: 300%;
-        background-repeat: no-repeat;
-        margin: 0;
-        padding: 0;
-        z-index: 1;
-    }
-
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .logo img {
-        margin-top: 6px;
-    }
-
-    .category {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-    .category li {
-        width: 100%;
-        text-align: center;
-    }
-
-    .sign {
-        display: none;
-    }
-
-    .navbar-toggle, .navbar-logout {
-        display: block; margin-top: 7px;
-    }
-    .navbar-toggle {
-        padding-right: 40px;
-    }
-    .category.active {
-        display: flex;
-    }
-}
