@@ -69,7 +69,7 @@ class Product(BaseModel):
 
     # DecimalField는 사용안하고 IntegerField로 해도 상관 없다.
     # decimal_places 소수점
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=0)
     # 남은 숫자 확인을 위한 stock 설정
     stock = models.PositiveIntegerField(default=0)
 

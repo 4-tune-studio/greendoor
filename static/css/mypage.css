@@ -211,16 +211,30 @@
         background-clip: content-box, border-box;
     }
 
-    .userfeed {
+    .user-feed, .bookmark-feed {
         display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        margin: 0 200px 200px 200px;
+        justify-content: center;
+        margin: 0 150px;
     }
 
-    .feed-img {
-        display: flex;
-        flex-direction: row;
+
+     .feed-img img {
+         width: 123px;
+         height: 200px;
+         border-radius: 20px;
+         object-fit: cover;
+         overflow: hidden;
+         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+         /*margin-right: 15px;*/
+         margin-bottom: 20px;
+     }
+
+    .user-feed-container h3 {
+        color: #fd6801;
+        text-align: center;
+        text-decoration: underline;
+        text-underline-position:under;
+        margin: 50px 0;
     }
 
     #scrollTopPc {

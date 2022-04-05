@@ -24,6 +24,7 @@ from feed.services.feed_service import (
     upload_feed_image,
 )
 from feed.services.like_service import do_like, undo_like
+from user.models import UsersFav
 
 URL_LOGIN = "user:sign-in"
 URL_COMMUNITY = "feed:community"
@@ -36,6 +37,11 @@ def community_view(request: HttpRequest) -> HttpResponse:
         # 로그인이 되어있다면
         if request.user.is_authenticated:
             user_id = request.user.id
+            # 설문 조사를 하지 않았다면 설문조사 페이지로 이동
+            fav = UsersFav.objects.filter(user_id_id=user_id)
+            if len(fav) == 0:
+                return redirect("survey:survey")
+
         # 로그인이 되어있지 않다면
         else:
             # 없는 사용자 id
@@ -51,7 +57,7 @@ def community_view(request: HttpRequest) -> HttpResponse:
 
         # 첫 페이지라면
         if offset == 0:
-            popular_feeds = get_popular_feed_list(user_id, offset, 20)
+            popular_feeds = get_popular_feed_list(user_id, offset, 6)
             return render(request, "index.html", {"all_feed": all_feed, "popular_feeds": popular_feeds})
 
         return render(request, "index.html", {"all_feed": all_feed})

@@ -23,6 +23,12 @@
 .sign button {
     border-radius: 20px;
 }
+
+.feed-header {
+    display: flex;
+    justify-content: center;
+}
+
 .seach-bar {
 
     display: flex;
@@ -72,7 +78,6 @@
     background-color: #ff883c;
     border-color: #ff883c;
 }
-
 a {
     color: #fd6801;
     text-decoration: none;
@@ -88,12 +93,34 @@ a {
 
 .btn-primary {
     color: #fff;
-    background-color: #45a874;
-    border-color: #45a874;
+    background-color: #55c58a;
+    border-color: #55c58a;
 }
+.btn-primary:hover {
+    color: #fff;
+    background-color: #2da86a;
+    border-color: #2da86a;
+}
+a:hover {
+    color: #2da86a;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: #fff;
+    background-color: #2da86a;
+    border-color: #2da86a;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0.2rem rgba(243, 199, 172, 0.66);
+}
+
+
+
 
 .col-4 {
     padding: 0;
+    width: 1000px;
 }
 .card {
     margin-bottom: 50px;
@@ -121,4 +148,54 @@ h5 {
     font-size: 12px;
 }
 
+
+.main {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+@import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+.search {
+  width: 300px;
+  position: relative;
+}
+.search:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-family: 'FontAwesome';
+  content: '\f002';
+  background: #48c789;
+  text-align: center;
+  color: #fff;
+  border-radius: 20px;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+}
+
+.searchTerm {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  border: 3px solid #48c789;
+  padding: 10px;
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
+}
+
+.searchButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  cursor: pointer;
+}
 

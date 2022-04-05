@@ -26,7 +26,7 @@ class OrderCreateForm(forms.ModelForm):
         self.fields["address"].widget.attrs["placeholder"] = " 필수 입력 사항 입니다."
         self.fields["postal_code"].widget.attrs["placeholder"] = " 필수 입력 사항 입니다."
 
-        print(Users.username)
+        # print(Users.username)
 
         # self.fields['user_name'].widget.attrs['value'] =Users.objects.get(username=request.user.id)
         # self.fields["user_name"].value = "이름(배송 받으실 분)"
