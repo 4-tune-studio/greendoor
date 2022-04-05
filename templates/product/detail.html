@@ -26,10 +26,19 @@
                 </form>
                 <h5><span class="badge badge-secondary">Description</span>{{ product.description|linebreaks }}</h5>
             </div>
+
+
             <div class="image_tag">
                 <br>
                 <br>
-                {{ product.image_tag|safe }}
+                <br>
+                <br>
+                <img src="https://greendoorhope.s3.ap-northeast-2.amazonaws.com/img/profile_default.png" width=100%/>
+                <br>
+                <br>
+                <div style="text-align: center">
+                    {{ product.image_tag|safe }}
+                </div>
             </div>
 
 
