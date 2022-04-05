@@ -32,7 +32,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = MY_SECRET["SECRET_KEY"]
 
-
 DEBUG = False
 
 # ALLOWED_HOSTS: List[str] = []
@@ -66,6 +65,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.naver",
     "survey",
     "storages",
+    "search_app",
+    "embed_video",
 ]
 
 # password reset
@@ -152,7 +153,6 @@ STATIC_URL = "static/"
 # ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
