@@ -15,31 +15,44 @@
 
     <div class="main">
         <form class="search" action="{% url 'search:feed_searchResult' %}" method="get">
-          <input class="searchTerm" placeholder="검색어를 입력하세요." type="text" name="kw" required="required"><input class="searchButton" type="submit" />
+            <input class="searchTerm" placeholder="검색어를 입력하세요." type="text" name="kw" required="required"><input
+                class="searchButton" type="submit"/>
         </form>
     </div>
-    <div class="search-img">
-        <div class="search-feed-img">
-            {% for search_feed in search_feeds %}
-            <a href="{% url 'feed:feed' search_feed.id %}"><img src="{{ search_feed.image }}"></a>
-            {% endfor %}
-        </div>
-    </div>
 
-    <div class="feed-container">
-    <h3>인기 피드</h3>
-        <div class="popular-feed">
-            <div class="feed-img">
-                {% for feed in popular_feeds %}
-                <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
+    {% if search_feeds %}
+        <h3>"{{ query }}"으로 검색한 피드</h3>
+
+        <div class="search-img">
+            <div class="search-feed-img">
+                {% for search_feed in search_feeds %}
+                    <a href="{% url 'feed:feed' search_feed.id %}"><img src="{{ search_feed.image }}"></a>
                 {% endfor %}
             </div>
         </div>
-    <h3>최신 피드</h3>
+    {% endif %}
+
+    {% if not search_feeds %}
+        {% if query %}
+            <h3>"{{ query }}"으로 검색한 알맞은 피드가 없습니다.</h3>
+
+        {% endif %}
+    {% endif %}
+
+    <div class="feed-container">
+        <h3>인기 피드</h3>
+        <div class="popular-feed">
+            <div class="feed-img">
+                {% for feed in popular_feeds %}
+                    <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
+                {% endfor %}
+            </div>
+        </div>
+        <h3>최신 피드</h3>
         <div class="new-feed">
             <div class="feed-img">
                 {% for feed in all_feed %}
-                <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
+                    <a href="{% url 'feed:feed' feed.id %}"><img src="{{ feed.image }}"></a>
                 {% endfor %}
             </div>
         </div>
