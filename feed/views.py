@@ -49,7 +49,7 @@ def community_view(request: HttpRequest) -> HttpResponse:
 
         # 클라이언트에서 전해준 page 값을 저장 (default : none -> 1, "" -> 1)
         page = int(request.GET.get("page", 1) or 1)
-        limit = 40
+        limit = 99999
         offset = limit * (page - 1)
 
         # 피드 리스트 가져오기
