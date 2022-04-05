@@ -53,7 +53,7 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
 
         # sug_product 갯수가 4개 미만이면 default 정보로 전환
         if len(sug_product) < 4:
-            id_list = [307, 246, 75, 243, 127, 357, 242, 415, 455, 100]
+            id_list = [307, 587, 75, 584, 467, 357, 583, 186, 234, 440]
             default_product_list = []
             for id in id_list:
                 default_product = Product.objects.get(id=id)
@@ -100,8 +100,8 @@ def product_detail(request: HttpRequest, id, product_slug=None) -> HttpResponse:
     # print(product.plant_id.type_name)
     # plant_info = get_object_or_404(Plant, id = int(product.plant_id))
 
-    return render(request, "product/detail.html",
-                  {"product": product, "add_to_cart": add_to_cart})
+    return render(request, "product/detail.html", {"product": product, "add_to_cart": add_to_cart})
+
 
 # @receiver(user_signed_up)
 # def user_signed_up_(**kwargs) -> None:
