@@ -127,7 +127,7 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
             user_id = request.POST["user_id"]
             img_file = request.FILES["image"]
             # 다른 사용자 수정 불가
-            if request.user.id == user_id:
+            if request.user.id == int(user_id):
                 # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
                 if img_file and allowed_file(img_file.name):
                     ext = get_file_extension(img_file.name)
