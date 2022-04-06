@@ -126,21 +126,24 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
             # json data 변수에 저장
             user_id = request.POST["user_id"]
             img_file = request.FILES["image"]
+            # 다른 사용자 수정 불가
+            if request.user.id == user_id:
+                # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
+                if img_file and allowed_file(img_file.name):
+                    ext = get_file_extension(img_file.name)
+                    filename = f"{user_id}.{ext}"
+                    img_file.name = filename
 
-            # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
-            if img_file and allowed_file(img_file.name):
-                ext = get_file_extension(img_file.name)
-                filename = f"{user_id}.{ext}"
-                img_file.name = filename
+                    # s3 image upload, s3 url - users 모델 저장
+                    img_update = update_user_image(img_file)
 
-                # s3 image upload, s3 url - users 모델 저장
-                img_update = update_user_image(img_file)
-
-                # Users 'image' 필드에 url update
-                url_update = update_user_image_url(user_id, img_update)
-                return JsonResponse({"message": url_update})
-            else:
-                return JsonResponse({"message": "올바른 이미지 확장자가 아닙니다."})
+                    # Users 'image' 필드에 url update
+                    url_update = update_user_image_url(user_id, img_update)
+                    return JsonResponse({"message": url_update})
+                else:
+                    return JsonResponse({"message": "올바른 이미지 확장자가 아닙니다."})
+        else:
+            return redirect("feed:community")
 
 
 # =============== user my page ================ #
