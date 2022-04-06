@@ -38,7 +38,7 @@ def add(request: HttpRequest, a: int, b: int) -> Dict[str, int]:
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("4tunegreendooradminlkkkch/", admin.site.urls),
     path("api/", api.urls),
     path("cart/", include("cart.urls")),
     path("", include("feed.urls")),
