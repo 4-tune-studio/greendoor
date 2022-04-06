@@ -14,8 +14,8 @@ def sign_up_password_validation(password: str, password2: str) -> Any:
 
 # nickname 유효성 검사: nickname 길이, 한글은 한글만, 영문은 영문 or 영문 + 숫자
 def sign_up_nickname_validation(nickname: str) -> Any:
-    if not (3 < len(nickname) < 21):
-        return "nickname 길이는 4~20자 입니다."
+    if not (2 < len(nickname) < 21):
+        return "nickname 길이는 3~20자 입니다."
     elif re.search("[가-힣]+", nickname) is None:
         if re.match("([A-Za-z0-9]{3,20})", nickname) is not None:
             if re.search("[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`'…》]+", nickname) is not None:
