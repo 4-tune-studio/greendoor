@@ -167,8 +167,6 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
 
 
 # ------------------회원탈퇴----------------------- #
-
-
 @login_required
 def member_del(request):
     request.user.delete()
