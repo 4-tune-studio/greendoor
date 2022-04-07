@@ -1,5 +1,6 @@
 from django.contrib import auth
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
@@ -13,8 +14,6 @@ from user.services.signup_service import (
     sign_up_password_validation,
 )
 from user.services.userimg_service import update_user_image, update_user_image_url
-
-from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -173,4 +172,4 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
 @login_required
 def member_del(request):
     request.user.delete()
-    return redirect('feed:community')
+    return redirect("feed:community")
