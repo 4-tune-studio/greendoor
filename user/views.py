@@ -136,14 +136,14 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
                     filename = f"{user_id}.{ext}"
                     img_file.name = filename
 
-                    # s3 image upload, s3 url - users 모델 저장
+                    # s3 image upload
                     img_update = update_user_image(img_file)
 
                     # Users 'image' 필드에 url update
                     url_update = update_user_image_url(user_id, img_update)
                     return JsonResponse({"message": url_update})
                 else:
-                    return JsonResponse({"message": "올바른 이미지 확장자가 아닙니다."})
+                    return redirect("user:user_my_page")
         else:
             return redirect("feed:community")
 
@@ -167,8 +167,6 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
 
 
 # ------------------회원탈퇴----------------------- #
-
-
 @login_required
 def member_del(request):
     request.user.delete()

@@ -17,11 +17,13 @@ function update_image_api(id) {
         contentType: false,
         processData: false,
         success: function (response) {
-            alert("성공")
+            alert("성공! 이미지 수정되었습니다 : )")
             console.log(response)
         },
         error: function () {
-            alert("실패")
+            alert("실패! 이미지 확장자를 확인해 주세요.")
+            location.reload()
+
         },
     })
 }
