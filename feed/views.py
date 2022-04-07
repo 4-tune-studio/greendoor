@@ -25,13 +25,25 @@ from feed.services.feed_service import (
 )
 from feed.services.like_service import do_like, undo_like
 from user.models import UsersFav
+from django.core.paginator import Paginator
 
 URL_LOGIN = "user:sign-in"
 URL_COMMUNITY = "feed:community"
 URL_FEED = "feed:feed"
 
 
+# def pagination(request):
+#     board_list = Feed.objects.all()  # models.py Board 클래스의 모든 객체를 board_list에 담음
+#     # board_list 페이징 처리
+#     page = request.GET.get('page', '1')  # GET 방식으로 정보를 받아오는 데이터
+#     paginator = Paginator(board_list, '10')  # Paginator(분할될 객체, 페이지 당 담길 객체수)
+#     page_obj = paginator.page(page)  # 페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
+#     return render(request, 'template_name', {'page_obj': page_obj})
+
 def community_view(request: HttpRequest) -> HttpResponse:
+
+
+
     # 요청하는 방식이 get 방식인지 확인
     if request.method == "GET":
         # 로그인이 되어있다면
@@ -54,6 +66,9 @@ def community_view(request: HttpRequest) -> HttpResponse:
 
         # 피드 리스트 가져오기
         all_feed = get_feed_list(user_id, offset, limit)
+
+        paginator = Paginator(all_feed, '10')
+        page_obj = paginator.page(page)
 
         # 첫 페이지라면
         if offset == 0:

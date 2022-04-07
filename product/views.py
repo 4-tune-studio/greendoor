@@ -9,12 +9,28 @@ from cart.forms import AddProductForm
 from plant.models import Plant
 from product.models import Category, Product
 from user.models import UsersFav
+from django.core.paginator import Paginator
 
 
 # request는 장고 뷰가 던져질때 자연스럽게 들어오는 request 객체를 이용
 def product_in_category(request: HttpRequest, category_slug=None) -> HttpResponse:
     # 제품을 보여줄 수 있는 것만 불러오기
-    products = Product.objects.filter(available_display=True)
+    # products = Product.objects.filter(available_display=True)
+
+    page = int(request.GET.get("page", 1) or 1)
+    print(f"product_page:{page}")
+    limit = 15
+    offset = limit * (page - 1)
+
+    # 피드 리스트 가져오기
+    products = Product.objects.filter(available_display=True)[offset:offset + limit]
+
+    page_all_product = Product.objects.all()
+    paginator = Paginator(page_all_product, '15')
+    page_obj = paginator.get_page(page)
+
+    print(f"product_page_obj:{page_obj}")
+
     # Category 전체를 불러올것
     categories = Category.objects.all()
 
@@ -90,6 +106,8 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
             "categories": categories,
             "products": products,
             "sug_product": sug_product,
+            "page_obj": page_obj,
+
         },
     )
 
@@ -101,7 +119,6 @@ def product_detail(request: HttpRequest, id, product_slug=None) -> HttpResponse:
     # plant_info = get_object_or_404(Plant, id = int(product.plant_id))
 
     return render(request, "product/detail.html", {"product": product, "add_to_cart": add_to_cart})
-
 
 # @receiver(user_signed_up)
 # def user_signed_up_(**kwargs) -> None:
