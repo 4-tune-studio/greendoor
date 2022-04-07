@@ -43,14 +43,15 @@
                 <h4 class="card-title">비밀번호 재설정</h4>
                 <a href="https://grdr.net/password_reset/">여기</a>를 클릭하시면 비밀번호 재설정이 가능합니다.
             </div>
-            <a href="{% url 'user:member_del' %}" onclick="return delchk();"> {# 이렇게 코딩 할 경우 회원탈퇴 클릭시 먼저 실행 되는것이 onclick 이벤트입니다. 여기서 지정된 함수 호출 후 return delchk() 부분에서 delchk의 리턴값이 true면 href로 연결된 링크로 이동하고 false면 이동하지 않습니다.  #}
+            <a href="{% url 'user:member_del' %}" onclick="return delchk();">
+                {# 이렇게 코딩 할 경우 회원탈퇴 클릭시 먼저 실행 되는것이 onclick 이벤트입니다. 여기서 지정된 함수 호출 후 return delchk() 부분에서 delchk의 리턴값이 true면 href로 연결된 링크로 이동하고 false면 이동하지 않습니다.  #}
                 <button id="member_del">회원탈퇴</button>
             </a>
         </div>
     </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script defer type="text/javascript" src="/static/js/edit.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/static/js/edit.js"></script>
 {% endblock %}
 
 
