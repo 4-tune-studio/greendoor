@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from config.utils import allowed_file, get_file_extension
 from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
@@ -12,6 +13,8 @@ from user.services.signup_service import (
     sign_up_password_validation,
 )
 from user.services.userimg_service import update_user_image, update_user_image_url
+
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -159,3 +162,12 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
             return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
     else:
         return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
+
+
+# ------------------회원탈퇴----------------------- #
+
+
+@login_required
+def member_del(request):
+    request.user.delete()
+    return redirect('feed:community')

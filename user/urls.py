@@ -13,4 +13,5 @@ urlpatterns = [
     path("password/", views.password, name="password"),
     path("api_update_user_image", views.api_update_user_image, name="api_update_user_image"),
     path("my_page/<int:pk>", views.user_my_page, name="user_my_page"),
+    path("member_del/", views.member_del, name="member_del"),
 ]
