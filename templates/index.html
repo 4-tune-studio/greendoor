@@ -5,6 +5,11 @@
 {% block static %}
     <link href="/static/css/feedindex.css" rel="stylesheet" type="text/css">
     <script src="https://kit.fontawesome.com/6bc056fb5e.js" crossorigin="anonymous"></script>
+    <script>
+        const csrf = "{{ csrf_token }}";
+        const newFeedURl = "{% url "feed:community" %}";
+        let page = 1;
+    </script>
 {% endblock %}
 {% block content %}
     <!-- 피드 상단 이미지 -->
@@ -50,10 +55,20 @@
         </div>
         <h3>최신 피드</h3>
         <div class="new-feed">
-            <div class="feed-img">
+            <div class="feed-img" id="new-feed-img">
                 {% for feed in all_feed %}
                     <a href="{% url 'feed:feed' feed.id %}"><img class="image" src="{{ feed.image }}"></a>
                 {% endfor %}
+            </div>
+        </div>
+        <div class="skeleton" id="skeleton-off">
+            <div class="feed-img">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
             </div>
         </div>
     </div>
@@ -65,4 +80,13 @@
     <div onclick="" id="scrollTopMob">
         <a href="{% url 'feed:create_feed' %}"><img src="/static/img/write.png" width="50px" height="50px"></a>
     </div>
+    <!--무한 스크롤 관찰 대상-->
+    <div class="list"></div>
+    <br><br>
+    <br><br>
+    <p id="sentinel"></p>
+
+
+    <script defer src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script defer type="text/javascript" src="/static/js/community.js"></script>
 {% endblock content %}

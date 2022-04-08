@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+from django.core import serializers
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
@@ -61,7 +62,7 @@ def community_view(request: HttpRequest) -> HttpResponse:
 
         # 클라이언트에서 전해준 page 값을 저장 (default : none -> 1, "" -> 1)
         page = int(request.GET.get("page", 1) or 1)
-        limit = 99999
+        limit = 18
         offset = limit * (page - 1)
 
         # 피드 리스트 가져오기
@@ -75,7 +76,11 @@ def community_view(request: HttpRequest) -> HttpResponse:
             popular_feeds = get_popular_feed_list(user_id, offset, 6)
             return render(request, "index.html", {"all_feed": all_feed, "popular_feeds": popular_feeds})
 
-        return render(request, "index.html", {"all_feed": all_feed})
+        # 비동기식
+        # offset이 0이 아닐경우 // ajax로 2가 넘어오면 1
+        data = serializers.serialize("json", list(all_feed))
+        context = {"all_feed": all_feed}
+        return HttpResponse(json.dumps(data), content_type="application/json")
 
     # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
     else:
