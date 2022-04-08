@@ -58,18 +58,20 @@ function addNewContent() {
               observer.observe(sentinel);
           }
         },
-        error: function (err) {
-          console.log(err);
+        error: function (request, status, error) {
+          console.log(`request: ${request}`);
+          console.log(`request: ${status}`);
+          console.log(`request: ${error}`);
         },
         beforeSend: function () { // ajax 보내기 전
             loadingStart();
-            //console.log("시작");
+            console.log("페이지 스크롤 시작");
             // 통신 시작할 때 관찰 끄기
             observer.unobserve(sentinel);
         },
         complete: function () { // ajax 완료
             loadingFinish();
-            //console.log("끝");
+            console.log("페이지 스크롤 끝");
         }
     });
 }
