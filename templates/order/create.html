@@ -19,11 +19,11 @@
                     {% for item in cart %}
                         <li class="list-group-item">
                             {{ item.quantity }}X{{ item.product.name }}
-                            <span>{{ item.total_price }}</span>
+                            <span>&#8361;{{ item.total_price|floatformat:"g" }}</span>
                         </li>
                     {% endfor %}
                 </ul>
-                <div class="alert alert-success" role="alert">Total : {{ cart.get_total_price|floatformat:"2" }}</div>
+                <div class="alert alert-success" role="alert">Total : &#8361;{{ cart.get_total_price|floatformat:"g" }}</div>
 
                 <!-- form에 class 추가 -->
                 <form action="" method="post" class="order-form">
@@ -32,7 +32,7 @@
                     {% csrf_token %}
                     <!-- hidden field 추가-->
                     <input type="hidden" name="pre_order_id" value="0">
-                    <input type="hidden" name="amount" value="{{ cart.get_total_price|floatformat:'2' }}">
+                    <input type="hidden" name="amount" value="&#8361;{{ cart.get_total_price|floatformat:'g' }}">
                     <input type="submit" class="btn btn-primary float-right" value="Place Order">
                 </form>
             </div>

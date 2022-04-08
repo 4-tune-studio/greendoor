@@ -41,15 +41,15 @@
                         </form>
                     </td>
                     <td><a href="{% url 'cart:product_remove' product.id %}">Remove</a></td>
-                    <td class="num">${{ item.price }}</td>
-                    <td class="num">${{ item.total_price }}</td>
+                    <td class="num">&#8361;{{ item.price|floatformat:"g"  }}</td>
+                    <td class="num">&#8361;{{ item.total_price|floatformat:"g"  }}</td>
                 </tr>
                 {% endwith %}
             {% endfor %}
             <tr class="total">
                 <td>Total</td>
                 <td colspan="4"></td>
-                <td class="num">${{ cart.get_total_price|floatformat:"2" }}</td>
+                <td class="num">&#8361;{{ cart.get_total_price|floatformat:"g" }}</td>
             </tr>
             </tbody>
         </table>
