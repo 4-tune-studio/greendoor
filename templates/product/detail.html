@@ -24,7 +24,7 @@
             <div class="col">
                 <h1 class="display-6">{{ product.name }}</h1>
 
-                <p><span class="badge badge-secondary">Price</span> &#8361;{{ product.price }}</p>
+                <p><span class="badge badge-secondary">Price</span> &#8361;{{ product.price|floatformat:"g" }}</p>
 
                 <form action="{% url 'cart:product_add' product.id %}" method="post">
                     {{ add_to_cart }}
