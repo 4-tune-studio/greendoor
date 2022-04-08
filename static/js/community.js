@@ -59,9 +59,13 @@ function addNewContent() {
           }
         },
         error: function (request, status, error) {
+          console.log(`code: ${request.status} \nmessage: ${request.responseText}\nerror: ${error}`)
+          console.dir(request)
+          console.dir(status)
+          console.dir(error)
           console.log(`request: ${request}`);
-          console.log(`request: ${status}`);
-          console.log(`request: ${error}`);
+          console.log(`status: ${status}`);
+          console.log(`error: ${error}`);
         },
         beforeSend: function () { // ajax 보내기 전
             loadingStart();
@@ -92,7 +96,7 @@ const option = {
 const callback = (entries, observer) => {
     entries.forEach(entry => {
         if(entry.isIntersecting) {
-            page ++; // 2부터 시작
+            page ++; // 2부터 시
             //console.log(page);
             addNewContent();
         }
