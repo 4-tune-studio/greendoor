@@ -53,9 +53,7 @@ def feed_searchResult(request):
         # 비동기식
         # offset이 0이 아닐경우 // ajax로 2가 넘어오면 1
         data = serializers.serialize("json", list(all_feed))
-        context = {
-            "all_feed": all_feed
-        }
+        context = {"all_feed": all_feed}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
         # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트

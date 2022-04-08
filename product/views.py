@@ -1,6 +1,7 @@
 import random
 
 from allauth.account.signals import user_signed_up  # type: ignore
+from django.core.paginator import Paginator
 from django.dispatch import receiver
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
@@ -9,7 +10,6 @@ from cart.forms import AddProductForm
 from plant.models import Plant
 from product.models import Category, Product
 from user.models import UsersFav
-from django.core.paginator import Paginator
 
 
 # request는 장고 뷰가 던져질때 자연스럽게 들어오는 request 객체를 이용
@@ -43,10 +43,10 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
     procuts_page = products
     # 피드 리스트 가져오기
     # products = Product.objects.filter(available_display=True)[offset:offset + limit]
-    products = products[offset:offset + limit]
+    products = products[offset : offset + limit]
 
     # page_all_product = Product.objects.all()
-    paginator = Paginator(procuts_page, '15')
+    paginator = Paginator(procuts_page, "15")
     page_obj = paginator.get_page(page)
 
     # print(f"product_page_obj:{page_obj}")
@@ -108,8 +108,6 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
     # get object or 는 말그대로 오브젝트를 가져오려고 시도해보고 없으면 404 에러를 나타내어 준다.
     # 밑의 내용은 category_slug를 Category 테이블의 slug에서 찾아보고 없다면 404가 뜨게된다
 
-
-
     ######################################################################################
     # templates의 구조에 따라서 다르게 쓸 수 있으나 앱기반으로 하여 이렇게 되어있다. 수정이 필요한 부분
     ######################################################################################
@@ -123,7 +121,6 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
             "products": products,
             "sug_product": sug_product,
             "page_obj": page_obj,
-
         },
     )
 
@@ -135,6 +132,7 @@ def product_detail(request: HttpRequest, id, product_slug=None) -> HttpResponse:
     # plant_info = get_object_or_404(Plant, id = int(product.plant_id))
 
     return render(request, "product/detail.html", {"product": product, "add_to_cart": add_to_cart})
+
 
 # @receiver(user_signed_up)
 # def user_signed_up_(**kwargs) -> None:
