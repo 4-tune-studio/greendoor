@@ -49,7 +49,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ search_product.name }}</h5>
                                     <p class="card-text">{{ search_product.description }} <span
-                                            class="badge badge-secondary">&#8361;{{ search_product.price }}</span>
+                                            class="badge badge-secondary">&#8361;{{ search_product.price|floatformat:"g"  }}</span>
                                     </p>
 
                                 </div>
@@ -93,7 +93,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ product.name }}</h5>
                                         <p class="card-text">{{ product.description }} <span
-                                                class="badge badge-secondary">&#8361;{{ product.price }}</span>
+                                                class="badge badge-secondary">&#8361;{{ product.price|floatformat:"g"  }}</span>
                                         </p>
 
                                     </div>
@@ -132,7 +132,7 @@
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
-                                <p class="card-text">{{ product.description }} <span class="badge badge-secondary">&#8361;{{ product.price }}</span>
+                                <p class="card-text">{{ product.description }} <span class="badge badge-secondary">&#8361;{{ product.price|floatformat:"g"  }}</span>
                                 </p>
 
                             </div>
