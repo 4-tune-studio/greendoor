@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 
 from django.core import serializers
+from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
@@ -26,7 +27,6 @@ from feed.services.feed_service import (
 )
 from feed.services.like_service import do_like, undo_like
 from user.models import UsersFav
-from django.core.paginator import Paginator
 
 URL_LOGIN = "user:sign-in"
 URL_COMMUNITY = "feed:community"
@@ -41,9 +41,8 @@ URL_FEED = "feed:feed"
 #     page_obj = paginator.page(page)  # 페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
 #     return render(request, 'template_name', {'page_obj': page_obj})
 
+
 def community_view(request: HttpRequest) -> HttpResponse:
-
-
 
     # 요청하는 방식이 get 방식인지 확인
     if request.method == "GET":
@@ -68,7 +67,7 @@ def community_view(request: HttpRequest) -> HttpResponse:
         # 피드 리스트 가져오기
         all_feed = get_feed_list(user_id, offset, limit)
 
-        paginator = Paginator(all_feed, '10')
+        paginator = Paginator(all_feed, "10")
         page_obj = paginator.page(page)
 
         # 첫 페이지라면
