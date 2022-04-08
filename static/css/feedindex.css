@@ -10,10 +10,10 @@
     display: flex;
     justify-content: center;
 }
-.popular-feed, .new-feed {
+.popular-feed, .new-feed, .skeleton {
     display: flex;
     justify-content: center;
-    margin: 0 150px;
+    /*margin: 0 150px;*/
 }
 
 .search-feed-img {
@@ -29,10 +29,16 @@
      object-fit: cover;
      overflow: hidden;
      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-     margin-right: 15px;
+     margin: 0 8px;
      margin-bottom: 20px;
 }
-
+ .feed-img {
+     display: flex;
+     max-width: 1500px;
+     flex-wrap: wrap;
+     justify-content: center;
+     /*margin: 0 auto;*/
+ }
  .feed-img img {
      width: 223px;
      height: 300px;
@@ -40,7 +46,7 @@
      object-fit: cover;
      overflow: hidden;
      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-     /*margin-right: 15px;*/
+     margin: 0 8px;
      margin-bottom: 20px;
 
  }
@@ -74,6 +80,16 @@ h3 {
 .main {
     display: flex;
     justify-content: center;
+}
+
+.spinner {
+        margin: 0 auto;
+        display: block;
+        width: 150px;
+    }
+
+#skeleton-off {
+    display: none;
 }
 
 @import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);

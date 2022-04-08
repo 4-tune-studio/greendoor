@@ -4,10 +4,10 @@
     {% block static %}
     <link href="/static/css/feeddetail.css" rel="stylesheet">
     <script type="text/javascript">
-        var updateCommentURL = "{% url "feed:update_comment" %}"
-        var likeApiURL = "{% url "feed:api_like" %}"
-        var bookmarkApiURL = "{% url "feed:api_bookmark" %}"
-        var csrf = "{{ csrf_token }}"
+        const updateCommentURL = "{% url "feed:update_comment" %}";
+        const likeApiURL = "{% url "feed:api_like" %}";
+        const bookmarkApiURL = "{% url "feed:api_bookmark" %}";
+        const csrf = "{{ csrf_token }}";
     </script>
     {% endblock static %}
 
