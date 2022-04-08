@@ -43,14 +43,15 @@
                     {% for search_product in search_products %}
                         <div class="col-4">
                             <div class="card">
-                                <img class="card-img-top" src="{{ search_product.image }}" alt="Product Image">
+                                <a href="{{ search_product.get_absolute_url }}">
+                                    <img class="card-img-top" src="{{ search_product.image }}" alt="Product Image">
+                                </a>
                                 <div class="card-body">
                                     <h5 class="card-title">{{ search_product.name }}</h5>
                                     <p class="card-text">{{ search_product.description }} <span
                                             class="badge badge-secondary">&#8361;{{ search_product.price }}</span>
                                     </p>
-                                    <a href="{{ search_product.get_absolute_url }}" class="btn btn-primary">View
-                                        Detail</a>
+
                                 </div>
                             </div>
                         </div>
@@ -85,13 +86,15 @@
                         {% for product in sug_product %}
                             <div class="col-4">
                                 <div class="card" style="width: 270px; ">
-                                    <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
+                                    </a>
                                     <div class="card-body">
                                         <h5 class="card-title">{{ product.name }}</h5>
                                         <p class="card-text">{{ product.description }} <span
                                                 class="badge badge-secondary">&#8361;{{ product.price }}</span>
                                         </p>
-                                        <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Detail</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -123,12 +126,14 @@
                 {% for product in products %}
                     <div class="col-4">
                         <div class="card">
-                            <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
+                            </a>
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <p class="card-text">{{ product.description }} <span class="badge badge-secondary">&#8361;{{ product.price }}</span>
                                 </p>
-                                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Detail</a>
+
                             </div>
                         </div>
                     </div>
