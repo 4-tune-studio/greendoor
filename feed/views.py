@@ -76,7 +76,7 @@ def community_view(request: HttpRequest) -> HttpResponse:
             return render(request, "index.html", {"all_feed": all_feed, "popular_feeds": popular_feeds})
 
         # 비동기식
-        # offset이 0이 아닐경우 // ajax로 2가 넘어오면 1
+        # offset이 0이 아닐경우 // ajax로 page 2가 넘어오면 offset = 18
         data = serializers.serialize("json", list(all_feed))
         return HttpResponse(json.dumps(data), content_type="application/json")
 
