@@ -96,7 +96,7 @@ const option = {
 const callback = (entries, observer) => {
     entries.forEach(entry => {
         if(entry.isIntersecting) {
-            p작age ++; // 2부터 시
+            page ++; // 2부터 시
             //console.log(page);
             addNewContent();
         }
