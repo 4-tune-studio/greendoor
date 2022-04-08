@@ -67,8 +67,8 @@ def community_view(request: HttpRequest) -> HttpResponse:
         # 피드 리스트 가져오기
         all_feed = get_feed_list(user_id, offset, limit)
 
-        paginator = Paginator(all_feed, "10")
-        page_obj = paginator.page(page)
+        # paginator = Paginator(all_feed, "10")
+        # page_obj = paginator.page(page)
 
         # 첫 페이지라면
         if offset == 0:
