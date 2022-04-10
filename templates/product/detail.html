@@ -244,5 +244,15 @@
             </div>
         </div>
     </div>
+    <!-- 상단 이동하기 버튼 -->
+    <div onclick="clickme()" style="position:fixed; bottom:45px; right:34px; z-index:99; scroll-behavior: smooth;">
+      <img src="/static/img/up.png" style="width:55px; height:55px; cursor: pointer;" alt="top">
+    </div>
+    <!-- 상단 이동 스크롤 스크립트 -->
+    <script defer>
+        function clickme(){
+            window.scrollTo({top:0, left:0})
+        }
+    </script>
 
 {% endblock content %}

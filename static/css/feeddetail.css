@@ -2,7 +2,6 @@
 
 /* desktop */
 
-    @import url('https://fonts.googleapis.com/css?family=Montserrat:500');
 
 
 
@@ -180,14 +179,20 @@
     #feed-txt {
         display: flex;
         justify-content: center;
+
     }
 
-    #feed-txt textarea {
+    .txtarea {
+        font-family: "Montserrat", sans-serif;
+        resize: none;
         border: none;
         text-align: center;
-        font-family: "Montserrat", sans-serif;
         color: #3a3a3a;
-        font-size: 17px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: white;
+        line-height: 24px;
+
     }
 
     .commenticon button{

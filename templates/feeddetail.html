@@ -56,7 +56,9 @@
             <h5 id="like_count">{{ feed.like_count }}명이 좋아합니다</h5>
         </div>
         <div id="feed-txt">
-            <textarea name="feed_content" rows="20" cols="50" maxlength="1000" readonly>{{ feed.content }}</textarea>
+            <label>
+                <textarea class="txtarea" name="feed_content" rows="20" cols="50" maxlength="1000" readonly disabled>{{ feed.content }}</textarea>
+            </label>
         </div>
         <div class="comment">
             <h3>댓글</h3>

@@ -143,22 +143,6 @@
                     </div>
                 {% endfor %}
             </div>
-        <div class="pagination">
-                <ul>
-                    <li class="btn prev"><span><i class="fas fa-angle-left"></i> prev</span></li>
-                    <li class="numb active"><span>1</span></li>
-                    <li class="numb"><span>2</span></li>
-                    <li class="dots"><span>...</span></li>
-                    <li class="numb"><span>4</span></li>
-                    <li class="numb"><span>5</span></li>
-                    <li class="dots"><span>...</span></li>
-                    <li class="numb"><span>7</span></li>
-                    <li class="btn next"><span><i class="fas fa-angle-right"></i> next</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <!-- 페이징처리 시작 -->
     <div id="paging">
         <ul class="pagination justify-content-center" style="margin-top: 2rem;">
@@ -198,6 +182,16 @@
             {% endif %}
         </ul>
     </div>
+    <!-- 상단 이동하기 버튼 -->
+    <div onclick="clickme()" style="position:fixed; bottom:105px; right:34px; z-index:99; scroll-behavior: smooth;">
+      <img src="/static/img/up.png" style="width:55px; height:55px; cursor: pointer;" alt="top">
+    </div>
+    <!-- 상단 이동 스크롤 스크립트 -->
+    <script defer>
+        function clickme(){
+            window.scrollTo({top:0, left:0})
+        }
+    </script>
     <!-- 페이징처리 끝 -->
 
 {% endblock %}
