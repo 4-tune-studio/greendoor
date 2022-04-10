@@ -1,7 +1,10 @@
+import json
 import random
 
 from allauth.account.signals import user_signed_up  # type: ignore
+from django.core import serializers
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from feed.models import Feed
@@ -32,7 +35,7 @@ def feed_searchResult(request):
 
         # 클라이언트에서 전해준 page 값을 저장 (default : none -> 1, "" -> 1)
         page = int(request.GET.get("page", 1) or 1)
-        limit = 40
+        limit = 18
         offset = limit * (page - 1)
 
         # 피드 리스트 가져오기
@@ -40,14 +43,18 @@ def feed_searchResult(request):
 
         # 첫 페이지라면
         if offset == 0:
-            popular_feeds = get_popular_feed_list(user_id, offset, 20)
+            popular_feeds = get_popular_feed_list(user_id, offset, 6)
             return render(
                 request,
                 "index.html",
                 {"all_feed": all_feed, "popular_feeds": popular_feeds, "query": query, "search_feeds": search_feeds},
             )
 
-        return render(request, "index.html", {"all_feed": all_feed, "query": query, "search_feeds": search_feeds})
+        # 비동기식
+        # offset이 0이 아닐경우 // ajax로 2가 넘어오면 1
+        data = serializers.serialize("json", list(all_feed))
+        context = {"all_feed": all_feed}
+        return HttpResponse(json.dumps(data), content_type="application/json")
 
         # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
     else:

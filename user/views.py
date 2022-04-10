@@ -1,7 +1,9 @@
 from django.contrib import auth
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from config.utils import allowed_file, get_file_extension
 from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
@@ -126,21 +128,24 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
             # json data 변수에 저장
             user_id = request.POST["user_id"]
             img_file = request.FILES["image"]
+            # 다른 사용자 수정 불가
+            if request.user.id == int(user_id):
+                # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
+                if img_file and allowed_file(img_file.name):
+                    ext = get_file_extension(img_file.name)
+                    filename = f"{user_id}.{ext}"
+                    img_file.name = filename
 
-            # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
-            if img_file and allowed_file(img_file.name):
-                ext = get_file_extension(img_file.name)
-                filename = f"{user_id}.{ext}"
-                img_file.name = filename
+                    # s3 image upload
+                    img_update = update_user_image(img_file)
 
-                # s3 image upload, s3 url - users 모델 저장
-                img_update = update_user_image(img_file)
-
-                # Users 'image' 필드에 url update
-                url_update = update_user_image_url(user_id, img_update)
-                return JsonResponse({"message": url_update})
-            else:
-                return JsonResponse({"message": "올바른 이미지 확장자가 아닙니다."})
+                    # Users 'image' 필드에 url update
+                    url_update = update_user_image_url(user_id, img_update)
+                    return JsonResponse({"message": url_update})
+                else:
+                    return redirect("user:user_my_page")
+        else:
+            return redirect("feed:community")
 
 
 # =============== user my page ================ #
@@ -159,3 +164,10 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
             return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
     else:
         return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
+
+
+# ------------------회원탈퇴----------------------- #
+@login_required
+def member_del(request):
+    request.user.delete()
+    return redirect("feed:community")

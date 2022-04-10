@@ -15,3 +15,5 @@ __pycache__
 aws-elastic-beanstalk-cli-setup
 .ebextensions
 secrets.json
+
+/config/urls.py

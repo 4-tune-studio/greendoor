@@ -1,6 +1,7 @@
 import random
 
 from allauth.account.signals import user_signed_up  # type: ignore
+from django.core.paginator import Paginator
 from django.dispatch import receiver
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
@@ -15,6 +16,41 @@ from user.models import UsersFav
 def product_in_category(request: HttpRequest, category_slug=None) -> HttpResponse:
     # 제품을 보여줄 수 있는 것만 불러오기
     products = Product.objects.filter(available_display=True)
+
+    page = int(request.GET.get("page", 1) or 1)
+    # print(f"product_page:{page}")
+    limit = 15
+    offset = limit * (page - 1)
+
+    product_category = []
+    if category_slug:
+        # print(f"category_slug:{category_slug}")
+        current_category = get_object_or_404(Category, slug=category_slug)
+        # print(f"current_category:{current_category}")
+        for product in products:
+            # print(f"product.category:{product.category}")
+            if current_category == product.category:
+                product_category.append(product)
+                # print(f"product_category:{product_category}")
+            else:
+                pass
+        products = product_category
+
+    else:
+        # 카테고리가 있을수도 없을수도있으니 None으로 설정
+        current_category = None
+
+    procuts_page = products
+    # 피드 리스트 가져오기
+    # products = Product.objects.filter(available_display=True)[offset:offset + limit]
+    products = products[offset : offset + limit]
+
+    # page_all_product = Product.objects.all()
+    paginator = Paginator(procuts_page, "15")
+    page_obj = paginator.get_page(page)
+
+    # print(f"product_page_obj:{page_obj}")
+
     # Category 전체를 불러올것
     categories = Category.objects.all()
 
@@ -71,12 +107,6 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
 
     # get object or 는 말그대로 오브젝트를 가져오려고 시도해보고 없으면 404 에러를 나타내어 준다.
     # 밑의 내용은 category_slug를 Category 테이블의 slug에서 찾아보고 없다면 404가 뜨게된다
-    if category_slug:
-        current_category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=current_category)
-    else:
-        # 카테고리가 있을수도 없을수도있으니 None으로 설정
-        current_category = None
 
     ######################################################################################
     # templates의 구조에 따라서 다르게 쓸 수 있으나 앱기반으로 하여 이렇게 되어있다. 수정이 필요한 부분
@@ -90,6 +120,7 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
             "categories": categories,
             "products": products,
             "sug_product": sug_product,
+            "page_obj": page_obj,
         },
     )
 
