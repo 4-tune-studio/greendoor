@@ -9,7 +9,7 @@ from user.models import Users
 @transaction.atomic
 def do_like(user_id: int, feed_id: int) -> FeedLike:
     Users.objects.filter(id=user_id).get()
-    feed = Feed.objects.filter(id=feed_id).get()
+    # feed = Feed.objects.filter(id=feed_id).get()
 
     Feed.objects.filter(id=feed_id).update(like_count=F("like_count") + 1)
     like = FeedLike.objects.create(user_id_id=user_id, feed_id_id=feed_id)
