@@ -2,7 +2,6 @@ from django.db import transaction
 from django.db.models import F
 
 from feed.models import Feed, FeedLike
-from user.models import Users
 
 
 # create 할때는 모델 인스턴스 참조, 필터 or get 할때는 id 참조
