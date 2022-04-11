@@ -8,7 +8,7 @@ const makeSpinner = () => {
         return spinner;
     };
 
-const list = document.querySelector('.list');
+const list = document.querySelector('.feed-container');
 const spinner = makeSpinner();
 
 const addSkeleton = () => {
