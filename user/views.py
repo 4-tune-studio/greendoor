@@ -109,7 +109,7 @@ def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
         elif request.method == "GET":
             form = CustomUserChangeForm(instance=request.user)
         context = {"form": form}
-        return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
+        return render(request, "user/edit.html", context)
     else:
         return redirect("feed:community")
 
