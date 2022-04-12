@@ -24,14 +24,14 @@
             <div class="col">
                 <h1 class="display-6">{{ product.name }}</h1>
 
-                <p><span class="badge badge-secondary">Price</span> &#8361;{{ product.price|floatformat:"g" }}</p>
+                <p><span class="badge badge-secondary">가격</span> &#8361;{{ product.price|floatformat:"g" }}</p>
 
                 <form action="{% url 'cart:product_add' product.id %}" method="post">
                     {{ add_to_cart }}
                     {% csrf_token %}
-                    <input type="submit" class="btn btn-primary btn-sm" value="Add to Cart">
+                    <input type="submit" class="btn btn-primary btn-sm" value="장바구니에 넣기">
                 </form>
-                <h5><span class="badge badge-secondary">Description</span>{{ product.description|linebreaks }}</h5>
+                <h5><span class="badge badge-secondary">상세설명</span>{{ product.description|linebreaks }}</h5>
             </div>
 
 

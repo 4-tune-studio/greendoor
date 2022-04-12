@@ -1,7 +1,7 @@
 import random
 
 from allauth.account.signals import user_signed_up  # type: ignore
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.dispatch import receiver
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
@@ -111,6 +111,28 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
     ######################################################################################
     # templates의 구조에 따라서 다르게 쓸 수 있으나 앱기반으로 하여 이렇게 되어있다. 수정이 필요한 부분
     ######################################################################################
+
+
+    total_len = len(procuts_page)
+    pages = request.GET.get('page', 1)
+    paginator = Paginator(procuts_page, 15)
+    try:
+        lines = paginator.page(pages)
+    except PageNotAnInteger:
+        lines = paginator.page(1)
+    except EmptyPage:
+        lines = paginator.page(paginator.num_pages)
+    index = lines.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 2 if index >= 2 else 0
+    if index < 2:
+        end_index = 5 - start_index
+    else:
+        end_index = index + 3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range[start_index:end_index])
+
+
+
     return render(
         request,
         "product/list.html",
@@ -121,6 +143,7 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
             "products": products,
             "sug_product": sug_product,
             "page_obj": page_obj,
+            'result_list': lines, 'page_range': page_range, 'total_len': total_len, 'max_index': max_index - 2,
         },
     )
 
