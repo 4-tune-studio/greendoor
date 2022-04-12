@@ -2,11 +2,12 @@ import json
 from datetime import datetime
 
 from django.core import serializers
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
 from config.utils import allowed_file, get_file_extension
+from feed.models import Feed
 from feed.services.bookmark_service import do_bookmark, undo_bookmark
 from feed.services.comment_service import (
     create_a_comment,
@@ -27,11 +28,14 @@ from feed.services.feed_service import (
 from feed.services.like_service import do_like, undo_like
 from user.models import UsersFav
 
+
+# 자주 사용하는 URL 변수 지정
 URL_LOGIN = "user:sign-in"
 URL_COMMUNITY = "feed:community"
 URL_FEED = "feed:feed"
 
 
+# 커뮤니티 page view 함수(get)
 def community_view(request: HttpRequest) -> HttpResponse:
     # 요청하는 방식이 get 방식인지 확인
     if request.method == "GET":
@@ -45,7 +49,8 @@ def community_view(request: HttpRequest) -> HttpResponse:
 
         # 로그인이 되어있지 않다면
         else:
-            # 없는 사용자 id
+            #커뮤니티 페이지에서는 피드를 가져올 때 user id 값에 의한 정보도 가져오기에(좋아요, 북마크 여부)
+            # 로그인이 되어있지 않은경우 없는 id로 지정
             user_id = 0
 
         # 클라이언트에서 전해준 page 값을 저장 (default : none -> 1, "" -> 1)
@@ -66,42 +71,43 @@ def community_view(request: HttpRequest) -> HttpResponse:
         data = serializers.serialize("json", list(all_feed))
         return HttpResponse(json.dumps(data), content_type="application/json")
 
-    # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
+    # 다른 방식으로 요청이 오면 community 페이지로 리다이렉트
     else:
         return redirect(URL_COMMUNITY)
 
 
-# 피드를 보여주는 함수
+# 피드를 상세 page view 함수(get)
 def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
-    # 요청 방식이 get 방식인지 확인
     if request.method == "GET":
-        # 로그인이 되어있다면
         if request.user.is_authenticated:
-            # 로그인된 사용자 id
             user_id = request.user.id
-        # 로그인이 되어있지 않다면
         else:
-            # 없는 사용자 id
             user_id = 0
 
         # 조회수 1증가시키고 피드 가져오기
         increase_views_when_get_a_feed(feed_id=feed_id)
-        feed = get_a_feed(user_id, feed_id)
-        comments = get_comment_list(feed.id, 0, 20)  # TODO 코멘트 몇개씩 보이게 할지 정해야함
+        # 사용자가 보낸 feed id가 유효한지 확인
+        try:
+            feed = get_a_feed(user_id=user_id, feed_id=feed_id)
+        # feed id가 유효하지 않다면 404에러 발생시키기
+        except Feed.DoesNotExist:
+            raise Http404("피드를 찾을 수 없습니다.")
 
+        comments = get_comment_list(feed.id, 0, 9999)  # TODO 코멘트 페이지 네이션 구현 시 수정되야함
         return render(request, "feeddetail.html", {"feed": feed, "comments": comments})
 
-    # 다른 방식으로 요청이 오면 index 페이지로 리다이렉트
+    # 다른 방식으로 요청이 오면 community 페이지로 리다이렉트
     else:
         return redirect(URL_COMMUNITY)
 
 
-# 피드 작성 페이지 뷰, api
+# 피드 생성 page view, api 함수 (get, post)
 def create_feed_view(request: HttpRequest) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
     # get 방식일 때
     if request.method == "GET":
+        # 피드 작성 페이지 렌더
         return render(request, "feedwrite.html")
     # post 방식일 때
     elif request.method == "POST":
@@ -141,18 +147,24 @@ def create_feed_view(request: HttpRequest) -> HttpResponse:
         return redirect(URL_COMMUNITY)
 
 
-# 피드 업데이트 함수
+# 피드 업데이트 page view, api 함수
 def update_feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
     if not request.user.is_authenticated:
         return redirect(URL_LOGIN)
+
     user_id = request.user.id
-    feed = get_a_feed(user_id=user_id, feed_id=feed_id)
+    # 사용자가 보낸 feed id가 유효한지 확인
+    try:
+        feed = get_a_feed(user_id=user_id, feed_id=feed_id)
+    # feed id가 유효하지 않다면 404에러 발생시키기
+    except Feed.DoesNotExist:
+        raise Http404("수정할 피드를 찾을 수 없습니다.")
 
     # GET 방식일 때
     if request.method == "GET":
+        # 피드 작성자와 api호출 유저가 동일한지 확인
         if user_id == feed.user_id.id:
             return render(request, "feedmodify.html", {"feed": feed})
-        # 피드 작성자가 아닌 다른 유저가 유청할 때
         else:
             return redirect(URL_COMMUNITY)
 
