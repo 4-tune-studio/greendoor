@@ -156,6 +156,7 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
     # 다른 사용자 수정 불가
     if request.user.id == pk:
         if request.method == "GET":
+            # feed_service.py 함수 연결
             my_feed_list = get_my_feed_list(pk)
             my_bookmark_list = get_my_bookmark_feed_list(pk)
             return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
