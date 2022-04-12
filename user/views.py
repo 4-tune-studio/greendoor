@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from django.views.decorators.http import require_POST
 
 from config.utils import allowed_file, get_file_extension
 from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
@@ -109,7 +108,7 @@ def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
         elif request.method == "GET":
             form = CustomUserChangeForm(instance=request.user)
         context = {"form": form}
-        return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
+        return render(request, "user/edit.html", context)
     else:
         return redirect("feed:community")
 
@@ -157,16 +156,17 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
     # 다른 사용자 수정 불가
     if request.user.id == pk:
         if request.method == "GET":
+            # feed_service.py 함수 연결
             my_feed_list = get_my_feed_list(pk)
             my_bookmark_list = get_my_bookmark_feed_list(pk)
             return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
         else:
-            return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
+            return redirect("feed:community")
     else:
-        return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
+        return redirect("feed:community")
 
 
-# ------------------회원탈퇴----------------------- #
+# =============== 회원 탈퇴 ================ #
 @login_required
 def member_del(request):
     request.user.delete()
