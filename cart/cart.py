@@ -5,8 +5,6 @@ from django.http import HttpRequest
 
 from product.models import Product
 
-# from coupon.models import Coupon
-
 
 class Cart(object):
 
@@ -61,7 +59,6 @@ class Cart(object):
 
     def clear(self):
         self.session[settings.CART_ID] = {}
-        # self.session['coupon_id'] = None
         self.session.modified = True
 
     def get_product_total(self):
