@@ -236,3 +236,10 @@ h5 {
 .recommend-row .card {
     border: rgba(159, 217, 198, 0.62) 1px solid;
 }
+
+.page-item span {
+    border: #fd6801 1px solid;
+    border-radius: 50%;
+    background-color: #fd6801;
+    color: white;
+}
