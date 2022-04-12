@@ -237,9 +237,22 @@ h5 {
     border: rgba(159, 217, 198, 0.62) 1px solid;
 }
 
-.page-item span {
-    border: #fd6801 1px solid;
-    border-radius: 50%;
-    background-color: #fd6801;
-    color: white;
+.pagination li {
+    font-size: 14px;
+    padding: 1px 5px;
+    border: #ff883c 1px solid;
+    background-color: #fff3e9;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 100px;
 }
+
+.pagination span {
+    color: #fd6801;
+    font-weight: bold;
+}
+
+.pagination {
+    margin-left: -100px;
+}
+
