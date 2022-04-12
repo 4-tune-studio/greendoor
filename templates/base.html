@@ -38,25 +38,25 @@
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item">
                 {% if user.is_authenticated %}
-                <a class="nav-link btn btn-outline-success">Welcome, {{ user.first_name }}</a>
+                    <a class="nav-link btn btn-outline-success">Welcome, {{ user.first_name }}</a>
                 {% endif %}
                 </a>
             </li>
             &nbsp;
             <li class="nav-item">
                 {% if user.is_authenticated %}
-                <a class="nav-link btn btn-outline-success" href="{% url 'account_logout' %}">Logout</a>
+                    <a class="nav-link btn btn-outline-success" href="{% url 'account_logout' %}">Logout</a>
                 {% else %}
-                <a class="nav-link btn btn-outline-success" href="{% url 'account_login' %}">Login</a>
+                    <a class="nav-link btn btn-outline-success" href="{% url 'account_login' %}">Login</a>
                 {% endif %}
             </li>
             &nbsp;
             <li class="nav-item">
                 <a class="nav-link btn btn-outline-success" href="{% url 'cart:detail' %}">Cart
                     {% if cart|length > 0 %}
-                    ${{ cart.get_total_price }} with {{cart|length}} items
+                        ${{ cart.get_total_price }} with {{ cart|length }} items
                     {% else %}
-                    : Empty
+                        : Empty
                     {% endif %}
                 </a>
             </li>
@@ -69,5 +69,11 @@
 </div>
 {% block script %}
 {% endblock %}
+
+{% block js %}
+{% endblock %}
+
+
 </body>
+
 </html>

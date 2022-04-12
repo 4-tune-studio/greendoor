@@ -38,16 +38,16 @@ def add(request: HttpRequest, a: int, b: int) -> Dict[str, int]:
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", api.urls),
+    path("4tunegreendooradminlkkkch/", admin.site.urls),
+    # path("api/", api.urls),
     path("cart/", include("cart.urls")),
-    # path("community/", include("feed.urls")),
     path("", include("feed.urls")),
+    path("info", include("info.urls")),
     path("user/", include("user.urls")),
     path("survey/", include("survey.urls")),
     path("order/", include("order.urls")),
     path("product/", include("product.urls")),
-    path("google/", include("allauth.urls")),
+    path("accounts/", include("allauth.urls")),
     path(
         "password_reset/",
         auth_views.PasswordResetView.as_view(template_name="password/password_reset.html"),
@@ -68,4 +68,5 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name="password/password_reset_complete.html"),
         name="password_reset_complete",
     ),
+    path("search/", include("search_app.urls")),
 ]

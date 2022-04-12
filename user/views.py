@@ -1,21 +1,24 @@
-import re
-
 from django.contrib import auth
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from config.utils import allowed_file, get_file_extension
 from feed.services.feed_service import get_my_bookmark_feed_list, get_my_feed_list
 from user.forms import CustomUserChangeForm
 from user.models import Users
+from user.services.signup_service import (
+    sign_up_nickname_validation,
+    sign_up_password_validation,
+)
 from user.services.userimg_service import update_user_image, update_user_image_url
 
 # Create your views here.
 
 
 def sign_up_view(request: HttpRequest) -> HttpResponse:
-
     if request.method == "GET":
         user = request.user.is_authenticated  # 로그인 된 사용자가 요청하는지 검사
         if user:  # 로그인이 되어있다면
@@ -33,23 +36,26 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
         if email == "" or nickname == "" or password == "" or password2 == "":
             return render(request, "sign.html", {"error": "빈 칸에 내용을 입력해 주세요!"})
         else:
-            if not (6 < len(password) < 21):
-                return render(request, "sign.html", {"error": "password 길이는 7~20자 입니다."})
-            elif re.search("[0-9]+", password) is None or re.search("[a-zA-Z]+", password) is None:
-                return render(request, "sign.html", {"error": "password 형식은 영문,숫자 포함 7~20자 입니다."})
-            elif password != password2:
-                return render(request, "sign.html", {"error": "password 확인 해 주세요!"})
-            if re.search("[0-9]+", nickname) is None or re.search("[a-zA-Z]+", nickname) is None:
-                return render(request, "sign.html", {"error": "nickname에 영문,숫자는 필수입니다."})
+            # password 유효성 검사: 비번 길이, 영문 + 숫자 조합 여부, password == password2 일치 여부
+            password_result = sign_up_password_validation(password, password2)
+            if password_result is not None:
+                return render(request, "sign.html", {"error": password_result})
 
-            exist_user = get_user_model().objects.filter(nickname=nickname)
+            # nickname 유효성 검사: nickname 길이, 한글은 한글만, 영문은 영문 or 영문 + 숫자
+            nickname_result = sign_up_nickname_validation(nickname)
+            if nickname_result is not None:
+                return render(request, "sign.html", {"error": nickname_result})
+
+            # username, email 중복 방지
+            exist_user = get_user_model().objects.filter(username=nickname)
             exist_email = get_user_model().objects.filter(email=email)
             if exist_email:
                 return render(request, "sign.html", {"error": "이미 사용 중인 email입니다."})
             elif exist_user:
                 return render(request, "sign.html", {"error": "이미 사용 중인 nickname입니다."})
             else:
-                Users.objects.create_user(email=email, username=nickname, nickname=nickname, password=password)
+                Users.objects.create_user(email=email, username=nickname, password=password)
+
                 return render(request, "sign.html", {"msg": "greendoor 회원가입 완료 : )"})
     else:
         return redirect("feed:community")
@@ -82,27 +88,27 @@ def logout(request: HttpRequest) -> HttpResponse:
 
 
 # =============== user profile update (text) ================ #
-# user 주소, 번호 update
 def profile_edit(request: HttpRequest, pk: int) -> HttpResponse:
     # 사용자 로그인 확인
     if not request.user.is_authenticated:
         return redirect("user:sign-in")
     # 다른 사용자 수정 불가
     if request.user.id == pk:
+        # 변경 내용 저장
         if request.method == "POST":
             # 추가 아닌 수정. 때문에 기존 정보를 가져오기 위해 instance 지정해 준다.
             form = CustomUserChangeForm(request.POST, instance=request.user)
             if form.is_valid():
-                form.bio = request.POST["zipcode"]
-                form.image = request.POST["address"]
-                form.image = request.POST["phonenumber"]
+                form.nickname = request.POST["nickname"]
+                form.zipcode = request.POST["zipcode"]
+                form.address = request.POST["address"]
+                form.phonenumber = request.POST["phonenumber"]
                 form.save()
-                return redirect("feed:community")
-
+                return redirect("user:user_my_page", pk=pk)
+        # 관련 templates 기존 정보를 넘겨 준다
         elif request.method == "GET":
             form = CustomUserChangeForm(instance=request.user)
         context = {"form": form}
-        # 관련 templates 기존 정보를 넘겨 준다
         return render(request, "user_test/edit.html", context)  # TODO 템플릿 변경시 경로 변경하기2
     else:
         return redirect("feed:community")
@@ -122,21 +128,24 @@ def api_update_user_image(request: HttpRequest) -> HttpResponse:
             # json data 변수에 저장
             user_id = request.POST["user_id"]
             img_file = request.FILES["image"]
+            # 다른 사용자 수정 불가
+            if request.user.id == int(user_id):
+                # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
+                if img_file and allowed_file(img_file.name):
+                    ext = get_file_extension(img_file.name)
+                    filename = f"{user_id}.{ext}"
+                    img_file.name = filename
 
-            # 이미지 파일 이름 -> user id로 변경 // utils.py 함수 사용
-            if img_file and allowed_file(img_file.name):
-                ext = get_file_extension(img_file.name)
-                filename = f"{user_id}.{ext}"
-                img_file.name = filename
+                    # s3 image upload
+                    img_update = update_user_image(img_file)
 
-                # s3 image upload, s3 url - users 모델 저장
-                img_update = update_user_image(img_file)
-
-                # Users 'image' 필드에 url update
-                url_update = update_user_image_url(user_id, img_update)
-                return JsonResponse({"message": url_update})
-            else:
-                return JsonResponse({"message": "올바른 이미지 확장자가 아닙니다."})
+                    # Users 'image' 필드에 url update
+                    url_update = update_user_image_url(user_id, img_update)
+                    return JsonResponse({"message": url_update})
+                else:
+                    return redirect("user:user_my_page")
+        else:
+            return redirect("feed:community")
 
 
 # =============== user my page ================ #
@@ -155,3 +164,10 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
             return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
     else:
         return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
+
+
+# ------------------회원탈퇴----------------------- #
+@login_required
+def member_del(request):
+    request.user.delete()
+    return redirect("feed:community")

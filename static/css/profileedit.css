@@ -1,0 +1,119 @@
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 120px;
+}
+.card {
+    width: 50vw;
+    border: #58bd87 3px solid;
+    border-radius: 30px;
+    background-color: white;
+    padding: 50px 80px;
+}
+
+
+.card.mb-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+}
+
+.profile img {
+    margin-top: 20px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+    border: 8px solid transparent;
+    background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(to right, #aae3c6, #37a16e, #65d3ffaa);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-sizing: border-box;
+}
+.file-edit-icon {
+    margin-top: 20px;
+}
+.card-title {
+    color: #fd6801;
+    text-align: left;
+}
+
+#adress h4{
+    text-align: left;
+    display: flex;
+    justify-content: left;
+}
+
+.btn.btn-primary {
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+}
+.form-group label {
+    color: #4d4d4d;
+    margin-right: 5px;
+    margin-bottom: 20px;
+
+}
+.form-group input {
+    padding: 5px 3px;
+    border: #a8a8a8 1px solid;
+    border-radius: 5px;
+    align-items: center;
+
+}
+
+#div_id_password {
+    display: flex;
+    flex-direction: column;
+}
+
+#div_id_password label {
+    color: #fd6801;
+    font-weight: bold;
+}
+
+
+
+.password a {
+    background-color: #ff883c;
+    color: white;
+    font-weight: bold;
+}
+
+#id_nickname {
+    width: 47%;
+}
+
+
+#id_password, #hint_id_password {
+    color: #4d4d4d;
+    margin-bottom: 10px;
+}
+
+#div_id_password {
+    display: none;
+}
+
+ #member_del {
+        font-size: 12px;
+        margin-top: 20px;
+    }
+
+ #member_del {
+     background-color: #a2a2a2;
+ }

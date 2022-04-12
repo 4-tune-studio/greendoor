@@ -1,0 +1,35 @@
+{% extends 'indexbase.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block title %}Planterior{% endblock %}
+
+{% block static %}
+{% endblock static %}
+
+{% block content %}
+    <div style="width: 800px; margin: 90px auto; background-color: white; background-color: rgba( 255, 255, 255, 0.5 ); border-radius: 30px; border: #4aba96 3px solid;">
+        <div style="width: 710px; margin: 0px auto; padding-top: 50px">
+         <div style="display: flex; justify-content: center">
+            <img id="planterior" src="/static/img/planterior.png" style="width: 97%; object-fit: cover; border-radius: 20px; margin-bottom: 30px">
+        </div>
+             {% for info in infos %}
+                <div style="margin: 0 auto 30px auto;">
+                    <div>
+                        <div>
+                            {% video info.video as youtube %}
+                                <iframe style="width: 700px; height: 400px; margin: 0 auto"
+                                        class="embed-responsive-item"
+                                        src="{{ youtube.url }}" frameborder="0" allowfullscreen></iframe>
+                            {% endvideo %}
+                        </div>
+                        <p style="font-size: 20px; color: #3a3a3a">{{ info.title }}</p>
+                        <p style="font-size: 14px; color: #6c6c6c; width: 700px;">
+                            {{ info.content }}</p>
+                    </div>
+                <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

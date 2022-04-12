@@ -1,31 +1,23 @@
 from django.db import models
 
+from config.models import BaseModel
 
-# 설문조사 문항
-class Survey(models.Model):
-    # 설문 인덱스
-    survey_idx = models.AutoField(primary_key=True)
-
-    # 설문 문제
-    question = models.TextField(null=True)
-
-    # 답 1~3
-    ans1 = models.TextField(null=True)
-    ans2 = models.TextField(null=True)
-    ans3 = models.TextField(null=True)
-    ans4 = models.TextField(null=True)
-
-    # 설문진행상태(y=진행중, n=종료)
-    status = models.CharField(max_length=1, default="y")
+# Create your models here.
 
 
-# ------------------------------------------------------------
-class Answer(models.Model):
-    # 응답 아이디(자동필드 증가)
-    answer_idx = models.AutoField(primary_key=True)
+class Question(BaseModel):
+    number = models.IntegerField(unique=True)
+    content = models.CharField(max_length=100)
 
-    # 설문 아이디
-    survey_idx = models.IntegerField()
+    def __str__(self):
+        return f"{self.number} - {self.content}"
 
-    # 응답 번호
-    num = models.IntegerField()
+
+class Choice(BaseModel):
+    content = models.CharField(max_length=100)
+    value = models.CharField(max_length=100)
+    question = models.ForeignKey(to="survey.Question", on_delete=models.CASCADE)
+    # level = models.ForeignKey(to="survey.Level", on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.content

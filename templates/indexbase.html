@@ -2,8 +2,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- VIEWPORT 설정 -->
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name='theme-color' content='#4aba96'/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="#4aba96">
     <title>{% block title %}Greendoor{% endblock %}</title>
+    <!-- OG태그 -->
+    <meta property="og:url"                content="https://www.grdr.net/" />
+    <meta property="og:type"               content="website" />
+    <meta property="og:title"              content="GREENDOOR" />
+    <meta property="og:description"        content="플랜테리어 커뮤니티 스토어 " />
+    <meta property="og:image"              content="https://i.imgur.com/VcmSr7u.png" />
+    <!-- 파비콘 -->
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
     <link href="/static/css/indexbase.css" rel="stylesheet" type="text/css">
     {% block static %}
     {% endblock static %}
@@ -15,16 +28,18 @@
 <!--헤더 + 네비게이션 바-->
 <nav class="navbar">
     <div class="logo">
-        <img src="/static/img/textlogo_white.png">
+        <a href="https://grdr.net/"><img src="/static/img/textlogo_white.png"></a>
     </div>
     <ul class="category">
         <li><a href="{% url 'product:product_all' %}">store</a></li>
         <li><a href="{% url 'feed:community' %}">community</a></li>
+        <li><a href="https://grdr.net/cart/">cart</a></li>
         {% if user.is_authenticated %}
             <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
         {% else %}
             <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
         {% endif %}
+
     </ul>
     <div class="sign">
     {% if user.is_authenticated %}
@@ -32,13 +47,14 @@
     {% else %}
         <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
     {% endif %}
+    <a class="sign" href="https://kkitokki.notion.site/TEAM-2-GREENDOOR-ab1ba0cd030c459593795e17817e11e6" target="_blank"><button>feedback</button></a>
     </div>
-    <a href="#" class="navbar-toggle">
-        <i class="fa-solid fa-bars"></i>
-    </a>
-    <a href="#" class="navbar-logout">
-        <i class="fa-solid fa-right-from-bracket"></i>
-    </a>
+{#    <a href="#" class="navbar-toggle">#}
+{#        <i class="fa-solid fa-bars"></i>#}
+{#    </a>#}
+{#    <a href="#" class="navbar-logout">#}
+{#        <i class="fa-solid fa-right-from-bracket"></i>#}
+{#    </a>#}
 </nav>
 {% block content %}
 {% endblock content %}

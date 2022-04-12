@@ -1,0 +1,34 @@
+{% extends "indexbase.html" %}
+{% load static %}
+{% block title %}Survey{% endblock %}
+    {% block static %}
+    <link href="/static/css/survey.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    {% endblock static %}
+{% block content %}
+    <div class="survey-container">
+        <div class="survey-wrapper">
+            <div id="survey-title">
+                <h2>🍀사용자 추천을 위한 간단설문!🍀</h2>
+                <h3>고객님의 취향을 반영해서 추천해드릴게요.</h3>
+            </div>
+            <div class="survey-form">
+                <form action="{% url "survey:survey" %}" method='post'>
+                {% csrf_token %}
+                    {% for question in questions  %}
+                        <h3 id="question">{{ question.number }}번 {{ question.content }} </h3>
+                        {% for choice in question.choice_set.all %}
+                            <div>
+                                <input type="radio" name="survey={{ question.number }}"
+                                       id="choice-{{ choice.pk }}" value="{{ choice.value }}">
+                                <label for="choice-{{ choice.pk }}">{{ forloop.counter }}.{{ choice.content }}</label>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    <input id="submit" type="submit" value="제출하기">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,177 +1,67 @@
 
-.grid-container img {
-  width: 100%; /* need to overwrite inline dimensions */
-  height: auto;
-}
-h2 {
-  margin-bottom: .5em;
-}
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 1em;
-}
-
-
-/* hover styles */
-.location-listing {
-  position: relative;
-}
-
-.location-image {
-  line-height: 0;
-  overflow: hidden;
-}
-
-.location-image img {
-  filter: blur(0px);
-  transition: filter 0.3s ease-in;
-  transform: scale(1.1);
-  border-radius: 20px;
-}
-
-.location-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  text-decoration: none;
-  z-index: 1;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity .5s;
-  background: rgba(90,0,10,0.4);
-  color: white;
-
-  /* position the text in t’ middle*/
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.location-listing:hover .location-title {
-  opacity: 1;
-}
-
-.location-listing:hover .location-image img {
-  filter: blur(2px);
-  border-radius: 20px;
-}
-
-
-/* for touch screen devices */
-@media (hover: none) {
-  .location-title {
-    opacity: 1;
-  }
-  .location-image img {
-    filter: blur(2px);
-    border-radius: 20px;
-  }
-}
-
-
-/* mobile */
-
-@media screen and (max-width:800px) {
-
-    .feed-header { display: flex; justify-content: center; }
-    /*.feed-header-text { margin-top: 200px; margin-left: -70px; margin-right: 100px; }*/
-    /*.feed-header-text h3 { color: #efebeb; margin-top: 0; }*/
-    /*.feed-header button { margin-top: 20px; }*/
-    /*.feed-header a { font-weight: 800; color: #edf0f1; text-decoration: none; }*/
-
-    button {
-        padding: 9px 25px;
-        background-color: rgb(255, 136, 60);
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: all 0.3s ease 0s;
-    }
-
-    button:hover { background-color: rgb(253, 104, 1); }
-
-
-    .popular-feed {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 50px;
-        flex-wrap: nowrap;
-    }
-
-    .feed-img {
-        display: flex;
-        flex-direction: row;
-        margin: 0 50px;
-        float: left;
-    }
-
-
-    .new-feed {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 80px;
-        flex-wrap: nowrap;
-        margin-bottom: 150px;
-    }
-
-    .popular-feed h3 { color: #fd6801; }
-    .new-feed h3 { color: #fd6801; }
-
-
-    #scrollTopMob {
-      display: flex;
-      position: fixed;
-      bottom: 64px; /* 아랫쪽 끝에서부터의 거리 */
-      right: 25px; /* 오른쪽 끝에서부터의 거리 */
-      z-index: 99;
-    }
-
-    #scrollTopPc {
-        display: none;
-    }
-
-}
 
 
 
 /* desktop */
 
-    @import url('http://fonts.googleapis.com/css?family=Monserrat:500');
 
-    .feed-header { display: flex; justify-content: center; }
-    .feed-header img { margin-top: -30px }
 
-    .feed-header-text { margin-top: 100px; }
-    .feed-header-text h3 { color: #efebeb; margin-top: 0; }
-    .feed-header button { margin-top: 50px; }
+.feed-header {
+    display: flex;
+    justify-content: center;
+}
+.popular-feed, .new-feed, .skeleton {
+    display: flex;
+    justify-content: center;
+    /*margin: 0 150px;*/
+}
 
-    .popular-feed {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 50px;
-    }
+.search-feed-img {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
 
-    .feed-img {
-        display: flex;
-        flex-direction: row;
-    }
+.search-feed-img img {
+     width: 150px;
+     height: 250px;
+     border-radius: 20px;
+     object-fit: cover;
+     overflow: hidden;
+     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+     margin: 0 8px;
+     margin-bottom: 20px;
+}
+ .feed-img {
+     display: flex;
+     max-width: 1500px;
+     flex-wrap: wrap;
+     justify-content: center;
+     /*margin: 0 auto;*/
+ }
+ .feed-img img {
+     width: 223px;
+     height: 300px;
+     border-radius: 20px;
+     object-fit: cover;
+     overflow: hidden;
+     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+     margin: 0 8px;
+     margin-bottom: 20px;
 
-    .new-feed {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 80px;
-    }
+ }
 
-    .popular-feed h3 { color: #fd6801; }
-    .new-feed h3 { color: #fd6801; }
+
+
+h3 {
+    color: #fd6801;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-position:under;
+    margin: 50px 0;
+}
+
+
 
     #scrollTopPc {
       display: flex;
@@ -187,4 +77,62 @@ h2 {
     }
 
 
+.main {
+    display: flex;
+    justify-content: center;
+}
+
+.spinner {
+        margin: 0 auto;
+        display: block;
+        width: 150px;
+    }
+
+#skeleton-off {
+    display: none;
+}
+
+@import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+.search {
+  width: 300px;
+  position: relative;
+}
+.search:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-family: 'FontAwesome';
+  content: '\f002';
+  background: #48c789;
+  text-align: center;
+  color: #fff;
+  border-radius: 20px;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+}
+
+.searchTerm {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  border: 3px solid #48c789;
+  padding: 10px;
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
+}
+
+.searchButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  cursor: pointer;
+}
 

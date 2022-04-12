@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block head_title %}{% endblock %}</title>
+
+    {% block static %}
+    <link href="/static/css/detailbase.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/kakao.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    {% endblock static %}
+    <script src="https://kit.fontawesome.com/6bc056fb5e.js" crossorigin="anonymous"></script>
+    <script defer src="/static/js/index.js"></script>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+    <!--헤더 + 네비게이션 바-->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/static/img/textlogo_white.png">
+        </div>
+        <ul class="category">
+            <li><a href="{% url 'product:product_all' %}">store</a></li>
+            <li><a href="{% url 'feed:community' %}">community</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'user:user_my_page' user.id %}">mypage</a></li>
+            {% else %}
+                <li><a href="{% url 'user:sign-in' %}">mypage</a></li>
+            {% endif %}
+        </ul>
+        <div class="sign">
+        {% if user.is_authenticated %}
+            <a class="sign" href="{% url 'user:logout' %}"><button>log out</button></a>
+        {% else %}
+            <a class="sign" href="{% url 'user:sign-in' %}"><button>log in</button></a>
+        {% endif %}
+        </div>
+        <a href="#" class="navbar-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </a>
+        <a href="#" class="navbar-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+</nav>
+    {% block body %}
+
+    {% if messages %}
+    <div>
+      <strong>Messages:</strong>
+      <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>

@@ -1,63 +1,103 @@
 {% extends 'indexbase.html' %}
 {% load static %}
 
-    {% block title %}Community{% endblock %}
-    {% block static %}
-      <link href="/static/css/feedindex.css" rel="stylesheet" type="text/css">
-    {% endblock %}
+{% block title %}Community{% endblock %}
+{% block static %}
+    <link href="/static/css/feedindex.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/6bc056fb5e.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const csrf = "{{ csrf_token }}";
+        const newFeedURl = "{% url "feed:community" %}";
+        let page = 1;
+    </script>
+{% endblock %}
 {% block content %}
     <!-- 피드 상단 이미지 -->
     <div class="feed-header">
-        <img src="/static/img/main.png">
-<!--        <div class="feed-header-text">-->
-<!--            <h3>플랜테리어</h3>-->
-<!--            <h3>어떻게 활용하면</h3>-->
-<!--            <h3>좋을까</h3>-->
-<!--            <button><a href="">자세히보기</a></button>-->
-<!--        </div>-->
+        <a href="{% url 'info:info' %}"><img src="/static/img/main.png"></a>
     </div>
-    {% if popular_feeds %}
-        <div class="popular-feed">
-            <div id="feed-category">
-                <h3>· 인기피드 ·</h3>
-            </div>
-            <div class="feed-img">
-                  <div class="grid-container">
-                      {% for feed in popular_feeds %}
-                        <article id="3685" class="location-listing">
-                          <a class="location-title" href="{% url 'feed:feed' feed.id %}">{{ feed.title }}</a>
-                          <div class="location-image">
-                            <a href="{% url 'feed:feed' feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
-                          </div>
-                        </article>
-                      {% endfor %}
-                  </div>
+
+
+    <div class="main">
+        <form class="search" action="{% url 'search:feed_searchResult' %}" method="get">
+            <input class="searchTerm" placeholder="검색어를 입력하세요." type="text" name="kw" required="required"><input
+                class="searchButton" type="submit"/>
+        </form>
+    </div>
+
+    {% if search_feeds %}
+        <h3>"{{ query }}"으로 검색한 피드</h3>
+
+        <div class="search-img">
+            <div class="search-feed-img">
+                {% for search_feed in search_feeds %}
+                    <a href="{% url 'feed:feed' search_feed.id %}"><img class="image" src="{{ search_feed.image }}"></a>
+                {% endfor %}
             </div>
         </div>
     {% endif %}
-    <div class="new-feed">
-        <div id="feed-category">
-            <h3>· 최신피드 ·</h3>
+
+    {% if not search_feeds %}
+        {% if query %}
+            <h3>"{{ query }}"으로 검색한 알맞은 피드가 없습니다.</h3>
+
+        {% endif %}
+    {% endif %}
+
+    <div class="feed-container">
+        <h3>인기 피드</h3>
+        <div class="popular-feed">
+            <div class="feed-img">
+                {% for feed in popular_feeds %}
+                    <a href="{% url 'feed:feed' feed.id %}"><img class="image" src="{{ feed.image }}"></a>
+                {% endfor %}
+            </div>
         </div>
-        <div class="feed-img">
-              <div class="grid-container">
-                  {% for feed in all_feed %}
-                    <article id="3685" class="location-listing">
-                      <a class="location-title" href="{% url "feed:feed" feed.id %}">{{ feed.title }}</a>
-                      <div class="location-image">
-                        <a href="{% url "feed:feed" feed.id %}"><img width="200" height="200" src="{{ feed.image }}"></a>
-                      </div>
-                    </article>
-                  {% endfor %}
-              </div>
+        <h3>최신 피드</h3>
+        <div class="new-feed">
+            <div class="feed-img" id="new-feed-img">
+                {% for feed in all_feed %}
+                    <a href="{% url 'feed:feed' feed.id %}"><img class="image" src="{{ feed.image }}"></a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="skeleton" id="skeleton-off">
+            <div class="feed-img">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+                <img class="image" src="/static/img/skeleton.jpg">
+            </div>
         </div>
     </div>
     <!-- PC 글쓰기 버튼 -->
     <div onclick="" id="scrollTopPc">
-        <a href="{% url 'feed:create_feed' %}"><img src="/static/img/write.png" width="50px" height="50px"></a>
+        <a href="{% url 'feed:create_feed' %}"><img src="/static/img/writing.png" width="50px" height="50px"></a>
     </div>
     <!-- 모바일 글쓰기 버튼 -->
     <div onclick="" id="scrollTopMob">
-        <a href="{% url 'feed:create_feed' %}"><img src="/static/img/write.png" width="50px" height="50px"></a>
+        <a href="{% url 'feed:create_feed' %}"><img src="/static/img/writing.png" width="50px" height="50px"></a>
     </div>
+    <!--무한 스크롤 관찰 대상-->
+    <div class="list"></div>
+    <br><br>
+    <br><br>
+    <p id="sentinel"></p>
+
+    <!-- 상단 이동하기 버튼 -->
+    <div onclick="clickme()" style="position:fixed; bottom:125px; right:34px; z-index:99; scroll-behavior: smooth;">
+      <img src="/static/img/up.png" style="width:55px; height:55px; cursor: pointer;" alt="top">
+    </div>
+    <!-- 상단 이동 스크롤 스크립트 -->
+    <script defer>
+        function clickme(){
+            window.scrollTo({top:0, left:0})
+        }
+    </script>
+    <script defer src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script defer type="text/javascript" src="/static/js/community.js"></script>
 {% endblock content %}
