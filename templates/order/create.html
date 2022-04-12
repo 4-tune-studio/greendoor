@@ -14,7 +14,7 @@
     <div class="order-container">
         <div class="row">
             <div class="col">
-                <div class="alert alert-info" role="alert">Your Order</div>
+                <div class="alert alert-info" role="alert">당신의 구매 목록</div>
                 <ul class="list-group">
                     {% for item in cart %}
                         <li class="list-group-item">
@@ -23,7 +23,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <div class="alert alert-success" role="alert">Total : &#8361;{{ cart.get_total_price|floatformat:"g" }}</div>
+                <div class="alert alert-success" role="alert">전체 가격 : &#8361;{{ cart.get_total_price|floatformat:"g" }}</div>
 
                 <!-- form에 class 추가 -->
                 <form action="" method="post" class="order-form">
@@ -32,8 +32,8 @@
                     {% csrf_token %}
                     <!-- hidden field 추가-->
                     <input type="hidden" name="pre_order_id" value="0">
-                    <input type="hidden" name="amount" value="&#8361;{{ cart.get_total_price|floatformat:'g' }}">
-                    <input type="submit" class="btn btn-primary float-right" value="Place Order">
+                    <input type="hidden" name="amount" value="{{ cart.get_total_price }}">
+                    <input type="submit" class="btn btn-primary float-right" value="주문">
                 </form>
             </div>
         </div>

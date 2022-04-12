@@ -36,11 +36,11 @@
                         <form action="{% url 'cart:product_add' product.id %}" method="post">
                             {{ item.quantity_form.quantity }}
                             {{ item.quantity_form.is_update }}
-                            <input type="submit" class="btn btn-primary" value="Update">
+                            <input type="submit" class="btn btn-primary" value="업데이트">
                             {% csrf_token %}
                         </form>
                     </td>
-                    <td><a href="{% url 'cart:product_remove' product.id %}">Remove</a></td>
+                    <td><a href="{% url 'cart:product_remove' product.id %}">목록빼기</a></td>
                     <td class="num">&#8361;{{ item.price|floatformat:"g"  }}</td>
                     <td class="num">&#8361;{{ item.total_price|floatformat:"g"  }}</td>
                 </tr>
@@ -55,8 +55,8 @@
         </table>
     </div>
     <p class="text-right">
-        <a href="{% url 'product:product_all' %}" class="btn btn-secondary">Continue shopping</a>
-        <a href="{% url 'order:order_create' %}" class="btn btn-secondary">Checkout</a>
+        <a href="{% url 'product:product_all' %}" class="btn btn-secondary">쇼핑 계속하기</a>
+        <a href="{% url 'order:order_create' %}" class="btn btn-secondary">주문하기</a>
     </p>
 
 {% endblock %}

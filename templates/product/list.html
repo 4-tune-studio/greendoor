@@ -52,7 +52,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ search_product.name }}</h5>
                                     <p class="card-text">{{ search_product.description }} <span
-                                            class="badge badge-secondary">&#8361;{{ search_product.price|floatformat:"g"  }}</span>
+                                            class="badge badge-secondary">&#8361;{{ search_product.price|floatformat:"g" }}</span>
                                     </p>
 
                                 </div>
@@ -96,7 +96,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ product.name }}</h5>
                                         <p class="card-text">{{ product.description }} <span
-                                                class="badge badge-secondary">&#8361;{{ product.price|floatformat:"g"  }}</span>
+                                                class="badge badge-secondary">&#8361;{{ product.price|floatformat:"g" }}</span>
                                         </p>
 
                                     </div>
@@ -111,88 +111,80 @@
     <!--추천 상품 끝-->
 
     <div class="row">
-        <div class="col-2">
-            <div class="list-group">
-                <a href="/product" class="list-group-item {% if not current_category %}active{% endif %}">All</a>
-                {% for c in categories %}
-                    <a href="{{ c.get_absolute_url }}"
-                       class="list-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{ c.name }}</a>
-                {% endfor %}
-            </div>
+    <div class="col-2">
+        <div class="list-group">
+            <a href="/product" class="list-group-item {% if not current_category %}active{% endif %}">All</a>
+            {% for c in categories %}
+                <a href="{{ c.get_absolute_url }}"
+                   class="list-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{ c.name }}</a>
+            {% endfor %}
         </div>
+    </div>
 
 
-        <div class="col">
-            <div class="alert alert-info" role="alert">
-                {% if current_category %}{{ current_category.name }}{% else %}All Products{% endif %}
-            </div>
-            <div class="row">
-                {% for product in products %}
-                    <div class="col-4">
-                        <div class="card">
-                            <a href="{{ product.get_absolute_url }}">
-                                <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
-                            </a>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ product.name }}</h5>
-                                <p class="card-text">{{ product.description }} <span class="badge badge-secondary">&#8361;{{ product.price|floatformat:"g"  }}</span>
-                                </p>
+    <div class="col">
+    <div class="alert alert-info" role="alert">
+        {% if current_category %}{{ current_category.name }}{% else %}All Products{% endif %}
+    </div>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-4">
+                <div class="card">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img class="card-img-top" src="{{ product.image }}" alt="Product Image">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }} <span
+                                class="badge badge-secondary">&#8361;{{ product.price|floatformat:"g" }}</span>
+                        </p>
 
-                            </div>
-                        </div>
                     </div>
-                {% endfor %}
+                </div>
             </div>
-    <!-- 페이징처리 시작 -->
-    <div id="paging">
-        <ul class="pagination justify-content-center" style="margin-top: 2rem;">
-            <!-- 이전페이지 -->
-            {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="/product/?&page={{ page_obj.previous_page_number }}">이전</a>
-                    <!-- href로 뎁스 설정 -->
-                </li>
-            {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-                </li>
-            {% endif %}
-            <!-- 페이지리스트 -->
-            {% for page_number in page_obj.paginator.page_range %}
-                {% if page_number == page_obj.number %}
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
-                    </li>
+        {% endfor %}
+    </div>
 
-                {% else %}
-                    <li class="page-item">
-                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
-                    </li>
+    {% if result_list.has_other_pages %}
+        <ul class="pagination justify-content-center font size=2em">
+            {% if result_list.has_previous %}
+                <li><a href="?page={{ result_list.previous_page_number }}">&laquo;</a>
+                </li> {% else %}
+                <li class="page-item"><span>&laquo;</span></li>
+            {% endif %}
+            {% if result_list.number > 2 %}
+                <li><a href="?page={{ 1 }}"> 1 </a></li>
+                <li><span>...<span class="sr-only">...</span></span></li>
+            {% endif %}
+            {% for i in page_range %}
+                {% if result_list.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>{% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
                 {% endif %}
             {% endfor %}
-            <!-- 다음페이지 -->
-            {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?&page={{ page_obj.next_page_number }}">다음</a>
-                </li>
+            {% if result_list.number < max_index %}
+                <li><span>...<span class="sr-only">...</span></span></li>
+                <li><a href="?page={{ max_index|add:'2' }}">{{ max_index|add:"2" }}</a></li>
+            {% endif %}
+            {% if result_list.has_next %}
+                <li><a href="?page={{ result_list.next_page_number }}">&raquo;</a></li>
             {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-                </li>
+                <li class="page-item"><span>&raquo;</span></li>
             {% endif %}
         </ul>
-    </div>
+    {% endif %}
     <!-- 상단 이동하기 버튼 -->
     <div onclick="clickme()" style="position:fixed; bottom:105px; right:34px; z-index:99; scroll-behavior: smooth;">
-      <img src="/static/img/up.png" style="width:55px; height:55px; cursor: pointer;" alt="top">
+        <img src="/static/img/up.png" style="width:55px; height:55px; cursor: pointer;" alt="top">
     </div>
     <!-- 상단 이동 스크롤 스크립트 -->
     <script defer>
-        function clickme(){
-            window.scrollTo({top:0, left:0})
+        function clickme() {
+            window.scrollTo({top: 0, left: 0})
         }
     </script>
-    <!-- 페이징처리 끝 -->
+
+
 
 {% endblock %}
 
