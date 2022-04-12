@@ -227,7 +227,14 @@ def api_like(request: HttpRequest) -> HttpResponse:
     # 사용자 정보 가져오기
     user = request.user
     feed_id = int(request.POST["feed_id"])
-    feed = get_a_feed(user_id=user.id, feed_id=feed_id)
+
+    # 사용자가 보낸 feed id가 유효한지 확인
+    try:
+        feed = get_a_feed(user_id=user.id, feed_id=feed_id)
+    # feed id가 유효하지 않다면 404에러 발생시키기
+    except Feed.DoesNotExist:
+        raise Http404("피드를 찾을 수 없습니다.")
+
     feed_like_count = feed.like_count
 
     # 좋아요를 한 상태이면 좋아요 취소
@@ -253,12 +260,16 @@ def api_bookmark(request: HttpRequest) -> HttpResponse:
         return redirect(URL_LOGIN)
 
     # 사용자 정보 가져오기
+    user = request.user
+    feed_id = int(request.POST["feed_id"])
+
+    # 사용자가 보낸 feed id가 유효한지 확인
     try:
-        user = request.user
-        feed_id = int(request.POST["feed_id"])
-    except Exception as e:
-        print(e)
-    feed = get_a_feed(user_id=user.id, feed_id=feed_id)
+        feed = get_a_feed(user_id=user.id, feed_id=feed_id)
+    # feed id가 유효하지 않다면 404에러 발생시키기
+    except Feed.DoesNotExist:
+        raise Http404("피드를 찾을 수 없습니다.")
+
     # 북마크를 한 상태이면 북마크 취소
     if feed.my_bookmark:
         undo_bookmark(user_id=user.id, feed_id=feed_id)
