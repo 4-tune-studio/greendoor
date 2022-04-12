@@ -161,9 +161,9 @@ def user_my_page(request: HttpRequest, pk: int) -> HttpResponse:
             my_bookmark_list = get_my_bookmark_feed_list(pk)
             return render(request, "mypage.html", {"feed_list": my_feed_list, "bookmark_list": my_bookmark_list})
         else:
-            return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
+            return redirect("feed:community")
     else:
-        return redirect("feed:community")  # TODO 잘못된 접근 경고문 여부
+        return redirect("feed:community")
 
 
 # ------------------회원탈퇴----------------------- #
