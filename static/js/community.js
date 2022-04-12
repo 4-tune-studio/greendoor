@@ -59,23 +59,14 @@ function addNewContent() {
           }
         },
         error: function (request, status, error) {
-          console.log(`code: ${request.status} \nmessage: ${request.responseText}\nerror: ${error}`)
-          console.dir(request)
-          console.dir(status)
-          console.dir(error)
-          console.log(`request: ${request}`);
-          console.log(`status: ${status}`);
-          console.log(`error: ${error}`);
         },
         beforeSend: function () { // ajax 보내기 전
             loadingStart();
-            console.log("페이지 스크롤 시작");
             // 통신 시작할 때 관찰 끄기
             observer.unobserve(sentinel);
         },
         complete: function () { // ajax 완료
             loadingFinish();
-            console.log("페이지 스크롤 끝");
         }
     });
 }
