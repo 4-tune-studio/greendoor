@@ -19,7 +19,6 @@ class Cart(object):
         if not cart:
             cart = self.session[settings.CART_ID] = {}
         self.cart = cart
-        # self.coupon_id = self.session.get('coupon_id')
 
     def __len__(self):
         return sum(item["quantity"] for item in self.cart.values())
@@ -67,18 +66,6 @@ class Cart(object):
 
     def get_product_total(self):
         return sum(Decimal(item["price"]) * item["quantity"] for item in self.cart.values())
-
-    # @property
-    # def coupon(self):
-    #     if self.coupon_id:
-    #         return Coupon.objects.get(id=self.coupon_id)
-    #     return None
-
-    # def get_discount_total(self):
-    #     if self.coupon:
-    #         if self.get_product_total() >= self.coupon.amount:
-    #             return self.coupon.amount
-    #     return Decimal(0)
 
     def get_total_price(self):
         return self.get_product_total()

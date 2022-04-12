@@ -3,17 +3,13 @@ import hashlib
 from django.db import models
 from django.db.models.signals import post_save
 
-# from django.core.validators import MinValueValidator, MaxValueValidator
-# from coupon.models import Coupon
-# from config.models import BaseModel
 from product.models import Product
 
 from .iamport import find_transaction, payments_prepare
 
 
 class Order(models.Model):
-    # first_name = models.CharField(max_length=50)
-    # last_name = models.CharField(max_length=50)
+
     user_name = models.CharField(max_length=50)
     email = models.EmailField()
     address = models.CharField(max_length=250)
@@ -22,9 +18,6 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-
-    # coupon = models.ForeignKey(Coupon, on_delete=models.PROTECT, related_name='order_coupon', null=True, blank=True)
-    # discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100000)])
 
     class Meta:
         ordering = ["-created"]
@@ -38,7 +31,6 @@ class Order(models.Model):
     def get_total_price(self):
         total_product = self.get_total_product()
 
-        # return total_product - self.discount
         return total_product
 
 

@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest
 
 from .cart import Cart
 
