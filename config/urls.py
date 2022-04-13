@@ -13,33 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
-# from django.urls import path
-#
-# urlpatterns = [
-#     path("admin/", admin.site.urls),
-# ]
-from typing import Dict
 
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.http import HttpRequest
 from django.urls import include, path
-from ninja import NinjaAPI
-
-from user import views
-
-api = NinjaAPI()
-
-
-@api.get("/add")
-def add(request: HttpRequest, a: int, b: int) -> Dict[str, int]:
-    return {"result": a + b}
-
 
 urlpatterns = [
     path("4tunegreendooradminlkkkch/", admin.site.urls),
-    # path("api/", api.urls),
     path("cart/", include("cart.urls")),
     path("", include("feed.urls")),
     path("info", include("info.urls")),

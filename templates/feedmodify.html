@@ -34,9 +34,7 @@
     </div>
 
     <script type="text/javascript">
-        /**
-         * 단일파일 업로드
-         */
+        /* 단일파일 업로드 */
         function readImage(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -54,22 +52,4 @@
             readImage(e.target);
         })
     </script>
-    {#    <div class="write-contatiner">#}
-    {#        <div class="write-wrapper">#}
-    {#            <h1>수정하기</h1>#}
-    {#            <div class="input-group mb-3">#}
-    {#              <span class="input-group-text" id="inputGroup-sizing-default">제목</span><br>#}
-    {#              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">#}
-    {#            </div>#}
-    {#            <div class="input-content">#}
-    {#                <span class="input-group-text" id="inputGroup-sizing-default">내용</span><br>#}
-    {#                <textarea id="content"></textarea>#}
-    {#            </div>#}
-    {#            <div class="input-group mb-3">#}
-    {#              <input type="file" class="form-control" id="inputGroupFile02">#}
-    {#            </div>#}
-    {#            <a class="modify" href=""><button>수정</button></a>#}
-    {#        </div>#}
-    {##}
-    {#    </div>#}
 {% endblock content %}

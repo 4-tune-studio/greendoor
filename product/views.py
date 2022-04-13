@@ -1,8 +1,7 @@
 import random
 
 from allauth.account.signals import user_signed_up  # type: ignore
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.dispatch import receiver
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
@@ -18,20 +17,20 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
     products = Product.objects.filter(available_display=True)
 
     page = int(request.GET.get("page", 1) or 1)
-    # print(f"product_page:{page}")
+
     limit = 15
     offset = limit * (page - 1)
 
     product_category = []
     if category_slug:
-        # print(f"category_slug:{category_slug}")
+
         current_category = get_object_or_404(Category, slug=category_slug)
-        # print(f"current_category:{current_category}")
+
         for product in products:
-            # print(f"product.category:{product.category}")
+
             if current_category == product.category:
                 product_category.append(product)
-                # print(f"product_category:{product_category}")
+
             else:
                 pass
         products = product_category
@@ -112,9 +111,8 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
     # templates의 구조에 따라서 다르게 쓸 수 있으나 앱기반으로 하여 이렇게 되어있다. 수정이 필요한 부분
     ######################################################################################
 
-
     total_len = len(procuts_page)
-    pages = request.GET.get('page', 1)
+    pages = request.GET.get("page", 1)
     paginator = Paginator(procuts_page, 15)
     try:
         lines = paginator.page(pages)
@@ -131,19 +129,19 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
         end_index = index + 3 if index <= max_index - 3 else max_index
     page_range = list(paginator.page_range[start_index:end_index])
 
-
-
     return render(
         request,
         "product/list.html",
-        # "storeindex.html",
         {
             "current_category": current_category,
             "categories": categories,
             "products": products,
             "sug_product": sug_product,
             "page_obj": page_obj,
-            'result_list': lines, 'page_range': page_range, 'total_len': total_len, 'max_index': max_index - 2,
+            "result_list": lines,
+            "page_range": page_range,
+            "total_len": total_len,
+            "max_index": max_index - 2,
         },
     )
 
@@ -151,16 +149,5 @@ def product_in_category(request: HttpRequest, category_slug=None) -> HttpRespons
 def product_detail(request: HttpRequest, id, product_slug=None) -> HttpResponse:
     product = get_object_or_404(Product, id=id, slug=product_slug)
     add_to_cart = AddProductForm(initial={"quantity": 1})
-    # print(product.plant_id.type_name)
-    # plant_info = get_object_or_404(Plant, id = int(product.plant_id))
 
     return render(request, "product/detail.html", {"product": product, "add_to_cart": add_to_cart})
-
-
-# @receiver(user_signed_up)
-# def user_signed_up_(**kwargs) -> None:
-#     user = kwargs["user"]
-#     extra_data = user.socialaccount_set.filter(provider="kakao")[0].extra_data
-#
-#     user.username = extra_data["name"]
-#     user.save()

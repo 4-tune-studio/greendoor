@@ -45,26 +45,7 @@ class Plant(BaseModel):
     insect_info = models.CharField(max_length=256, null=True, blank=True)
     extragrow_info = models.CharField(max_length=2000, null=True, blank=True)
     functional_info = models.CharField(max_length=2000, null=True, blank=True)
-    # potsize_big = models.IntegerField(null=True, blank=True)
-    # potsize_mid = models.IntegerField(null=True, blank=True)
-    #
-    # potsize_small = models.IntegerField(null=True, blank=True)
-    # width_big = models.IntegerField(null=True, blank=True)
-    # width_mid = models.IntegerField(null=True, blank=True)
-    # width_small = models.IntegerField(null=True, blank=True)
-    # length_big = models.IntegerField(null=True, blank=True)
-    # length_mid = models.IntegerField(null=True, blank=True)
-    # length_small = models.IntegerField(null=True, blank=True)
-    # heigt_big = models.IntegerField(null=True, blank=True)
-    # heigt_mid = models.IntegerField(null=True, blank=True)
-    # heigt_small = models.IntegerField(null=True, blank=True)
-    #
-    # volume_big = models.IntegerField(null=True, blank=True)
-    # volume_mid = models.IntegerField(null=True, blank=True)
-    # volume_small = models.IntegerField(null=True, blank=True)
-    # price_big = models.IntegerField(null=True, blank=True)
-    # price_mid = models.IntegerField(null=True, blank=True)
-    # price_small = models.IntegerField(null=True, blank=True)
+
     care_need = models.CharField(max_length=100, null=True, blank=True)
     type = models.CharField(max_length=100, null=True, blank=True)
     growth_type = models.CharField(max_length=100, null=True, blank=True)
@@ -83,4 +64,3 @@ class Plant(BaseModel):
 
     # size 대 중 소 입력 필드 추가
     size = models.CharField(max_length=1, default="")
-    # insect = models.CharField(max_length=100, null=True, blank=True)

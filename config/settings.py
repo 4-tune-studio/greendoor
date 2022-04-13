@@ -38,7 +38,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    # "corsheaders",
+    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -210,27 +210,27 @@ LOGIN_REDIRECT_URL = "/"
 
 # cors setting
 # CORS_ORIGIN_ALLOW_ALL = True # <- 모든 호스트 허용
-# CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # it make white list that can access
-# CORS_ALLOW_METHODS = (
-#     'DELETE',
-#     'GET',
-#     'OPTIONS',
-#     'PATCH',
-#     'POST',
-#     'PUT',
-# )
-# CORS_ALLOW_HEADERS = (
-#     'accept',
-#     'accept-encoding',
-#     'authorization',
-#     'content-type',
-#     'dnt',
-#     'origin',
-#     'user-agent',
-#     'x-csrftoken',
-#     'x-requested-with',
-# )
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:8000", "http://localhost:8000"]  # it make white list that can access
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 IAMPORT_KEY = MY_IAMPORT_KEY
 IAMPORT_SECRET = MY_IAMPORT_SECRET
 
