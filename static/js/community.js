@@ -1,3 +1,5 @@
+const csrftoken = Cookies.get('csrftoken');
+
 const makeSpinner = () => {
         const spinner = document.createElement('div');
         const spinnerImage = document.createElement('img');
@@ -38,7 +40,7 @@ function addNewContent() {
         type: "GET", // request 전달 방식 (POST, GET 등)
         url: newFeedURl,
         headers: {//헤더에 csrf 토큰 추가
-                'X-CSRFToken': csrf
+                'X-CSRFToken': csrftoken
             },
         data: {// json 형식으로 서버에 데이터 전달
             "page": page // page 번호를 서버에 전달 // 따로 인자로 page를 받지 않아도 증감 연산된 page가 자동으로 할당되는지 여부 확인

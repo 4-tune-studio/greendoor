@@ -93,8 +93,21 @@ def feed_view(request: HttpRequest, feed_id: int) -> HttpResponse:
         except Feed.DoesNotExist:
             raise Http404("피드를 찾을 수 없습니다.")
 
-        comments = get_comment_list(feed.id, 0, 9999)  # TODO 코멘트 페이지 네이션 구현 시 수정되야함
-        return render(request, "feeddetail.html", {"feed": feed, "comments": comments})
+        # 클라이언트에서 전해준 page 값을 저장 (default : none -> 1, "" -> 1)
+        page = int(request.GET.get("page", 1) or 1)
+        limit = 999999
+        offset = limit * (page - 1)
+
+        comments = get_comment_list(feed.id, offset, limit)  # TODO 코멘트 페이지 네이션 구현 시 수정되야함
+
+        # 첫 페이지라면
+        if offset == 0:
+            return render(request, "feeddetail.html", {"feed": feed, "comments": comments})
+
+        # 비동기식
+        # offset이 0이 아닐경우 // ajax로 page 2가 넘어오면 offset = 5
+        data = serializers.serialize("json", list(comments))
+        return HttpResponse(json.dumps(data), content_type="application/json")
 
     # 다른 방식으로 요청이 오면 community 페이지로 리다이렉트
     else:

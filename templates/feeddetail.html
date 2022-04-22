@@ -7,8 +7,12 @@
         const updateCommentURL = "{% url "feed:update_comment" %}";
         const likeApiURL = "{% url "feed:api_like" %}";
         const bookmarkApiURL = "{% url "feed:api_bookmark" %}";
-        const csrf = "{{ csrf_token }}";
+        const commentAddURL = "{% url "feed:feed" feed_id=feed.id %}";
+        let page = 1;
+        let limit = 2;
+        let list = [1,2,3,4,5];
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script>
     {% endblock static %}
 
 <!-- feed -->
@@ -60,6 +64,8 @@
                 <textarea class="txtarea" name="feed_content" rows="20" cols="50" maxlength="1000" readonly disabled>{{ feed.content }}</textarea>
             </label>
         </div>
+
+        <!--댓글-->
         <div class="comment">
             <h3>댓글</h3>
             <!-- 코멘트 반복문 시작 -->
@@ -74,7 +80,6 @@
                     <h5 id="comment-date"> - {{ comment.created_at }}</h5>
                     <input id="comment_{{ comment.id }}_input" type="text" value="{{ comment.content }} "
                            readonly required size="100" maxlength="100">
-{#                    <h5 id="comment">comment</h5>#}
                 </div>
             </div>
             <div class="commenticon">
